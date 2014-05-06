@@ -28,7 +28,7 @@
                        Margin="9,-7,0,0" 
                        Style="{StaticResource PhoneTextTitle2Style}"/>
         </StackPanel>
-
+  
         <!--ContentPanel - placez tout contenu supplémentaire ici-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <ListBox x:Name="ContactList" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Items}">
