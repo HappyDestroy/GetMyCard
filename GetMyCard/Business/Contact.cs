@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GetMyCard
 {
-    class Contact
+    public class Contact
     {
         #region Fields
 
@@ -14,6 +14,7 @@ namespace GetMyCard
         private string _prenom;
         private string _adresse;
         private int _telephone;
+        private string _imageProfil;
 
         #endregion
 
@@ -26,12 +27,13 @@ namespace GetMyCard
 
         }
 
-        public Contact(string nom, string prenom, string adresse, int telephone)
+        public Contact(string nom, string prenom, string adresse, int telephone, string imageProfil)
         {
             this._nom = nom;
             this._prenom = prenom;
             this._adresse = adresse;
             this._telephone = telephone;
+            this._imageProfil = imageProfil;
         }
 
         #endregion
@@ -64,7 +66,14 @@ namespace GetMyCard
             set { _telephone = value; }
         }
 
+        public string ImageProfil
+        {
+            get { return _imageProfil; }
+            set { _imageProfil = value; }
+        }
+
         #endregion
+
 
 
         #region Override

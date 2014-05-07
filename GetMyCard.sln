@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetMyCard", "GetMyCard\GetMyCard.csproj", "{D3C9C5B7-8F89-4475-8A48-D28CAD674610}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.Core", "WP.Core\WP.Core.csproj", "{783CEE7F-624A-4DE1-89CE-B37C6F18C122}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,18 @@ Global
 		{D3C9C5B7-8F89-4475-8A48-D28CAD674610}.Release|x86.ActiveCfg = Release|x86
 		{D3C9C5B7-8F89-4475-8A48-D28CAD674610}.Release|x86.Build.0 = Release|x86
 		{D3C9C5B7-8F89-4475-8A48-D28CAD674610}.Release|x86.Deploy.0 = Release|x86
+		{783CEE7F-624A-4DE1-89CE-B37C6F18C122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{783CEE7F-624A-4DE1-89CE-B37C6F18C122}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{783CEE7F-624A-4DE1-89CE-B37C6F18C122}.Debug|ARM.ActiveCfg = Debug|ARM
+		{783CEE7F-624A-4DE1-89CE-B37C6F18C122}.Debug|ARM.Build.0 = Debug|ARM
+		{783CEE7F-624A-4DE1-89CE-B37C6F18C122}.Debug|x86.ActiveCfg = Debug|x86
+		{783CEE7F-624A-4DE1-89CE-B37C6F18C122}.Debug|x86.Build.0 = Debug|x86
+		{783CEE7F-624A-4DE1-89CE-B37C6F18C122}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{783CEE7F-624A-4DE1-89CE-B37C6F18C122}.Release|Any CPU.Build.0 = Release|Any CPU
+		{783CEE7F-624A-4DE1-89CE-B37C6F18C122}.Release|ARM.ActiveCfg = Release|ARM
+		{783CEE7F-624A-4DE1-89CE-B37C6F18C122}.Release|ARM.Build.0 = Release|ARM
+		{783CEE7F-624A-4DE1-89CE-B37C6F18C122}.Release|x86.ActiveCfg = Release|x86
+		{783CEE7F-624A-4DE1-89CE-B37C6F18C122}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

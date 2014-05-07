@@ -21,10 +21,15 @@ namespace GetMyCard
         private string _telephone;
 
         private List<Contact> myContacts;
-
+        private Contact _SelectedContact;
 
         #endregion
 
+        public Contact SelectedContact
+        {
+            get { return _SelectedContact; }
+            set { _SelectedContact = value; }
+        }
 
 
         #region Constructeur
@@ -35,12 +40,12 @@ namespace GetMyCard
 
             myContacts = new List<Contact>
             {
-                new Contact("Jean", "Pierre", "Angers", 0123456789),
-                new Contact("Nico", "Sabou", "Cholet", 0123456789),
-                new Contact("René", "Bernard", "Nantes", 0123456789)
+                new Contact("Jean", "Pierre", "Angers", 0123456789, "/Images/contact.png"),
+                new Contact("Nico", "Sabou", "Cholet", 0123456789, "/Images/contact.png"),
+                new Contact("René", "Bernard", "Nantes", 0123456789, "/Images/contact.png")
             };
 
-            ContactList.ItemsSource = myContacts.Select(e => new ContactBinding { Nom = e.Nom, Image = getContactImage(), Prenom = e.Prenom });
+            ContactList.ItemsSource = myContacts;
 
 
         }
@@ -73,11 +78,6 @@ namespace GetMyCard
 
         #region Methods
 
-        private BitmapImage getContactImage()
-        {
-            return new BitmapImage(new Uri("/Images/contact.png", UriKind.Relative));
-        }
-
 
          private void ApplicationBarMenuItem_Click_MaCarte(object sender, EventArgs e)
         {
@@ -93,12 +93,6 @@ namespace GetMyCard
         private void ContactList_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             MessageBox.Show("ok");
-        }
-
-        
-        private void ContactList_Hold(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            MessageBox.Show("lol");
         }
         #endregion
 

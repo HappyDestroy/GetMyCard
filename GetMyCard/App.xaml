@@ -8,6 +8,17 @@
     <!--Ressources d'applications-->
     <Application.Resources>
         <local:LocalizedStrings xmlns:local="clr-namespace:GetMyCard" x:Key="LocalizedStrings"/>
+
+        <!-- Style pour que les items de la liste prennent toutes la largeur -->
+        <Style x:Key="ListBoxStyle" TargetType="ListBox">
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>
