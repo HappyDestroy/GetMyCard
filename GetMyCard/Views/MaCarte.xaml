@@ -6,12 +6,14 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:vm="clr-namespace:GetMyCard.ViewModels"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
+    toolkit:TiltEffect.IsTiltEnabled="True"
     shell:SystemTray.IsVisible="True">
 
     <phone:PhoneApplicationPage.DataContext>
@@ -40,49 +42,51 @@
             <ScrollViewer>
                 <StackPanel>
                     <TextBlock Text="{Binding Path=LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Nom}"/>
+                    <TextBox Text="{Binding Nom, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Prenom}"/>
+                    <TextBox Text="{Binding Prenom, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PhotoTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Photo}"/>
+                    <TextBox Text="{Binding Photo, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Mail}"/>
+                    <TextBox Text="{Binding Mail, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelFixeTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding TelFixe}"/>
+                    <TextBox Text="{Binding TelFixe, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelPortTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding TelPort}"/>
+                    <TextBox Text="{Binding TelPort, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.NationaliteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Nationalite}"/>
+                    <TextBox Text="{Binding Nationalite, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.SocieteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Societe}"/>
+                    <TextBox Text="{Binding Societe, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.LogoTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Logo}"/>
+                    <TextBox Text="{Binding Logo, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PosteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Poste}"/>
+                    <TextBox Text="{Binding Poste, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.SiteWebTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding SiteWeb}"/>
+                    <TextBox Text="{Binding SiteWeb, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.AdresseTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Adresse}"/>
+                    <TextBox Text="{Binding Adresse, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.VilleTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Ville}"/>
+                    <TextBox Text="{Binding Ville, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.CPTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding CP}"/>
+                    <TextBox Text="{Binding CP, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Pays}"/>
+                    <TextBox Text="{Binding Pays, Mode=TwoWay}"/>
+                    
+                    <Button Content="Valider" Command="{Binding ValidateCommand}" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>

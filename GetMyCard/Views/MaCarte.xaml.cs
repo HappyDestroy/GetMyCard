@@ -16,15 +16,5 @@ namespace GetMyCard
         {
             InitializeComponent();
         }
-
-        private void ApplicationBarMenuItem_Click_MaCarte(object sender, EventArgs e)
-        {
-            App.RootFrame.Navigate(new Uri("/MaCarte.xaml", UriKind.Relative));
-        }
-
-        private void ApplicationBarMenuItem_Click_Param(object sender, EventArgs e)
-        {
-            App.RootFrame.Navigate(new Uri("/Param.xaml", UriKind.Relative));
-        }
     }
 }

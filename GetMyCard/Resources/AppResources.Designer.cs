@@ -133,6 +133,15 @@ namespace GetMyCard.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Activer l&apos;agent :.
+        /// </summary>
+        public static string ParamAgentTexte {
+            get {
+                return ResourceManager.GetString("ParamAgentTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Paramètres.
         /// </summary>
         public static string ParamètresText {

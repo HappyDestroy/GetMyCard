@@ -182,4 +182,7 @@
   <data name="VilleTexte" xml:space="preserve">
     <value>Ville :</value>
   </data>
+  <data name="ParamAgentTexte" xml:space="preserve">
+    <value>Activer l'agent :</value>
+  </data>
 </root>
