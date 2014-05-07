@@ -95,6 +95,10 @@
     </Compile>
     <Compile Include="Business\Contact.cs" />
     <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="Model\Categorie.cs" />
+    <Compile Include="Model\Contact.cs" />
+    <Compile Include="Model\GetMyCardDataContext.cs" />
+    <Compile Include="Model\MaCarte.cs" />
     <Compile Include="ViewModels\ViewModelMainPage.cs" />
     <Compile Include="Views\MaCarte.xaml.cs">
       <DependentUpon>MaCarte.xaml</DependentUpon>
