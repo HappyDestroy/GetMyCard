@@ -32,16 +32,18 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contient le nom de l'application et le titre de la page-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+        <!--<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle,  Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
             <TextBlock Text="{Binding Path=LocalizedResources.PorteCartesPage, Source={StaticResource LocalizedStrings}}"
                        Margin="9,-7,0,0" 
                        Style="{StaticResource PhoneTextTitle2Style}"/>
-        </StackPanel>
+        </StackPanel>-->
   
         <!--ContentPanel - placez tout contenu supplémentaire ici-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <controls:Pivot Title="Get My Card">
+                <controls:PivotItem Header="Contacts">
             <ListBox x:Name="ContactList" ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -69,6 +71,21 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            </controls:PivotItem>
+
+                <controls:PivotItem Header="Partage">
+                    <controls:PivotItem.DataContext>
+                        <vm:ViewModelMaCarte/>
+                    </controls:PivotItem.DataContext>
+
+                    <StackPanel>
+                        <Button Content="Supprimer la base de données" Command="{Binding DeleteBDDCommand}"/>
+                    </StackPanel>
+
+                </controls:PivotItem>
+
+            </controls:Pivot>
+
         </Grid>
     </Grid>
     
