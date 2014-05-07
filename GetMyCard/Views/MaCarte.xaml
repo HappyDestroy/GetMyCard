@@ -46,10 +46,17 @@
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" />
                     <TextBox Text="{Binding Prenom, Mode=TwoWay}"/>
-
+            
                     <TextBlock Text="{Binding Path=LocalizedResources.PhotoTexte, Source={StaticResource LocalizedStrings}}" />
-                    <!--<TextBox Text="{Binding Photo, Mode=TwoWay}"/>-->
-                    <Button Content="Import" Command="{Binding ImportPhotoCommand}"/>
+                    <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Import" Command="{Binding ImportPhotoCommand}"/>
+                        <Button Grid.Column="1" Content="Photo" Command="{Binding ImportPhotoCommand}"/>
+                    </Grid>
                     <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />
                     <TextBox Text="{Binding Mail, Mode=TwoWay}"/>
 

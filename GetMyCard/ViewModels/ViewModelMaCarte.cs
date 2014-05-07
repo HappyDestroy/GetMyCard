@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.Phone.Tasks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WP.Core;
+
 
 namespace GetMyCard.ViewModels
 {
@@ -29,7 +31,10 @@ namespace GetMyCard.ViewModels
         private string _Pays;
 
         private DelegateCommand _ValidateCommand;
+        private DelegateCommand _ImportPhotoCommand;
 
+
+        private PhotoChooserTask photoChooserTask;
         #endregion
 
 
@@ -130,7 +135,11 @@ namespace GetMyCard.ViewModels
         {
             get { return _ValidateCommand; }
         }
-        
+        public DelegateCommand ImportPhotoCommand
+        {
+            get { return _ImportPhotoCommand; }
+            set { _ImportPhotoCommand = value; }
+        }
         #endregion
 
 
@@ -140,6 +149,8 @@ namespace GetMyCard.ViewModels
         public ViewModelMaCarte()
         {
             _ValidateCommand = new DelegateCommand(ExecuteValidate, CanExecuteValidate);
+            _ImportPhotoCommand = new DelegateCommand(ExecuteImportPhoto, CanExecuteImportPhoto);
+          
         }
 
         #endregion
@@ -173,6 +184,29 @@ namespace GetMyCard.ViewModels
                 "\n Pays : " + Pays);
         }
 
+        public void ExecuteImportPhoto(object parameters)
+        {
+            photoChooserTask = new PhotoChooserTask();
+            photoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
+            photoChooserTask.Show();
+        }
+        public bool CanExecuteImportPhoto(object parameters)
+        {
+            return true;
+        }
+
+        void photoChooserTask_Completed(object sender, Microsoft.Phone.Tasks.PhotoResult e)
+        {
+            if (e.TaskResult == TaskResult.OK)
+            {
+                MessageBox.Show(e.ChosenPhoto.Length.ToString());
+
+                //Code to display the photo on the page in an image control named myImage.
+                //System.Windows.Media.Imaging.BitmapImage bmp = new System.Windows.Media.Imaging.BitmapImage();
+                //bmp.SetSource(e.ChosenPhoto);
+                //myImage.Source = bmp;
+            }
+        }
         #endregion
     }
 }
