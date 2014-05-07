@@ -37,53 +37,54 @@
 
         <!--ContentPanel - placez tout contenu supplémentaire ici-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <StackPanel>
-                <TextBlock Text="{Binding Path=LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding Nom}"/>
+            <ScrollViewer>
+                <StackPanel>
+                    <TextBlock Text="{Binding Path=LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding Nom}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding Prenom}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding Prenom}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.PhotoTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding Photo}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.PhotoTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding Photo}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding Mail}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding Mail}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.TelFixeTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding TelFixe}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.TelFixeTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding TelFixe}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.TelPortTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding TelPort}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.TelPortTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding TelPort}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.NationaliteTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding Nationalite}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.NationaliteTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding Nationalite}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.SocieteTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding Societe}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.SocieteTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding Societe}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.LogoTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding Logo}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.LogoTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding Logo}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.PosteTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding Poste}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.PosteTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding Poste}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.SiteWebTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding SiteWeb}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.SiteWebTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding SiteWeb}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.AdresseTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding Adresse}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.AdresseTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding Adresse}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.VilleTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding Ville}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.VilleTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding Ville}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.CPTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding CP}"/>
+                    <TextBlock Text="{Binding Path=LocalizedResources.CPTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding CP}"/>
 
-                <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
-                <TextBox Text="{Binding Pays}"/>
-
-            </StackPanel>
+                    <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBox Text="{Binding Pays}"/>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
     </Grid>
     
