@@ -33,14 +33,5 @@
 
         </Grid>
     </Grid>
-    <!--ApplicationBar-->
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="Ma carte"
-                                              Click="ApplicationBarMenuItem_Click_MaCarte"/>
-                <shell:ApplicationBarMenuItem Text="Paramètres" Click="ApplicationBarMenuItem_Click_Param"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+    
 </phone:PhoneApplicationPage>

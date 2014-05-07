@@ -95,6 +95,7 @@
     </Compile>
     <Compile Include="Business\Contact.cs" />
     <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="ViewModels\ViewModelMaCarte.cs" />
     <Compile Include="ViewModels\ViewModelMainPage.cs" />
     <Compile Include="Views\MaCarte.xaml.cs">
       <DependentUpon>MaCarte.xaml</DependentUpon>
@@ -102,8 +103,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Param.xaml.cs">
-      <DependentUpon>Param.xaml</DependentUpon>
+    <Compile Include="Views\Params.xaml.cs">
+      <DependentUpon>Params.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
@@ -125,7 +126,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Param.xaml">
+    <Page Include="Views\Params.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

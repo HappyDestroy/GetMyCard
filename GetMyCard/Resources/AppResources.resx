@@ -128,12 +128,6 @@
   <data name="ApplicationTitle" xml:space="preserve">
     <value>Get My Card</value>
   </data>
-  <data name="AppBarButtonText" xml:space="preserve">
-    <value>ajouter</value>
-  </data>
-  <data name="AppBarMenuItemText" xml:space="preserve">
-    <value>Élément de menu</value>
-  </data>
   <data name="PorteCartesPage" xml:space="preserve">
     <value>Mon porte-cartes</value>
   </data>
@@ -142,5 +136,50 @@
   </data>
   <data name="ParamètresText" xml:space="preserve">
     <value>Paramètres</value>
+  </data>
+  <data name="AdresseTexte" xml:space="preserve">
+    <value>Adresse :</value>
+  </data>
+  <data name="CPTexte" xml:space="preserve">
+    <value>CodePostal :</value>
+  </data>
+  <data name="LogoTexte" xml:space="preserve">
+    <value>Logo de l'entreprise :</value>
+  </data>
+  <data name="MailTexte" xml:space="preserve">
+    <value>Adresse e-mail :</value>
+  </data>
+  <data name="NationaliteTexte" xml:space="preserve">
+    <value>Nationalité :</value>
+  </data>
+  <data name="NomTexte" xml:space="preserve">
+    <value>Nom :</value>
+  </data>
+  <data name="PaysTexte" xml:space="preserve">
+    <value>Pays :</value>
+  </data>
+  <data name="PhotoTexte" xml:space="preserve">
+    <value>Photo :</value>
+  </data>
+  <data name="PosteTexte" xml:space="preserve">
+    <value>Poste :</value>
+  </data>
+  <data name="PrenomTexte" xml:space="preserve">
+    <value>Prénom :</value>
+  </data>
+  <data name="SiteWebTexte" xml:space="preserve">
+    <value>Site web :</value>
+  </data>
+  <data name="SocieteTexte" xml:space="preserve">
+    <value>Société :</value>
+  </data>
+  <data name="TelFixeTexte" xml:space="preserve">
+    <value>Téléphone fixe :</value>
+  </data>
+  <data name="TelPortTexte" xml:space="preserve">
+    <value>Téléphone portable :</value>
+  </data>
+  <data name="VilleTexte" xml:space="preserve">
+    <value>Ville :</value>
   </data>
 </root>

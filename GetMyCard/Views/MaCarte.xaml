@@ -6,12 +6,19 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:GetMyCard.ViewModels"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.DataContext>
+        <vm:ViewModelMaCarte/>
+    </phone:PhoneApplicationPage.DataContext>
+    
+    
 
     <!--LayoutRoot est la grille racine où tout le contenu de la page est placé-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -30,18 +37,54 @@
 
         <!--ContentPanel - placez tout contenu supplémentaire ici-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <StackPanel>
+                <TextBlock Text="{Binding Path=LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding Nom}"/>
 
+                <TextBlock Text="{Binding Path=LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding Prenom}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.PhotoTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding Photo}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding Mail}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.TelFixeTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding TelFixe}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.TelPortTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding TelPort}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.NationaliteTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding Nationalite}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.SocieteTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding Societe}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.LogoTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding Logo}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.PosteTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding Poste}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.SiteWebTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding SiteWeb}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.AdresseTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding Adresse}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.VilleTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding Ville}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.CPTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding CP}"/>
+
+                <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
+                <TextBox Text="{Binding Pays}"/>
+
+            </StackPanel>
         </Grid>
     </Grid>
-
-    <!--ApplicationBar-->
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="Ma carte"
-                                              Click="ApplicationBarMenuItem_Click_MaCarte"/>
-                <shell:ApplicationBarMenuItem Text="Paramètres" Click="ApplicationBarMenuItem_Click_Param"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+    
 </phone:PhoneApplicationPage>

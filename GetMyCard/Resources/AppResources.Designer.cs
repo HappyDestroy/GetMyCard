@@ -61,20 +61,11 @@ namespace GetMyCard.Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à ajouter.
+        ///   Recherche une chaîne localisée semblable à Adresse :.
         /// </summary>
-        public static string AppBarButtonText {
+        public static string AdresseTexte {
             get {
-                return ResourceManager.GetString("AppBarButtonText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Élément de menu.
-        /// </summary>
-        public static string AppBarMenuItemText {
-            get {
-                return ResourceManager.GetString("AppBarMenuItemText", resourceCulture);
+                return ResourceManager.GetString("AdresseTexte", resourceCulture);
             }
         }
         
@@ -88,11 +79,56 @@ namespace GetMyCard.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à CodePostal :.
+        /// </summary>
+        public static string CPTexte {
+            get {
+                return ResourceManager.GetString("CPTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Logo de l&apos;entreprise :.
+        /// </summary>
+        public static string LogoTexte {
+            get {
+                return ResourceManager.GetString("LogoTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Ma carte.
         /// </summary>
         public static string MaCarteText {
             get {
                 return ResourceManager.GetString("MaCarteText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Adresse e-mail :.
+        /// </summary>
+        public static string MailTexte {
+            get {
+                return ResourceManager.GetString("MailTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nationalité :.
+        /// </summary>
+        public static string NationaliteTexte {
+            get {
+                return ResourceManager.GetString("NationaliteTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Nom :.
+        /// </summary>
+        public static string NomTexte {
+            get {
+                return ResourceManager.GetString("NomTexte", resourceCulture);
             }
         }
         
@@ -106,11 +142,47 @@ namespace GetMyCard.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pays :.
+        /// </summary>
+        public static string PaysTexte {
+            get {
+                return ResourceManager.GetString("PaysTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Photo :.
+        /// </summary>
+        public static string PhotoTexte {
+            get {
+                return ResourceManager.GetString("PhotoTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Mon porte-cartes.
         /// </summary>
         public static string PorteCartesPage {
             get {
                 return ResourceManager.GetString("PorteCartesPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Poste :.
+        /// </summary>
+        public static string PosteTexte {
+            get {
+                return ResourceManager.GetString("PosteTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Prénom :.
+        /// </summary>
+        public static string PrenomTexte {
+            get {
+                return ResourceManager.GetString("PrenomTexte", resourceCulture);
             }
         }
         
@@ -129,6 +201,51 @@ namespace GetMyCard.Resources {
         public static string ResourceLanguage {
             get {
                 return ResourceManager.GetString("ResourceLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Site web :.
+        /// </summary>
+        public static string SiteWebTexte {
+            get {
+                return ResourceManager.GetString("SiteWebTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Société :.
+        /// </summary>
+        public static string SocieteTexte {
+            get {
+                return ResourceManager.GetString("SocieteTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Téléphone fixe :.
+        /// </summary>
+        public static string TelFixeTexte {
+            get {
+                return ResourceManager.GetString("TelFixeTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Téléphone portable :.
+        /// </summary>
+        public static string TelPortTexte {
+            get {
+                return ResourceManager.GetString("TelPortTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Ville :.
+        /// </summary>
+        public static string VilleTexte {
+            get {
+                return ResourceManager.GetString("VilleTexte", resourceCulture);
             }
         }
     }

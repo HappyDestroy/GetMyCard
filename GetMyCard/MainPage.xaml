@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-    xmlns:vm="clr-namespace:WP.PasswordBox.ViewModels"
+    xmlns:vm="clr-namespace:GetMyCard.ViewModels"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -17,8 +17,13 @@
     shell:SystemTray.IsVisible="True"
     toolkit:TiltEffect.IsTiltEnabled="True"
     x:Name="_this">
-    
-    
+
+
+    <phone:PhoneApplicationPage.DataContext>
+        <vm:ViewModelMainPage/>
+    </phone:PhoneApplicationPage.DataContext>
+
+
     <!--LayoutRoot est la grille racine où tout le contenu de la page est placé-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -37,20 +42,20 @@
   
         <!--ContentPanel - placez tout contenu supplémentaire ici-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ListBox x:Name="ContactList" ItemsSource="{Binding Items}" Style="{StaticResource ListBoxStyle}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
+            <ListBox x:Name="ContactList" ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderThickness="0,0,0,2" BorderBrush="AliceBlue">
+                        <Border BorderThickness="0,0,0,4" BorderBrush="AliceBlue">
                             <toolkit:ContextMenuService.ContextMenu>
                                 <toolkit:ContextMenu>
                                     <toolkit:MenuItem Header="Supprimer"
-                                                              Command="{Binding Path=DataContext.DeleteCategoryCommand, ElementName=_this}"
+                                                              Command="{Binding Path=DataContext.DeleteContactCommand, ElementName=_this}"
                                                               CommandParameter="{Binding}" />
                                 </toolkit:ContextMenu>
                             </toolkit:ContextMenuService.ContextMenu>
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="{Binding ImageProfil}" Width="30" Height="60" />
-                                <TextBlock Text="{Binding Nom}" Margin="20 0 0 0" FontSize="30" />
+                                <TextBlock Text="{Binding Nom}" Margin="20 0 0 0" FontSize="30"/>
                                 <TextBlock Text="{Binding Prenom}" Margin="10 0 0 0" FontSize="30" />
                             </StackPanel>
                         </Border>
@@ -67,10 +72,13 @@
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Ma carte"
-                                              Click="ApplicationBarMenuItem_Click_MaCarte"/>
+                                              Click="GoToMaCarte"/>
                 <shell:ApplicationBarMenuItem Text="Paramètres"
-                                              Click="ApplicationBarMenuItem_Click_Param"/>
+                                              Click="GoToParams"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
+    
+    
+    
 </phone:PhoneApplicationPage>

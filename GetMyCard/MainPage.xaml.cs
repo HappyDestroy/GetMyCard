@@ -14,88 +14,21 @@ namespace GetMyCard
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        #region Fields
-
-        private string _nom;
-        private string _prenom;
-        private string _telephone;
-
-        private List<Contact> myContacts;
-        private Contact _SelectedContact;
-
-        #endregion
-
-        public Contact SelectedContact
-        {
-            get { return _SelectedContact; }
-            set { _SelectedContact = value; }
-        }
-
-
-        #region Constructeur
         public MainPage()
         {
             InitializeComponent();
-
-
-            myContacts = new List<Contact>
-            {
-                new Contact("Jean", "Pierre", "Angers", 0123456789, "/Images/contact.png"),
-                new Contact("Nico", "Sabou", "Cholet", 0123456789, "/Images/contact.png"),
-                new Contact("René", "Bernard", "Nantes", 0123456789, "/Images/contact.png")
-            };
-
-            ContactList.ItemsSource = myContacts;
-
-
         }
-        #endregion
-        
 
-
-        #region Accesseurs
-
-        public string Nom
+        //Lors du click sur le bouton "Ma carte" du menu
+        private void GoToMaCarte(object sender, EventArgs e)
         {
-            get { return _nom; }
-            set { _nom = value; }
+            App.RootFrame.Navigate(new Uri("/Views/MaCarte.xaml", UriKind.Relative));
         }
 
-        public string Prenom
+        //Lors du click sur le bouton "Paramètres" sur menu
+        private void GoToParams(object sender, EventArgs e)
         {
-            get { return _prenom; }
-            set { _prenom = value; }
+            App.RootFrame.Navigate(new Uri("/Views/Params.xaml", UriKind.Relative));
         }
-
-        public string Telephone
-        {
-            get { return _telephone; }
-            set { _telephone = value; }
-        }
-
-        #endregion
-
-
-        #region Methods
-
-
-         private void ApplicationBarMenuItem_Click_MaCarte(object sender, EventArgs e)
-        {
-            App.RootFrame.Navigate(new Uri("/MaCarte.xaml", UriKind.Relative));
-        }
-
-        private void ApplicationBarMenuItem_Click_Param(object sender, EventArgs e)
-        {
-            App.RootFrame.Navigate(new Uri("/Param.xaml", UriKind.Relative));
-        }
-
-
-        private void ContactList_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            MessageBox.Show("ok");
-        }
-        #endregion
-
-        
     }
 }

@@ -10,11 +10,11 @@ namespace GetMyCard
     {
         #region Fields
 
-        private string _nom;
-        private string _prenom;
-        private string _adresse;
-        private int _telephone;
-        private string _imageProfil;
+        private string _Nom;
+        private string _Prenom;
+        private string _Adresse;
+        private int _Telephone;
+        private string _ImageProfil;
 
         #endregion
 
@@ -29,11 +29,11 @@ namespace GetMyCard
 
         public Contact(string nom, string prenom, string adresse, int telephone, string imageProfil)
         {
-            this._nom = nom;
-            this._prenom = prenom;
-            this._adresse = adresse;
-            this._telephone = telephone;
-            this._imageProfil = imageProfil;
+            this._Nom = nom;
+            this._Prenom = prenom;
+            this._Adresse = adresse;
+            this._Telephone = telephone;
+            this._ImageProfil = imageProfil;
         }
 
         #endregion
@@ -44,32 +44,32 @@ namespace GetMyCard
 
         public string Nom
         {
-            get { return _nom; }
-            set { _nom = value; }
+            get { return _Nom; }
+            set { _Nom = value; }
         }
 
         public string Prenom
         {
-            get { return _prenom; }
-            set { _prenom = value; }
+            get { return _Prenom; }
+            set { _Prenom = value; }
         }
 
         public string Adresse
         {
-            get { return _adresse; }
-            set { _adresse = value; }
+            get { return _Adresse; }
+            set { _Adresse = value; }
         }
 
         public int Telephone
         {
-            get { return _telephone; }
-            set { _telephone = value; }
+            get { return _Telephone; }
+            set { _Telephone = value; }
         }
 
         public string ImageProfil
         {
-            get { return _imageProfil; }
-            set { _imageProfil = value; }
+            get { return _ImageProfil; }
+            set { _ImageProfil = value; }
         }
 
         #endregion
