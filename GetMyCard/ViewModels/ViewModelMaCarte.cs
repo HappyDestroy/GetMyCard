@@ -151,8 +151,7 @@ namespace GetMyCard.ViewModels
 
         private bool CanExecuteValidate(object parameters)
         {
-            //TODO : Vérifier que le tous les champs requis sont remplis
-            return true;
+            return !string.IsNullOrWhiteSpace(Nom) || !string.IsNullOrWhiteSpace(Prenom);
         }
 
         private void ExecuteValidate(object parameters)

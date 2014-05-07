@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GetMyCard.Model;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -43,14 +44,6 @@ namespace GetMyCard.ViewModels
         public ViewModelMainPage()
         {
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
-
-
-
-            _Contact = new ObservableCollection<Contact>();
-
-            _Contact.Add(new Contact("Jean", "Pierre", "Angers", 0123456789, "/Images/contact.png"));
-            _Contact.Add(new Contact("Nico", "Sabou", "Cholet", 0123456789, "/Images/contact.png"));
-            _Contact.Add(new Contact("René", "Bernard", "Nantes", 0123456789, "/Images/contact.png"));
         }
 
 
@@ -83,13 +76,14 @@ namespace GetMyCard.ViewModels
             }
         }
 
-        /*public void LoadData()
+
+        public void LoadData()
         {
-            foreach (Category category in PasswordBoxDataContext.Instance.Categories)
+            foreach (Contact contact in GetMyCardDataContext.Instance.Contact)
             {
-                Categories.Add(category);
+                Contacts.Add(contact);
             }
-        }*/
+        }
 
         #endregion
     }

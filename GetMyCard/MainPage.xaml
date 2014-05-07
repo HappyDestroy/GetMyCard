@@ -45,7 +45,7 @@
             <ListBox x:Name="ContactList" ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderThickness="0,0,0,4" BorderBrush="AliceBlue">
+                        <Border BorderThickness="0,0,0,4" BorderBrush="AliceBlue" Background="{StaticResource PhoneBackgroundBrush}">
                             <toolkit:ContextMenuService.ContextMenu>
                                 <toolkit:ContextMenu>
                                     <toolkit:MenuItem Header="Supprimer"
@@ -53,11 +53,18 @@
                                                               CommandParameter="{Binding}" />
                                 </toolkit:ContextMenu>
                             </toolkit:ContextMenuService.ContextMenu>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{Binding ImageProfil}" Width="30" Height="60" />
-                                <TextBlock Text="{Binding Nom}" Margin="20 0 0 0" FontSize="30"/>
-                                <TextBlock Text="{Binding Prenom}" Margin="10 0 0 0" FontSize="30" />
-                            </StackPanel>
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image     Grid.Column="0" Source="{Binding ImageProfil}" Width="30" Height="60" />
+                                <TextBlock Grid.Column="1" Text="{Binding Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
