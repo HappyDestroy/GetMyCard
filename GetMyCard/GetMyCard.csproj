@@ -99,6 +99,7 @@
     <Compile Include="Model\Contact.cs" />
     <Compile Include="Model\GetMyCardDataContext.cs" />
     <Compile Include="Model\MaCarte.cs" />
+    <Compile Include="ViewModels\ViewModelMaCarte.cs" />
     <Compile Include="ViewModels\ViewModelMainPage.cs" />
     <Compile Include="Views\MaCarte.xaml.cs">
       <DependentUpon>MaCarte.xaml</DependentUpon>
