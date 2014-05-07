@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GetMyCard.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -156,21 +157,151 @@ namespace GetMyCard.ViewModels
 
         private void ExecuteValidate(object parameters)
         {
-            //TODO : Enregistrer en base
-            MessageBox.Show("Nom : " + Nom + 
-                "\nPrénom : " + Prenom + 
-                "\nPhoto : " + Photo +
-                "\nMail : " + Mail +
-                "\nTéléphone fixe : " + TelFixe +
-                "\nTéléphone portable : " + TelPort +
-                "\nNationalité : " + Nationalite +
-                "\nLogo : " + Logo + 
-                "\nPoste : " + Poste +
-                "\nSite web : " + SiteWeb +
-                "\nAdresse : " + Adresse +
-                "\nVille : " + Ville +
-                "\nCode postal : " + CP +
-                "\n Pays : " + Pays);
+            MaCarteVisite c = new MaCarteVisite();
+            //Si il n'y a rien dans la table MaCarte, on ajoute la notre
+            if(GetMyCardDataContext.Instance.MaCarte.First() == null)
+            {
+                c.Nom = Nom;
+                c.Prenom = Prenom;
+
+                #region Test des champs
+                if (!string.IsNullOrWhiteSpace(Photo))
+                {
+                    c.Photo = Photo;
+                }
+
+                if (!string.IsNullOrWhiteSpace(Mail))
+                {
+                    c.Mail = Mail;
+                }
+
+                if (TelFixe != null)
+                {
+                    c.TelFixe = int.Parse(TelFixe);
+                }
+
+                if (TelPort != null)
+                {
+                    c.TelPort = int.Parse(TelPort);
+                }
+
+                if (!string.IsNullOrWhiteSpace(Nationalite))
+                {
+                    c.Nationalite = Nationalite;
+                }
+
+                if (!string.IsNullOrWhiteSpace(Logo))
+                {
+                    c.Logo = Logo;
+                }
+
+                if (!string.IsNullOrWhiteSpace(Poste))
+                {
+                    c.Poste = Poste;
+                }
+
+                if (!string.IsNullOrWhiteSpace(SiteWeb))
+                {
+                    c.SiteWeb = SiteWeb;
+                }
+
+                if (!string.IsNullOrWhiteSpace(Adresse))
+                {
+                    c.Adresse = Adresse;
+                }
+
+                if (!string.IsNullOrWhiteSpace(Ville))
+                {
+                    c.Ville = Ville;
+                }
+
+                if (CP != null)
+                {
+                    c.CP = int.Parse(CP);
+                }
+
+                if (!string.IsNullOrWhiteSpace(Pays))
+                {
+                    c.Pays = Pays;
+                }
+                #endregion
+
+                GetMyCardDataContext.Instance.MaCarte.InsertOnSubmit(c);
+                GetMyCardDataContext.Instance.SubmitChanges();
+            }
+            else
+            {
+                c = GetMyCardDataContext.Instance.MaCarte.First();
+
+                c.Nom = Nom;
+                c.Prenom = Prenom;
+
+                #region Test des champs
+                if (!string.IsNullOrWhiteSpace(Photo))
+                {
+                    c.Photo = Photo;
+                }
+
+                if (!string.IsNullOrWhiteSpace(Mail))
+                {
+                    c.Mail = Mail;
+                }
+
+                if (TelFixe != null)
+                {
+                    c.TelFixe = int.Parse(TelFixe);
+                }
+
+                if (TelPort != null)
+                {
+                    c.TelPort = int.Parse(TelPort);
+                }
+
+                if (!string.IsNullOrWhiteSpace(Nationalite))
+                {
+                    c.Nationalite = Nationalite;
+                }
+
+                if (!string.IsNullOrWhiteSpace(Logo))
+                {
+                    c.Logo = Logo;
+                }
+
+                if (!string.IsNullOrWhiteSpace(Poste))
+                {
+                    c.Poste = Poste;
+                }
+
+                if (!string.IsNullOrWhiteSpace(SiteWeb))
+                {
+                    c.SiteWeb = SiteWeb;
+                }
+
+                if (!string.IsNullOrWhiteSpace(Adresse))
+                {
+                    c.Adresse = Adresse;
+                }
+
+                if (!string.IsNullOrWhiteSpace(Ville))
+                {
+                    c.Ville = Ville;
+                }
+
+                if (CP != null)
+                {
+                    c.CP = int.Parse(CP);
+                }
+
+                if (!string.IsNullOrWhiteSpace(Pays))
+                {
+                    c.Pays = Pays;
+                }
+                #endregion
+
+                GetMyCardDataContext.Instance.SubmitChanges();
+            }
+
+            
         }
 
         #endregion

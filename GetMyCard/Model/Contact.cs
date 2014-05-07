@@ -106,7 +106,7 @@ namespace GetMyCard.Model
             set { _SiteWeb = value; }
         }
         [Column(DbType="NVarChar(250)")]
-        public string Adressse
+        public string Adresse
         {
             get { return _Adresse; }
             set { _Adresse = value; }

@@ -6,13 +6,24 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:vm="clr-namespace:GetMyCard.ViewModels"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    shell:SystemTray.IsVisible="True">
-    
+    shell:SystemTray.IsVisible="True"
+    toolkit:TiltEffect.IsTiltEnabled="True"
+    x:Name="_this">
+
+
+    <phone:PhoneApplicationPage.DataContext>
+        <vm:ViewModelMainPage/>
+    </phone:PhoneApplicationPage.DataContext>
+
+
     <!--LayoutRoot est la grille racine où tout le contenu de la page est placé-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -20,52 +31,91 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8c9e2cdc344af995b9cbe3f8805812ef4bb1fd3b
         <!--TitlePanel contient le nom de l'application et le titre de la page-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+        <!--<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle,  Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
             <TextBlock Text="{Binding Path=LocalizedResources.PorteCartesPage, Source={StaticResource LocalizedStrings}}"
                        Margin="9,-7,0,0" 
                        Style="{StaticResource PhoneTextTitle2Style}"/>
-        </StackPanel>
-
+        </StackPanel>-->
+  
         <!--ContentPanel - placez tout contenu supplémentaire ici-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+<<<<<<< HEAD
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            
-            <ListBox x:Name="ContactList" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Items}">
+            <ListBox Grid.Row="0" x:Name="ContactList" ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
+=======
+            <controls:Pivot Title="Get My Card">
+                <controls:PivotItem Header="Contacts">
+            <ListBox x:Name="ContactList" ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
+>>>>>>> be1ae2ed47db1548aaabb57b5d93567647f5ad56
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderThickness="0,0,0,10" BorderBrush="AliceBlue">
-                            <StackPanel Orientation="Horizontal" Tap="ContactList_Tap" Hold="ContactList_Hold">
-                                <Image Source="{Binding Image}" Width="30" Height="60" />
-                                <TextBlock Text="{Binding Nom}" Margin="20 0 0 0" FontSize="30" />
-                                <TextBlock Text="{Binding Prenom}" Margin="10 0 0 0" FontSize="30" />
-                            </StackPanel>
+                        <Border BorderThickness="0,0,0,4" BorderBrush="AliceBlue" Background="{StaticResource PhoneBackgroundBrush}">
+                            <toolkit:ContextMenuService.ContextMenu>
+                                <toolkit:ContextMenu>
+                                    <toolkit:MenuItem Header="Supprimer"
+                                                              Command="{Binding Path=DataContext.DeleteContactCommand, ElementName=_this}"
+                                                              CommandParameter="{Binding}" />
+                                </toolkit:ContextMenu>
+                            </toolkit:ContextMenuService.ContextMenu>
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image     Grid.Column="0" Source="{Binding Photo}" Width="30" Height="60" />
+                                <TextBlock Grid.Column="1" Text="{Binding Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                            </Grid>
                         </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+<<<<<<< HEAD
+            
+            <Button Grid.Row="1" Content="Ajouter" Command="{Binding AddContactCommand}" />
+=======
+            </controls:PivotItem>
+
+                <controls:PivotItem Header="Partage">
+                    <controls:PivotItem.DataContext>
+                        <vm:ViewModelMaCarte/>
+                    </controls:PivotItem.DataContext>
+
+                    <StackPanel>
+                        <Button Content="Supprimer la base de données" Command="{Binding DeleteBDDCommand}"/>
+                    </StackPanel>
+
+                </controls:PivotItem>
+
+            </controls:Pivot>
+
+>>>>>>> be1ae2ed47db1548aaabb57b5d93567647f5ad56
         </Grid>
     </Grid>
-
+    
+    
+    
     <!--ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Ma carte"
-                                              Click="ApplicationBarMenuItem_Click_MaCarte"/>
-                <shell:ApplicationBarMenuItem Text="Paramètres" Click="ApplicationBarMenuItem_Click_Param"/>
+                                              Click="GoToMaCarte"/>
+                <shell:ApplicationBarMenuItem Text="Paramètres"
+                                              Click="GoToParams"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
+    
+    
+    
 </phone:PhoneApplicationPage>

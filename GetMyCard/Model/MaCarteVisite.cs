@@ -10,7 +10,7 @@ using System.Data.Linq;
 namespace GetMyCard.Model
 {
     [Table]
-    public class MaCarte : ObservableObject
+    public class MaCarteVisite : ObservableObject
     {
         #region Fields
         private long    _Identifiant;
