@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using GetMyCard.Resources;
 using System.Windows.Media.Imaging;
+using GetMyCard.ViewModels;
 
 namespace GetMyCard
 {
@@ -29,6 +30,17 @@ namespace GetMyCard
         private void GoToParams(object sender, EventArgs e)
         {
             App.RootFrame.Navigate(new Uri("/Views/Params.xaml", UriKind.Relative));
+        }
+
+        //Pour charcer les donnée de la BDD à l'arrivé sur la page
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (this.DataContext is ViewModelMainPage)
+            {
+                ((ViewModelMainPage)this.DataContext).LoadData();
+            }
         }
     }
 }
