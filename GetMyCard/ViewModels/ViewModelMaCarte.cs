@@ -5,8 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Shapes;
 using WP.Core;
-
+using System.Net;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using Microsoft.Phone.Controls;
+using System.IO;
+using System.Windows.Media.Imaging;
 
 namespace GetMyCard.ViewModels
 {
@@ -32,9 +41,9 @@ namespace GetMyCard.ViewModels
 
         private DelegateCommand _ValidateCommand;
         private DelegateCommand _ImportPhotoCommand;
-
-
+        private DelegateCommand _CameraPhotoCommand;
         private PhotoChooserTask photoChooserTask;
+        private CameraCaptureTask cameraCaptureTask;
         #endregion
 
 
@@ -140,6 +149,11 @@ namespace GetMyCard.ViewModels
             get { return _ImportPhotoCommand; }
             set { _ImportPhotoCommand = value; }
         }
+        public DelegateCommand ImportCameraCommand
+        {
+            get { return _CameraPhotoCommand; }
+            set { _CameraPhotoCommand = value; }
+        }
         #endregion
 
 
@@ -150,6 +164,7 @@ namespace GetMyCard.ViewModels
         {
             _ValidateCommand = new DelegateCommand(ExecuteValidate, CanExecuteValidate);
             _ImportPhotoCommand = new DelegateCommand(ExecuteImportPhoto, CanExecuteImportPhoto);
+            _CameraPhotoCommand = new DelegateCommand(ExecutecameraPhoto, CanExecuteCameraPhoto);
           
         }
 
@@ -195,7 +210,35 @@ namespace GetMyCard.ViewModels
             return true;
         }
 
-        void photoChooserTask_Completed(object sender, Microsoft.Phone.Tasks.PhotoResult e)
+        void photoChooserTask_Completed(object sender, Microsoft.Phone.Tasks.PhotoResult MaPhoto)
+        {
+            if (MaPhoto.TaskResult == TaskResult.OK)
+            {
+                //MessageBox.Show(e.ChosenPhoto.Length.ToString());
+                //MessageBox.Show(e.ChosenPhoto.ToString());
+                //Photo e
+                MessageBox.Show(MaPhoto.ChosenPhoto.ToString() + MaPhoto.OriginalFileName);
+                //Image à sauvegarder
+                //BinaryReader reader = new BinaryReader(e.ChosenPhoto);
+                //image1.Source = new BitmapImage(new Uri(e.OriginalFileName));
+
+                //Code to display the photo on the page in an image control named myImage.
+                //System.Windows.Media.Imaging.BitmapImage bmp = new System.Windows.Media.Imaging.BitmapImage();
+                //bmp.SetSource(MaPhoto.ChosenPhoto);
+                //MaPhotoBox.Source = bmp;
+            }
+        }
+        public bool CanExecuteCameraPhoto(object parameters)
+        {
+            return true;
+        }
+        public void ExecutecameraPhoto(object parameters)
+        {
+            cameraCaptureTask = new CameraCaptureTask();
+            cameraCaptureTask.Completed += new EventHandler<PhotoResult>(cameraCaptureTask_Completed);
+            cameraCaptureTask.Show();
+        }
+        public void cameraCaptureTask_Completed(object sender, PhotoResult e)
         {
             if (e.TaskResult == TaskResult.OK)
             {
