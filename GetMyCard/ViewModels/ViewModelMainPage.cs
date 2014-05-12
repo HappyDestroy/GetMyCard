@@ -18,6 +18,7 @@ namespace GetMyCard.ViewModels
         private DelegateCommand _AddContactCommand;
 
         private ObservableCollection<Contact> _Contacts;
+        private MaCarteVisite _MaCarteVisite;
 
         #endregion
 
@@ -42,6 +43,27 @@ namespace GetMyCard.ViewModels
             private set { Assign(ref _Contacts, value); }
         }
 
+        public MaCarteVisite MaCarteVisite
+        {
+            get { return _MaCarteVisite; }
+            set { _MaCarteVisite = value; }
+        }
+
+        public string PhotoMoi
+        {
+            get { return _MaCarteVisite.Photo; }
+        }
+
+        public string NomMoi
+        {
+            get { return _MaCarteVisite.Nom; }
+        }
+
+        public string PrenomMoi
+        {
+            get { return _MaCarteVisite.Prenom; }
+        }
+
         #endregion
 
 
@@ -53,6 +75,19 @@ namespace GetMyCard.ViewModels
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _AddContactCommand = new DelegateCommand(ExecuteAddContact, CanExecuteAddContact);
             _Contacts = new ObservableCollection<Contact>();
+
+            if(GetMyCardDataContext.Instance.MaCarteVisite.Count() > 0)
+            {
+                _MaCarteVisite = GetMyCardDataContext.Instance.MaCarteVisite.First();
+            }
+            else
+            {
+                MaCarteVisite = new MaCarteVisite();
+                MaCarteVisite.Photo = "Images/contact.png";
+                MaCarteVisite.Nom = "test";
+                MaCarteVisite.Prenom = "test";
+            }
+            
         }
 
 

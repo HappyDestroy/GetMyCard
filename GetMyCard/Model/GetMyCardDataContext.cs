@@ -31,7 +31,7 @@ namespace GetMyCard.Model
         /// <summary>
         /// Table MaCarte
         /// </summary>
-        public Table<MaCarteVisite> MaCarte
+        public Table<MaCarteVisite> MaCarteVisite
         {
             get { return GetTable<MaCarteVisite>();  }
         }

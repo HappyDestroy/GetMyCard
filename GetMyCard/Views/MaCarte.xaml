@@ -43,10 +43,10 @@
                 <StackPanel>
                     <TextBlock Text="{Binding Path=LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" />
                     <TextBox Text="{Binding Nom, Mode=TwoWay}"/>
-
+                    
                     <TextBlock Text="{Binding Path=LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" />
                     <TextBox Text="{Binding Prenom, Mode=TwoWay}"/>
-            
+                    
                     <TextBlock Text="{Binding Path=LocalizedResources.PhotoTexte, Source={StaticResource LocalizedStrings}}" />
                     <Grid>
                     <Grid.ColumnDefinitions>
@@ -58,13 +58,13 @@
                         <Button Grid.Column="1" Content="Photo" Command="{Binding ImportPhotoCommand}"/>
                     </Grid>
                     <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Mail, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding Mail, Mode=TwoWay}" InputScope="EmailUserName"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelFixeTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding TelFixe, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding TelFixe, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelPortTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding TelPort, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding TelPort, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.NationaliteTexte, Source={StaticResource LocalizedStrings}}" />
                     <TextBox Text="{Binding Nationalite, Mode=TwoWay}"/>
@@ -82,18 +82,18 @@
                     <TextBox Text="{Binding SiteWeb, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.AdresseTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Adresse, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding Adresse, Mode=TwoWay}" InputScope="AddressCity"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.VilleTexte, Source={StaticResource LocalizedStrings}}" />
                     <TextBox Text="{Binding Ville, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.CPTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding CP, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding CP, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Pays, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding Pays, Mode=TwoWay}" InputScope="AddressCountryName"/>
                     
-                    <Button Content="Valider" Command="{Binding ValidateCommand}" />
+                    <Button Content="Valider" Command="{Binding ValidateCommand, Mode=TwoWay}" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>
