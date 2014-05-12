@@ -59,7 +59,7 @@
                     </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" Content="Import" Command="{Binding ImportPhotoCommand}"/>
                         <Button Grid.Column="1" Content="Photo" Command="{Binding CameraPhotoCommand}"/>
-                   <Image Grid.Column="2" Source="{Binding MaPhotoBox, Mode=TwoWay}" Width="150" Height="100" />
+                    <Image Grid.Column="2" Source="{Binding MaPhotoBox, Mode=TwoWay}" Width="150" Height="100" />
                     </Grid>
                    
                     <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />
