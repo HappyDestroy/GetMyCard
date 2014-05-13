@@ -150,7 +150,6 @@ namespace GetMyCard.ViewModels
         {
             _ValidateCommand = new DelegateCommand(ExecuteValidate, CanExecuteValidate);
             _ImportPhotoCommand = new DelegateCommand(ExecuteImportPhoto, CanExecuteImportPhoto);
-          
         }
 
         #endregion
@@ -199,7 +198,7 @@ namespace GetMyCard.ViewModels
         {
             if (e.TaskResult == TaskResult.OK)
             {
-                MessageBox.Show(e.ChosenPhoto.Length.ToString());
+                MessageBox.Show(e.OriginalFileName.ToString());
 
                 //Code to display the photo on the page in an image control named myImage.
                 //System.Windows.Media.Imaging.BitmapImage bmp = new System.Windows.Media.Imaging.BitmapImage();
