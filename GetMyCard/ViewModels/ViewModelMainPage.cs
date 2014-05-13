@@ -82,6 +82,13 @@ namespace GetMyCard.ViewModels
 
         public ViewModelMainPage()
         {
+            Contact c = new Contact();
+            c.Nom = "Nico";
+            c.Prenom = "Sabou";
+            c.Photo = "Images/contact.png";
+            GetMyCardDataContext.Instance.Contact.InsertOnSubmit(c);
+            GetMyCardDataContext.Instance.SubmitChanges();
+
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _AddContactCommand = new DelegateCommand(ExecuteAddContact, CanExecuteAddContact);
             _Contacts = new ObservableCollection<Contact>();
