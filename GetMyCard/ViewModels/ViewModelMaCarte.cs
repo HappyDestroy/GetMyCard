@@ -17,6 +17,7 @@ using System.Windows.Media.Animation;
 using Microsoft.Phone.Controls;
 using System.IO;
 using System.Windows.Media.Imaging;
+using System.Windows.Data;
 
 namespace GetMyCard.ViewModels
 {
@@ -40,13 +41,10 @@ namespace GetMyCard.ViewModels
         private string _CP;
         private string _Pays;
 
-        private string _ImportPhoto;
+        private BitmapImage _MaPhotoBox;
+
         private DelegateCommand _ValidateCommand;
         private DelegateCommand _ImportPhotoCommand;
-        private DelegateCommand _CameraPhotoCommand;
-        private PhotoChooserTask _photoChooserTask;
-        private CameraCaptureTask _cameraCaptureTask;
-        
         private PhotoChooserTask _PhotoChooserTask;
         #endregion
 
@@ -155,27 +153,27 @@ namespace GetMyCard.ViewModels
             get { return _ImportPhotoCommand; }
             set { Assign(ref _ImportPhotoCommand, value); }
         }
-        public DelegateCommand CameraPhotoCommand
+
+
+        public BitmapImage MaPhotoBox
         {
-            get { return _CameraPhotoCommand; }
-            set { _CameraPhotoCommand = value; }
+            get { return _MaPhotoBox; }
+            set { Assign(ref _MaPhotoBox, value); }
         }
-        public string MaPhotoBox
-        {
-            get {return _ImportPhoto; }
-            set { Assign(ref _ImportPhoto, value); }
-        }
+
+
         #endregion
 
 
 
         #region Constructeur
-        
+
         public ViewModelMaCarte()
         {
             _ValidateCommand = new DelegateCommand(ExecuteValidate, CanExecuteValidate);
             _ImportPhotoCommand = new DelegateCommand(ExecuteImportPhoto, CanExecuteImportPhoto);
-            _CameraPhotoCommand = new DelegateCommand(ExecutecameraPhoto, CanExecuteCameraPhoto);
+
+            _MaPhotoBox = new BitmapImage();
 
             #region Remplissage des champs avec les valeurs de la BDD
 
@@ -233,14 +231,12 @@ namespace GetMyCard.ViewModels
                     Pays = GetMyCardDataContext.Instance.MaCarteVisite.First().Pays;
                 }
 
-                #endregion
+            #endregion
             }
-           
+
         }
 
         #endregion
-
-
 
 
         #region Methods
@@ -256,12 +252,12 @@ namespace GetMyCard.ViewModels
             MaCarteVisite c = new MaCarteVisite();
 
             //Si il y a déjà un enregistreement
-            if(GetMyCardDataContext.Instance.MaCarteVisite.Count() > 0)
+            if (GetMyCardDataContext.Instance.MaCarteVisite.Count() > 0)
             {
                 #region Changement des propriétées
 
                 c = GetMyCardDataContext.Instance.MaCarteVisite.First();
-                
+
                 c.Nom = Nom;
                 c.Prenom = Prenom;
 
@@ -388,12 +384,16 @@ namespace GetMyCard.ViewModels
             }
         }
 
+
         public void ExecuteImportPhoto(object parameters)
         {
             _PhotoChooserTask = new PhotoChooserTask();
+            _PhotoChooserTask.ShowCamera = true;
             _PhotoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
             _PhotoChooserTask.Show();
         }
+
+
         public bool CanExecuteImportPhoto(object parameters)
         {
             return true;
@@ -403,35 +403,8 @@ namespace GetMyCard.ViewModels
         {
             if (MaPhoto.TaskResult == TaskResult.OK)
             {
- 
-                MessageBox.Show( MaPhoto.OriginalFileName);
-                
-                //Image à sauvegarder
-                var img = new BitmapImage();
-                //img.SetSource(MaPhoto.ChosenPhoto);
-                //MaPhotoBox = img;
-            }
-        }
-        public bool CanExecuteCameraPhoto(object parameters)
-        {
-            return true;
-        }
-        public void ExecutecameraPhoto(object parameters)
-        {
-            _cameraCaptureTask = new CameraCaptureTask();
-            _cameraCaptureTask.Completed += new EventHandler<PhotoResult>(cameraCaptureTask_Completed);
-            _cameraCaptureTask.Show();
-        }
-        public void cameraCaptureTask_Completed(object sender, PhotoResult e)
-        {
-            if (e.TaskResult == TaskResult.OK)
-            {
-                MessageBox.Show(e.OriginalFileName);
-               MaPhotoBox = e.OriginalFileName;
-                //Code to display the photo on the page in an image control named myImage.
-                //System.Windows.Media.Imaging.BitmapImage bmp = new System.Windows.Media.Imaging.BitmapImage();
-                //bmp.SetSource(e.ChosenPhoto);
-                //myImage.Source = bmp;
+                //MessageBox.Show(MaPhoto.OriginalFileName);
+
             }
         }
         #endregion

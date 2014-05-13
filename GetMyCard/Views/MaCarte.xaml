@@ -19,8 +19,7 @@
     <phone:PhoneApplicationPage.DataContext>
         <vm:ViewModelMaCarte/>
     </phone:PhoneApplicationPage.DataContext>
-    
-    
+
 
     <!--LayoutRoot est la grille racine où tout le contenu de la page est placé-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -51,15 +50,17 @@
                     
                     
                     <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <!--<ColumnDefinition Width="Auto"/>-->
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" Content="Import" Command="{Binding ImportPhotoCommand}"/>
-                        <Button Grid.Column="1" Content="Photo" Command="{Binding CameraPhotoCommand}"/>
-                    <Image Grid.Column="2" Source="{Binding MaPhotoBox, Mode=TwoWay}" Width="150" Height="100" />
+                        <Image Grid.Column="2" Width="120">
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding MaPhotoBox, Mode=TwoWay}" />
+                            </Image.Source>
+                        </Image>
                     </Grid>
                    
                     <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />
