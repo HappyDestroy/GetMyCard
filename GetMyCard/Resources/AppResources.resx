@@ -185,4 +185,7 @@
   <data name="ParamAgentTexte" xml:space="preserve">
     <value>Activer l'agent :</value>
   </data>
+  <data name="ContactInfoText" xml:space="preserve">
+    <value>Infos Contact</value>
+  </data>
 </root>

@@ -79,6 +79,15 @@ namespace GetMyCard.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Infos Contact.
+        /// </summary>
+        public static string ContactInfoText {
+            get {
+                return ResourceManager.GetString("ContactInfoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à CodePostal :.
         /// </summary>
         public static string CPTexte {
