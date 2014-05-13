@@ -53,6 +53,7 @@ namespace GetMyCard.Model
         }
         #endregion
 
+
         #region Constructors
         /// <summary>
         /// Constructeur static. Est appelé lors de l'initialisation de la première instance ou au premier accès

@@ -25,8 +25,7 @@ namespace GetMyCard
         private void VerifNombre(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (System.Text.RegularExpressions.Regex.IsMatch(e.Key.ToString(), "[0-9]"))
-            {
-                e.Handled = false;
+        }
             }
             else
             {

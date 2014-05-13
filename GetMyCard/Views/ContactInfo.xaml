@@ -1,5 +1,5 @@
 ﻿<phone:PhoneApplicationPage
-    x:Class="GetMyCard.MaCarte"
+    x:Class="GetMyCard.ContactInfo"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -17,8 +17,9 @@
     shell:SystemTray.IsVisible="True">
 
     <phone:PhoneApplicationPage.DataContext>
-        <vm:ViewModelMaCarte/>
+        <vm:ViewModelContactInfo/>
     </phone:PhoneApplicationPage.DataContext>
+
 
 
     <!--LayoutRoot est la grille racine où tout le contenu de la page est placé-->
@@ -32,7 +33,7 @@
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle,  Source={StaticResource LocalizedStrings}}"
                        Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="{Binding Path=LocalizedResources.MaCarteText,  Source={StaticResource LocalizedStrings}}" 
+            <TextBlock Text="{Binding Path=LocalizedResources.ContactInfoText,  Source={StaticResource LocalizedStrings}}" 
                        Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
@@ -40,67 +41,65 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <ScrollViewer>
                 <StackPanel>
-                    <TextBlock Text="{Binding Path=LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Nom, Mode=TwoWay}"/>
-                    
-                    <TextBlock Text="{Binding Path=LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Prenom, Mode=TwoWay}"/>
-                    
-                    <TextBlock Text="{Binding Path=LocalizedResources.PhotoTexte, Source={StaticResource LocalizedStrings}}" />
-                    
-                    
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="Import" Command="{Binding ImportPhotoCommand}"/>
-                        <Image Grid.Column="1" Width="120" Source="{Binding MaPhotoBox, Mode=TwoWay}"/>
-                                <BitmapImage UriSource="{Binding MaPhotoBox, Mode=TwoWay}" />
+                        <Image Grid.Column="0" Width="150" Height="100">
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding ContactPhotoBox, Mode=TwoWay}"/>
+                            </Image.Source>
+                        </Image>
+                        <Image Grid.Column="1" Width="150" Height="100">
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding ContactLogoBox, Mode=TwoWay}"/>
                             </Image.Source>
                         </Image>
                     </Grid>
-                   
+
+                    <TextBlock Text="{Binding Path=LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBlock Text="{Binding NomContact}" />
+
+                    <TextBlock Text="{Binding Path=LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" />
+                    <TextBlock Text="{Binding PrenomContact}"/>
+
                     <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Mail, Mode=TwoWay}" InputScope="EmailUserName"/>
+                    <TextBlock Text="{Binding MailContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelFixeTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding TelFixe, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre"/>
+                    <TextBlock Text="{Binding TelFixeContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelPortTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding TelPort, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
+                    <TextBlock Text="{Binding TelPortContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.NationaliteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Nationalite, Mode=TwoWay}"/>
+                    <TextBlock Text="{Binding TelFixeContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.SocieteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Societe, Mode=TwoWay}"/>
-
-                    <TextBlock Text="{Binding Path=LocalizedResources.LogoTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Logo, Mode=TwoWay}"/>
+                    <TextBlock Text="{Binding SocieteContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PosteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Poste, Mode=TwoWay}"/>
+                    <TextBlock Text="{Binding PosteContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.SiteWebTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding SiteWeb, Mode=TwoWay}"/>
+                    <TextBlock Text="{Binding SiteWebContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.AdresseTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Adresse, Mode=TwoWay}" InputScope="AddressCity"/>
+                    <TextBlock Text="{Binding AdresseContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.VilleTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Ville, Mode=TwoWay}"/>
+                    <TextBlock Text="{Binding VilleContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.CPTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding CP, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
+                    <TextBlock Text="{Binding CPContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Pays, Mode=TwoWay}" InputScope="AddressCountryName"/>
-                    
-                    <Button Content="Valider" Command="{Binding ValidateCommand, Mode=TwoWay}" />
+                    <TextBlock Text="{Binding TelFixeContact}" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>
     </Grid>
-    
+
 </phone:PhoneApplicationPage>
