@@ -16,6 +16,7 @@ using System.Windows.Media.Animation;
 using Microsoft.Phone.Controls;
 using System.IO;
 using System.Windows.Media.Imaging;
+using GetMyCard.Model;
 
 namespace GetMyCard.ViewModels
 {
@@ -39,12 +40,12 @@ namespace GetMyCard.ViewModels
         private string _CP;
         private string _Pays;
 
-        private string _ImportPhoto;
+        private ImageSource _MaPhotoBox;
+
         private DelegateCommand _ValidateCommand;
         private DelegateCommand _ImportPhotoCommand;
-        private DelegateCommand _CameraPhotoCommand;
-        private PhotoChooserTask _photoChooserTask;
-        
+        private PhotoChooserTask _PhotoChooserTask;
+
         #endregion
 
 
@@ -145,57 +146,114 @@ namespace GetMyCard.ViewModels
         {
             get { return _ValidateCommand; }
         }
+
         public DelegateCommand ImportPhotoCommand
         {
             get { return _ImportPhotoCommand; }
             set { _ImportPhotoCommand = value; }
         }
-        public DelegateCommand CameraPhotoCommand
+
+
+        public ImageSource MaPhotoBox
         {
-            get { return _CameraPhotoCommand; }
-            set { _CameraPhotoCommand = value; }
-        }
-        public string MaPhotoBox
-        {
-            get {return _ImportPhoto; }
-            set { Assign(ref _ImportPhoto, value); }
+            get { return _MaPhotoBox; }
+            set { Assign(ref _MaPhotoBox, value); }
         }
         #endregion
 
 
 
         #region Constructeur
-        
+
         public ViewModelMaCarte()
         {
             _ValidateCommand = new DelegateCommand(ExecuteValidate, CanExecuteValidate);
             _ImportPhotoCommand = new DelegateCommand(ExecuteImportPhoto, CanExecuteImportPhoto);
-
         }
 
         #endregion
-
-
 
 
         #region Methods
 
         private bool CanExecuteValidate(object parameters)
         {
-            return !string.IsNullOrWhiteSpace(Nom) || !string.IsNullOrWhiteSpace(Prenom);
+            //return !string.IsNullOrWhiteSpace(Nom) || !string.IsNullOrWhiteSpace(Prenom);
+            return true;
         }
 
         private void ExecuteValidate(object parameters)
         {
             //TODO : Enregistrer en base
-            MessageBox.Show("Nom : " + Nom + 
-                "\nPrénom : " + Prenom + 
+            MaCarteVisite c = new MaCarteVisite();
+
+            c.Nom = Nom;
+            c.Prenom = Prenom;
+
+            if(string.IsNullOrEmpty(Photo))
+            {
+                c.Photo = Photo;
+            }
+            if (string.IsNullOrEmpty(Mail))
+            {
+                c.Mail = Mail;
+            }
+            if (TelFixe != null)
+            {
+                c.TelFixe = int.Parse(TelFixe);
+            }
+            if (TelPort != null)
+            {
+                c.TelPort = int.Parse(TelPort);
+            }
+            if (string.IsNullOrEmpty(Nationalite))
+            {
+                c.Nationalite = Nationalite;
+            }
+            if (string.IsNullOrEmpty(Societe))
+            {
+                c.Societe = Societe;
+            }
+            if (string.IsNullOrEmpty(Logo))
+            {
+                c.Logo = Logo;
+            }
+            if (string.IsNullOrEmpty(Poste))
+            {
+                c.Poste = Poste;
+            }
+            if (string.IsNullOrEmpty(SiteWeb))
+            {
+                c.SiteWeb = SiteWeb;
+            }
+            if (string.IsNullOrEmpty(Adresse))
+            {
+                c.Adresse = Adresse;
+            }
+            if (string.IsNullOrEmpty(Ville))
+            {
+                c.Ville = Ville;
+            }
+            if (CP != null)
+            {
+                c.CP = int.Parse(CP);
+            }
+            if (string.IsNullOrEmpty(Pays))
+            {
+                c.Pays = Pays;
+            }
+
+            /*GetMyCardDataContext.Instance.MaCarteVisite.InsertOnSubmit(c);
+            GetMyCardDataContext.Instance.SubmitChanges();*/
+
+            MessageBox.Show("Nom : " + Nom +
+                "\nPrénom : " + Prenom +
                 "\nPhoto : " + Photo +
                 "\nMail : " + Mail +
                 "\nTéléphone fixe : " + TelFixe +
                 "\nTéléphone portable : " + TelPort +
                 "\nNationalité : " + Nationalite +
-                "\nLogo : " + Logo + 
+                "\nLogo : " + Logo +
                 "\nPoste : " + Poste +
                 "\nSite web : " + SiteWeb +
                 "\nAdresse : " + Adresse +
@@ -204,29 +262,30 @@ namespace GetMyCard.ViewModels
                 "\n Pays : " + Pays);
         }
 
+
         public void ExecuteImportPhoto(object parameters)
         {
-            _photoChooserTask = new PhotoChooserTask();
-            _photoChooserTask.ShowCamera = true;
-            _photoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
-            _photoChooserTask.Show();
+            _PhotoChooserTask = new PhotoChooserTask();
+            _PhotoChooserTask.ShowCamera = true;
+            _PhotoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
+            _PhotoChooserTask.Show();
         }
+
+
         public bool CanExecuteImportPhoto(object parameters)
         {
             return true;
         }
 
+
         void photoChooserTask_Completed(object sender, Microsoft.Phone.Tasks.PhotoResult MaPhoto)
         {
             if (MaPhoto.TaskResult == TaskResult.OK)
             {
- 
-                MessageBox.Show( MaPhoto.OriginalFileName);
-                
-                //Image à sauvegarder
-                var img = new BitmapImage();
-                //img.SetSource(MaPhoto.ChosenPhoto);
-                //MaPhotoBox = img;
+                BitmapImage img = new BitmapImage();
+                img.SetSource(MaPhoto.ChosenPhoto);
+
+                MaPhotoBox = img;
             }
         }
         #endregion
