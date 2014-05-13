@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Linq.Mapping;
 using WP.Core;
 using System.Data.Linq;
+using System.Windows.Media;
 
 namespace GetMyCard.Model
 {
@@ -29,7 +30,7 @@ namespace GetMyCard.Model
         private string  _Ville;
         private int     _CP;
         private string  _Pays;
-        // private EntityRef<Categorie> _CategorieRef;
+
         #endregion
 
         #region Properties

@@ -26,7 +26,7 @@ namespace GetMyCard.ViewModels
 
         private string _Nom;
         private string _Prenom;
-        private string _Photo;
+        private ImageSource _MaPhotoBox;
         private string _Mail;
         private string _TelFixe;
         private string _TelPort;
@@ -40,7 +40,7 @@ namespace GetMyCard.ViewModels
         private string _CP;
         private string _Pays;
 
-        private ImageSource _MaPhotoBox;
+        private string _SrcPhoto;
 
         private DelegateCommand _ValidateCommand;
         private DelegateCommand _ImportPhotoCommand;
@@ -55,19 +55,19 @@ namespace GetMyCard.ViewModels
         public string Nom
         {
             get { return _Nom; }
-            set { Assign(ref _Nom, value); }
+            set { Assign(ref _Nom, value); ValidateCommand.OnCanExecuteChanged(); }
         }
 
         public string Prenom
         {
             get { return _Prenom; }
-            set { Assign(ref _Prenom, value); }
+            set { Assign(ref _Prenom, value); ValidateCommand.OnCanExecuteChanged(); }
         }
 
-        public string Photo
+        public ImageSource MaPhotoBox
         {
-            get { return _Photo; }
-            set { Assign(ref _Photo, value); }
+            get { return _MaPhotoBox; }
+            set { Assign(ref _MaPhotoBox, value); }
         }
 
         public string Mail
@@ -153,12 +153,12 @@ namespace GetMyCard.ViewModels
             set { _ImportPhotoCommand = value; }
         }
 
-
-        public ImageSource MaPhotoBox
+        public string SrcPhoto
         {
-            get { return _MaPhotoBox; }
-            set { Assign(ref _MaPhotoBox, value); }
+            get { return _SrcPhoto; }
+            set { Assign(ref _SrcPhoto, value); }
         }
+
         #endregion
 
 
@@ -178,8 +178,7 @@ namespace GetMyCard.ViewModels
 
         private bool CanExecuteValidate(object parameters)
         {
-            //return !string.IsNullOrWhiteSpace(Nom) || !string.IsNullOrWhiteSpace(Prenom);
-            return true;
+            return !string.IsNullOrWhiteSpace(Nom) && !string.IsNullOrEmpty(Prenom);
         }
 
         private void ExecuteValidate(object parameters)
@@ -187,14 +186,20 @@ namespace GetMyCard.ViewModels
             //TODO : Enregistrer en base
             MaCarteVisite c = new MaCarteVisite();
 
+            #region Verification champs
             c.Nom = Nom;
             c.Prenom = Prenom;
 
-            if(string.IsNullOrEmpty(Photo))
+            /*if(MaPhotoBox != null)
             {
-                c.Photo = Photo;
+                c.Photo = MaPhotoBox;
+            }*/
+
+            if (!string.IsNullOrEmpty(SrcPhoto))
+            {
+                c.Photo = SrcPhoto;
             }
-            if (string.IsNullOrEmpty(Mail))
+            if (!string.IsNullOrEmpty(Mail))
             {
                 c.Mail = Mail;
             }
@@ -206,31 +211,31 @@ namespace GetMyCard.ViewModels
             {
                 c.TelPort = int.Parse(TelPort);
             }
-            if (string.IsNullOrEmpty(Nationalite))
+            if (!string.IsNullOrEmpty(Nationalite))
             {
                 c.Nationalite = Nationalite;
             }
-            if (string.IsNullOrEmpty(Societe))
+            if (!string.IsNullOrEmpty(Societe))
             {
                 c.Societe = Societe;
             }
-            if (string.IsNullOrEmpty(Logo))
+            if (!string.IsNullOrEmpty(Logo))
             {
                 c.Logo = Logo;
             }
-            if (string.IsNullOrEmpty(Poste))
+            if (!string.IsNullOrEmpty(Poste))
             {
                 c.Poste = Poste;
             }
-            if (string.IsNullOrEmpty(SiteWeb))
+            if (!string.IsNullOrEmpty(SiteWeb))
             {
                 c.SiteWeb = SiteWeb;
             }
-            if (string.IsNullOrEmpty(Adresse))
+            if (!string.IsNullOrEmpty(Adresse))
             {
                 c.Adresse = Adresse;
             }
-            if (string.IsNullOrEmpty(Ville))
+            if (!string.IsNullOrEmpty(Ville))
             {
                 c.Ville = Ville;
             }
@@ -238,28 +243,19 @@ namespace GetMyCard.ViewModels
             {
                 c.CP = int.Parse(CP);
             }
-            if (string.IsNullOrEmpty(Pays))
+            if (!string.IsNullOrEmpty(Pays))
             {
                 c.Pays = Pays;
             }
 
-            /*GetMyCardDataContext.Instance.MaCarteVisite.InsertOnSubmit(c);
-            GetMyCardDataContext.Instance.SubmitChanges();*/
+            #endregion
 
-            MessageBox.Show("Nom : " + Nom +
-                "\nPrénom : " + Prenom +
-                "\nPhoto : " + Photo +
-                "\nMail : " + Mail +
-                "\nTéléphone fixe : " + TelFixe +
-                "\nTéléphone portable : " + TelPort +
-                "\nNationalité : " + Nationalite +
-                "\nLogo : " + Logo +
-                "\nPoste : " + Poste +
-                "\nSite web : " + SiteWeb +
-                "\nAdresse : " + Adresse +
-                "\nVille : " + Ville +
-                "\nCode postal : " + CP +
-                "\n Pays : " + Pays);
+
+            GetMyCardDataContext.Instance.MaCarteVisite.InsertOnSubmit(c);
+            GetMyCardDataContext.Instance.SubmitChanges();
+            App.RootFrame.GoBack();
+
+            MessageBox.Show(MaPhotoBox.ToString());
         }
 
 
@@ -284,6 +280,8 @@ namespace GetMyCard.ViewModels
             {
                 BitmapImage img = new BitmapImage();
                 img.SetSource(MaPhoto.ChosenPhoto);
+
+                SrcPhoto = MaPhoto.OriginalFileName;
 
                 MaPhotoBox = img;
             }

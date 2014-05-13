@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using WP.Core;
 
 namespace GetMyCard.ViewModels
@@ -18,6 +21,11 @@ namespace GetMyCard.ViewModels
         private DelegateCommand _AddContactCommand;
 
         private ObservableCollection<Contact> _Contacts;
+
+        private MaCarteVisite _MaCarteVisite;
+        private ImageSource _PhotoMoi;
+        private string _NomMoi;
+        private string _PrenomMoi;
 
         #endregion
 
@@ -42,6 +50,30 @@ namespace GetMyCard.ViewModels
             private set { Assign(ref _Contacts, value); }
         }
 
+        public MaCarteVisite MaCarteVisite
+        {
+            get { return _MaCarteVisite; }
+            set { Assign(ref _MaCarteVisite, value); }
+        }
+
+        public ImageSource PhotoMoi
+        {
+            get { return _PhotoMoi; }
+            set { Assign(ref _PhotoMoi, value); }
+        }
+
+        public string NomMoi
+        {
+            get { return _NomMoi; }
+            set { Assign(ref _NomMoi, value); }
+        }
+
+        public string PrenomMoi
+        {
+            get { return _PrenomMoi; }
+            set { Assign(ref _PrenomMoi, value); }
+        }
+
         #endregion
 
 
@@ -53,6 +85,25 @@ namespace GetMyCard.ViewModels
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _AddContactCommand = new DelegateCommand(ExecuteAddContact, CanExecuteAddContact);
             _Contacts = new ObservableCollection<Contact>();
+
+            
+
+            if(GetMyCardDataContext.Instance.MaCarteVisite.Any())
+            {
+                MaCarteVisite = GetMyCardDataContext.Instance.MaCarteVisite.First();
+
+                BitmapImage img = new BitmapImage();
+                img.UriSource = new Uri(MaCarteVisite.Photo, UriKind.RelativeOrAbsolute);
+                PhotoMoi = img;
+
+                NomMoi = MaCarteVisite.Nom;
+                PrenomMoi = MaCarteVisite.Prenom;
+            }
+            else
+            {
+                NomMoi = "test";
+                PrenomMoi = "test";
+            }
         }
 
 
