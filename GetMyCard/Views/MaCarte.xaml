@@ -51,25 +51,22 @@
                     
                     
                     <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <!--<ColumnDefinition Width="Auto"/>-->
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" Content="Import" Command="{Binding ImportPhotoCommand}"/>
-                        <Button Grid.Column="1" Content="Photo" Command="{Binding CameraPhotoCommand}"/>
-                    <Image Grid.Column="2" Source="{Binding MaPhotoBox, Mode=TwoWay}" Width="150" Height="100" />
+                        <Image Grid.Column="1" Width="120" Source="{Binding MaPhotoBox, Mode=TwoWay}"/>
                     </Grid>
                    
                     <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />
                     <TextBox Text="{Binding Mail, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelFixeTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding TelFixe, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding TelFixe, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelPortTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding TelPort, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding TelPort, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.NationaliteTexte, Source={StaticResource LocalizedStrings}}" />
                     <TextBox Text="{Binding Nationalite, Mode=TwoWay}"/>
@@ -93,7 +90,7 @@
                     <TextBox Text="{Binding Ville, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.CPTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding CP, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding CP, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
                     <TextBox Text="{Binding Pays, Mode=TwoWay}"/>

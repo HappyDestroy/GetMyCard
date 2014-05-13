@@ -22,8 +22,9 @@ namespace GetMyCard
             InitializeComponent();
         }
 
+        private void VerifNombre(object sender, System.Windows.Input.KeyEventArgs e)
+        {
 
-
-        
+        }
     }
 }
