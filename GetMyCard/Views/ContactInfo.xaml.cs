@@ -7,19 +7,15 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Microsoft.Phone.Tasks;
 
-namespace GetMyCard.Views
+namespace GetMyCard
 {
     public partial class ContactInfo : PhoneApplicationPage
     {
         public ContactInfo()
         {
             InitializeComponent();
-        }
-
-        private void InitializeComponent()
-        {
-            throw new NotImplementedException();
         }
     }
 }

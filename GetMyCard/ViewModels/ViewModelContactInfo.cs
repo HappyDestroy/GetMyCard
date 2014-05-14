@@ -1,9 +1,26 @@
-﻿using System;
+﻿using Microsoft.Phone.Tasks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Shapes;
 using WP.Core;
+using System.Net;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using Microsoft.Phone.Controls;
+using System.IO;
+using System.Windows.Media.Imaging;
+using GetMyCard.Model;
+using Windows.Storage;
+using System.IO.IsolatedStorage;
+using System.Windows.Navigation;
+using Microsoft.Phone.Shell;
 
 namespace GetMyCard.ViewModels
 {
@@ -26,6 +43,8 @@ namespace GetMyCard.ViewModels
        private string _Ville;
        private string _CP;
        private string _Pays;
+
+       private ImageSource _PhotoBox;
 
        #endregion
 
@@ -123,6 +142,12 @@ namespace GetMyCard.ViewModels
            set { Assign(ref _Pays, value); }
        }
 
+       public ImageSource PhotoBox
+       {
+           get { return _PhotoBox; }
+           set { Assign(ref _PhotoBox, value); }
+       }
+
        #endregion
 
 
@@ -130,7 +155,83 @@ namespace GetMyCard.ViewModels
        
        public ViewModelContactInfo()
        {
+           Contact c = (Contact)PhoneApplicationService.Current.State["contact"];
 
+           Nom = c.Nom;
+           Prenom = c.Prenom;
+
+           #region verification des info de l'utilisateur
+           if (!string.IsNullOrEmpty(c.Photo))
+           {
+               BitmapImage retrievedImage = new BitmapImage();
+
+               if(c.Photo == "/Images/contact.png")
+               {
+                   retrievedImage.UriSource = new Uri(c.Photo, UriKind.RelativeOrAbsolute);
+                   PhotoBox = retrievedImage;
+               }
+               else
+               {
+                   using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                   {
+                       using (var isoFileStream = isoStore.OpenFile(c.Photo, System.IO.FileMode.Open))
+                       {
+                           retrievedImage.SetSource(isoFileStream);
+                       }
+
+                       PhotoBox = retrievedImage;
+                   }
+               }
+           }
+           if (!string.IsNullOrEmpty(c.Mail))
+           {
+               Mail = c.Mail;
+           }
+           if (c.TelFixe != 0)
+           {
+               TelFixe = c.TelFixe.ToString();
+           }
+           if (c.TelPort != 0)
+           {
+               Mail = c.TelPort.ToString();
+           }
+           if (!string.IsNullOrEmpty(c.Nationalite))
+           {
+               Nationalite = c.Nationalite;
+           }
+           if (!string.IsNullOrEmpty(c.Societe))
+           {
+               Societe = c.Societe;
+           }
+           if (!string.IsNullOrEmpty(c.Logo))
+           {
+               Logo = c.Logo;
+           }
+           if (!string.IsNullOrEmpty(c.Poste))
+           {
+               Poste = c.Poste;
+           }
+           if (!string.IsNullOrEmpty(c.SiteWeb))
+           {
+               SiteWeb = c.SiteWeb;
+           }
+           if (!string.IsNullOrEmpty(c.Adresse))
+           {
+               Adresse = c.Adresse;
+           }
+           if (!string.IsNullOrEmpty(c.Ville))
+           {
+               Ville = c.Ville;
+           }
+           if (c.CP != 0)
+           {
+               CP = c.CP.ToString();
+           }
+           if (!string.IsNullOrEmpty(c.Pays))
+           {
+               Pays = c.Pays;
+           }
+           #endregion
        }
 
        #endregion

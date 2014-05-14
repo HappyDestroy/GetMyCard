@@ -1,4 +1,5 @@
 ﻿using GetMyCard.Model;
+using Microsoft.Phone.Shell;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -85,6 +86,16 @@ namespace GetMyCard.ViewModels
 
         public ViewModelMainPage()
         {
+            Contact addContact = new Contact();
+            addContact.Photo = "/Images/contact.png";
+            addContact.Nom = "Nico";
+            addContact.Prenom = "Sabou";
+
+            GetMyCardDataContext.Instance.Contact.InsertOnSubmit(addContact);
+            GetMyCardDataContext.Instance.SubmitChanges();
+
+
+
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _SelectedContact = new DelegateCommand(ExecuteSelectedContact, CanExecuteSelectContact);
             _Contacts = new ObservableCollection<Contact>();
@@ -157,6 +168,7 @@ namespace GetMyCard.ViewModels
         {
             string idContact = ((Contact)parameters).Identifiant.ToString();
 
+            PhoneApplicationService.Current.State["contact"] = parameters;
             App.RootFrame.Navigate(new Uri("/Views/ContactInfo.xaml", UriKind.Relative));
         }
 
