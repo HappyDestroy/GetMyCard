@@ -13,9 +13,6 @@ namespace GetMyCard
 {
     public partial class MaCarte : PhoneApplicationPage
     {
-        #region Fields
-
-        #endregion
         public MaCarte()
         {
 
