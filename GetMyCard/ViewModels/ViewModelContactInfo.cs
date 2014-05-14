@@ -1,9 +1,13 @@
-﻿using System;
+﻿using GetMyCard.Model;
+using Microsoft.Phone.Tasks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WP.Core;
+
 
 namespace GetMyCard.ViewModels
 {
@@ -27,6 +31,8 @@ namespace GetMyCard.ViewModels
        private string _CP;
        private string _Pays;
 
+       private DelegateCommand _AddContact;
+       private SaveContactTask _saveContactTask;
        #endregion
 
 
@@ -122,7 +128,10 @@ namespace GetMyCard.ViewModels
            get { return _Pays; }
            set { Assign(ref _Pays, value); }
        }
-
+       public DelegateCommand AddContact
+       {
+           get { return _AddContact; }
+       }
        #endregion
 
 
@@ -130,7 +139,56 @@ namespace GetMyCard.ViewModels
        
        public ViewModelContactInfo()
        {
+           _AddContact = new DelegateCommand(ExecuteAdd, CanExecuteAdd);
+       }
+       #endregion
 
+       #region Methods
+
+       private bool CanExecuteAdd(object parameters)
+       {
+           return true;
+       }
+
+       private void ExecuteAdd(object parameters)
+       {
+           _saveContactTask = new SaveContactTask();
+           _saveContactTask.Completed += new EventHandler<SaveContactResult>(saveContactTask_Completed);
+           _saveContactTask.FirstName = _Prenom;
+           _saveContactTask.LastName = _Nom;
+           _saveContactTask.MobilePhone = _TelPort;
+           _saveContactTask.HomePhone = _TelFixe;
+           _saveContactTask.HomeAddressStreet = _Adresse;
+           _saveContactTask.HomeAddressZipCode = _CP;
+           _saveContactTask.PersonalEmail = _Mail;
+           _saveContactTask.Company = _Societe;
+           //_saveContactTask.JobTitle _Poste;
+       //private string _SiteWeb;
+       //private string _Adresse;
+       //private string _Ville;
+       //private string _Pays;
+           _saveContactTask.Show();
+       }
+
+       void saveContactTask_Completed(object sender, SaveContactResult e)
+       {
+           switch (e.TaskResult)
+           {
+               //Logic for when the contact was saved successfully
+               case TaskResult.OK:
+                   MessageBox.Show("Contact saved.");
+                   break;
+
+               //Logic for when the task was cancelled by the user
+               case TaskResult.Cancel:
+                   MessageBox.Show("Save cancelled.");
+                   break;
+
+               //Logic for when the contact could not be saved
+               case TaskResult.None:
+                   MessageBox.Show("Contact could not be saved.");
+                   break;
+           }
        }
 
        #endregion

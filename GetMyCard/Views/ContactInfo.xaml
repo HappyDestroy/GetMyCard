@@ -57,6 +57,9 @@
                                 <BitmapImage UriSource="{Binding ContactLogoBox, Mode=TwoWay}"/>
                             </Image.Source>
                         </Image>
+                        <Button Command="{Binding AddContact}">
+                            <Image Source="/Images/Btn_add.png"/>
+                        </Button>
                     </Grid>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" />
