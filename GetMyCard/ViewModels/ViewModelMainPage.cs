@@ -30,7 +30,7 @@ namespace GetMyCard.ViewModels
         private ImageSource _PhotoMoi;
         private string _NomMoi;
         private string _PrenomMoi;
-
+        private Contact _Cont ;
         #endregion
 
 
@@ -99,6 +99,15 @@ namespace GetMyCard.ViewModels
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _SelectedContact = new DelegateCommand(ExecuteSelectedContact, CanExecuteSelectContact);
             _Contacts = new ObservableCollection<Contact>();
+           
+            Contact c;
+            c = new Contact();          
+            c.Nom = "Sab";
+            c.Prenom = "Nini";
+            c.Mail = "Nicolassab@nigwa.com";
+
+            GetMyCardDataContext.Instance.Contact.InsertOnSubmit(c);
+            GetMyCardDataContext.Instance.SubmitChanges();
 
             if(GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {
@@ -166,6 +175,7 @@ namespace GetMyCard.ViewModels
 
         private void ExecuteSelectedContact(object parameters)
         {
+            MessageBox.Show(((Contact)parameters).Nom.ToString());
             string idContact = ((Contact)parameters).Identifiant.ToString();
 
             PhoneApplicationService.Current.State["contact"] = parameters;

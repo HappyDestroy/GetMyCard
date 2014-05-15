@@ -7,13 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:vm="clr-namespace:GetMyCard.ViewModels"
-    mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
     toolkit:TiltEffect.IsTiltEnabled="True"
     shell:SystemTray.IsVisible="True">
 
@@ -48,48 +47,59 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Width="150" Height="100" Source="{Binding PhotoBox, Mode=TwoWay}" />
-                        <Image Grid.Column="1" Width="150" Height="100" Source="{Binding LogoBox, Mode=TwoWay}" />
+                        <Image Grid.Column="0" Width="150" Height="100">
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding ContactPhotoBox, Mode=TwoWay}"/>
+                            </Image.Source>
+                        </Image>
+                        <Image Grid.Column="1" Width="150" Height="100">
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding ContactLogoBox, Mode=TwoWay}"/>
+                            </Image.Source>
+                        </Image>
+                        <Button Command="{Binding AddContact}">
+                            <Image Source="/Images/Btn_add.png"/>
+                        </Button>
                     </Grid>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding Nom}" />
+                    <TextBlock Text="{Binding NomContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding Prenom}"/>
+                    <TextBlock Text="{Binding PrenomContact}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding Mail}" />
+                    <TextBlock Text="{Binding MailContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelFixeTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding TelFixe}" />
+                    <TextBlock Text="{Binding TelFixeContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelPortTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding TelPort}" />
+                    <TextBlock Text="{Binding TelPortContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.NationaliteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding TelFixe}" />
+                    <TextBlock Text="{Binding TelFixeContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.SocieteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding Societe}" />
+                    <TextBlock Text="{Binding SocieteContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PosteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding Poste}" />
+                    <TextBlock Text="{Binding PosteContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.SiteWebTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding SiteWeb}" />
+                    <TextBlock Text="{Binding SiteWebContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.AdresseTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding Adresse}" />
+                    <TextBlock Text="{Binding AdresseContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.VilleTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding Ville}" />
+                    <TextBlock Text="{Binding VilleContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.CPTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding CP}" />
+                    <TextBlock Text="{Binding CPContact}" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBlock Text="{Binding TelFixe}" />
+                    <TextBlock Text="{Binding TelFixeContact}" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>

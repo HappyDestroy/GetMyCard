@@ -1,26 +1,13 @@
-﻿using Microsoft.Phone.Tasks;
+﻿using GetMyCard.Model;
+using Microsoft.Phone.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Shapes;
 using WP.Core;
-using System.Net;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using Microsoft.Phone.Controls;
-using System.IO;
-using System.Windows.Media.Imaging;
-using GetMyCard.Model;
-using Windows.Storage;
-using System.IO.IsolatedStorage;
-using System.Windows.Navigation;
-using Microsoft.Phone.Shell;
+
 
 namespace GetMyCard.ViewModels
 {
@@ -44,8 +31,8 @@ namespace GetMyCard.ViewModels
        private string _CP;
        private string _Pays;
 
-       private ImageSource _PhotoBox;
-
+       private DelegateCommand _AddContact;
+       private SaveContactTask _saveContactTask;
        #endregion
 
 
@@ -141,13 +128,10 @@ namespace GetMyCard.ViewModels
            get { return _Pays; }
            set { Assign(ref _Pays, value); }
        }
-
-       public ImageSource PhotoBox
+       public DelegateCommand AddContact
        {
-           get { return _PhotoBox; }
-           set { Assign(ref _PhotoBox, value); }
+           get { return _AddContact; }
        }
-
        #endregion
 
 
@@ -155,83 +139,56 @@ namespace GetMyCard.ViewModels
        
        public ViewModelContactInfo()
        {
-           Contact c = (Contact)PhoneApplicationService.Current.State["contact"];
+           _AddContact = new DelegateCommand(ExecuteAdd, CanExecuteAdd);
+       }
+       #endregion
 
-           Nom = c.Nom;
-           Prenom = c.Prenom;
+       #region Methods
 
-           #region verification des info de l'utilisateur
-           if (!string.IsNullOrEmpty(c.Photo))
-           {
-               BitmapImage retrievedImage = new BitmapImage();
+       private bool CanExecuteAdd(object parameters)
+       {
+           return true;
+       }
 
-               if(c.Photo == "/Images/contact.png")
-               {
-                   retrievedImage.UriSource = new Uri(c.Photo, UriKind.RelativeOrAbsolute);
-                   PhotoBox = retrievedImage;
-               }
-               else
-               {
-                   using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
-                   {
-                       using (var isoFileStream = isoStore.OpenFile(c.Photo, System.IO.FileMode.Open))
-                       {
-                           retrievedImage.SetSource(isoFileStream);
-                       }
+       private void ExecuteAdd(object parameters)
+       {
+           _saveContactTask = new SaveContactTask();
+           _saveContactTask.Completed += new EventHandler<SaveContactResult>(saveContactTask_Completed);
+           _saveContactTask.FirstName = _Prenom;
+           _saveContactTask.LastName = _Nom;
+           _saveContactTask.MobilePhone = _TelPort;
+           _saveContactTask.HomePhone = _TelFixe;
+           _saveContactTask.HomeAddressStreet = _Adresse;
+           _saveContactTask.HomeAddressZipCode = _CP;
+           _saveContactTask.PersonalEmail = _Mail;
+           _saveContactTask.Company = _Societe;
+           //_saveContactTask.JobTitle _Poste;
+       //private string _SiteWeb;
+       //private string _Adresse;
+       //private string _Ville;
+       //private string _Pays;
+           _saveContactTask.Show();
+       }
 
-                       PhotoBox = retrievedImage;
-                   }
-               }
-           }
-           if (!string.IsNullOrEmpty(c.Mail))
+       void saveContactTask_Completed(object sender, SaveContactResult e)
+       {
+           switch (e.TaskResult)
            {
-               Mail = c.Mail;
+               //Logic for when the contact was saved successfully
+               case TaskResult.OK:
+                   MessageBox.Show("Contact saved.");
+                   break;
+
+               //Logic for when the task was cancelled by the user
+               case TaskResult.Cancel:
+                   MessageBox.Show("Save cancelled.");
+                   break;
+
+               //Logic for when the contact could not be saved
+               case TaskResult.None:
+                   MessageBox.Show("Contact could not be saved.");
+                   break;
            }
-           if (c.TelFixe != 0)
-           {
-               TelFixe = c.TelFixe.ToString();
-           }
-           if (c.TelPort != 0)
-           {
-               Mail = c.TelPort.ToString();
-           }
-           if (!string.IsNullOrEmpty(c.Nationalite))
-           {
-               Nationalite = c.Nationalite;
-           }
-           if (!string.IsNullOrEmpty(c.Societe))
-           {
-               Societe = c.Societe;
-           }
-           if (!string.IsNullOrEmpty(c.Logo))
-           {
-               Logo = c.Logo;
-           }
-           if (!string.IsNullOrEmpty(c.Poste))
-           {
-               Poste = c.Poste;
-           }
-           if (!string.IsNullOrEmpty(c.SiteWeb))
-           {
-               SiteWeb = c.SiteWeb;
-           }
-           if (!string.IsNullOrEmpty(c.Adresse))
-           {
-               Adresse = c.Adresse;
-           }
-           if (!string.IsNullOrEmpty(c.Ville))
-           {
-               Ville = c.Ville;
-           }
-           if (c.CP != 0)
-           {
-               CP = c.CP.ToString();
-           }
-           if (!string.IsNullOrEmpty(c.Pays))
-           {
-               Pays = c.Pays;
-           }
-           #endregion
        }
 
        #endregion
