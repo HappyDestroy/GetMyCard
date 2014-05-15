@@ -250,6 +250,8 @@ namespace GetMyCard.ViewModels
                 {
                     Pays = c.Pays;
                 }
+
+
                 #endregion
             }
         }

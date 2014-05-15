@@ -86,13 +86,13 @@ namespace GetMyCard.ViewModels
 
         public ViewModelMainPage()
         {
-            Contact addContact = new Contact();
+            /*Contact addContact = new Contact();
             addContact.Photo = "/Images/contact.png";
             addContact.Nom = "Nico";
             addContact.Prenom = "Sabou";
 
             GetMyCardDataContext.Instance.Contact.InsertOnSubmit(addContact);
-            GetMyCardDataContext.Instance.SubmitChanges();
+            GetMyCardDataContext.Instance.SubmitChanges();*/
 
 
 
