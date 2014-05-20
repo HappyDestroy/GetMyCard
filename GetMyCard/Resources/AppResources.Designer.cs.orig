@@ -79,11 +79,19 @@ namespace GetMyCard.Resources {
         }
         
         /// <summary>
+<<<<<<< HEAD
+        ///   Recherche une chaîne localisée semblable à Contacts.
+        /// </summary>
+        public static string ContactTexte {
+            get {
+                return ResourceManager.GetString("ContactTexte", resourceCulture);
+=======
         ///   Recherche une chaîne localisée semblable à Infos Contact.
         /// </summary>
         public static string ContactInfoText {
             get {
                 return ResourceManager.GetString("ContactInfoText", resourceCulture);
+>>>>>>> c94389085213bb53abd529fc7a6f31e2b7653c00
             }
         }
         

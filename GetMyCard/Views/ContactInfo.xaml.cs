@@ -8,7 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
-namespace GetMyCard.Views
+namespace GetMyCard
 {
     public partial class ContactInfo : PhoneApplicationPage
     {
@@ -17,9 +17,6 @@ namespace GetMyCard.Views
             InitializeComponent();
         }
 
-        private void InitializeComponent()
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }
