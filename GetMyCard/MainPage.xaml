@@ -47,10 +47,19 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{Binding PhotoMoi}" Width="30" Height="60" />
-                                <TextBlock Grid.Column="1" Text="{Binding NomMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                <TextBlock Grid.Column="2" Text="{Binding PrenomMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image Grid.Row="0" Grid.Column="0" Source="{Binding PhotoMoi}" Width="100" Height="100" />
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding NomMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding PrenomMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <Image Grid.Row="0" Grid.Column="3" Source="{Binding MonLogo}" Width="30" Height="60" />
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding EntrepriseMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding PosteMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                             </Grid>
                         </Grid>
                         
@@ -80,7 +89,7 @@
                                             </Grid.ColumnDefinitions>
                                             <Image     Grid.Column="0" Source="{Binding Photo}" Width="30" Height="60" />
                                             <TextBlock Grid.Column="1" Text="{Binding Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                            <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>                              
                                         </Grid>
                                     </Border>                                    
                                 </DataTemplate>
