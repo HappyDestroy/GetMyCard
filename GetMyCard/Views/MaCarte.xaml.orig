@@ -56,7 +56,16 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" Content="Import" Command="{Binding ImportPhotoCommand}"/>
-                        <Image Grid.Column="1" Width="120" Height="100" Source="{Binding MaPhotoBox, Mode=TwoWay}"/>
+<<<<<<< HEAD
+                    <!--<Image Grid.Column="2" Source="{Binding MaPhotoBox, Mode=TwoWay}" Width="150" Height="100" />-->
+                        <Image Grid.Column="1" Width="150" Height="100">
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding MaPhotoBox, Mode=TwoWay}"/>
+                            </Image.Source>
+                        </Image>
+=======
+                        <Image Grid.Column="1" Width="120" Source="{Binding MaPhotoBox, Mode=TwoWay}"/>
+>>>>>>> 8e9c3b71cf18605b4d72325f5503c65345865a42
                     </Grid>
                    
                     <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />

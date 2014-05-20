@@ -88,5 +88,7 @@ namespace WP.Core
         #endregion
 
 
+
+        public string Name { get; set; }
     }
 }

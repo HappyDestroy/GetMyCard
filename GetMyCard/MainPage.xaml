@@ -64,9 +64,9 @@
                                             <TextBlock Grid.Column="1" Text="{Binding Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                                             <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                                         </Grid>
-                                    </Border>
+                                    </Border>                                    
                                 </DataTemplate>
-                            </ListBox.ItemTemplate>
+                            </ListBox.ItemTemplate>                            
                         </ListBox>
                         
                     </Grid>

@@ -16,7 +16,7 @@ namespace GetMyCard.ViewModels
 
         private DelegateCommand _DeleteContactCommand;
         private DelegateCommand _AddContactCommand;
-
+        private DelegateCommand _SelectedContact;
         private ObservableCollection<Contact> _Contacts;
 
         #endregion
@@ -34,6 +34,11 @@ namespace GetMyCard.ViewModels
         {
             get { return _AddContactCommand; }
             set { _AddContactCommand = value; }
+        }
+        public DelegateCommand SelectedContact
+        {
+            get { return _SelectedContact; }
+            set { _SelectedContact = value; }
         }
 
         public ObservableCollection<Contact> Contacts
@@ -60,6 +65,7 @@ namespace GetMyCard.ViewModels
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _AddContactCommand = new DelegateCommand(ExecuteAddContact, CanExecuteAddContact);
             _Contacts = new ObservableCollection<Contact>();
+            _SelectedContact = new DelegateCommand(ExecuteSelectedContact, CanExecuteSelectedContact);
         }
 
 
@@ -77,6 +83,10 @@ namespace GetMyCard.ViewModels
         }
 
         private bool CanExecuteAddContact(object parameters)
+        {
+            return true;
+        }
+        private bool CanExecuteSelectedContact(object parameters)
         {
             return true;
         }
@@ -109,7 +119,11 @@ namespace GetMyCard.ViewModels
 
             _Contacts.Add(c);
         }
+        private void ExecuteSelectedContact(object parameters)
+        {
 
+            MessageBox.Show(SelectedContact.Name);
+        }
 
         public void LoadData()
         {
