@@ -94,13 +94,13 @@ namespace GetMyCard.Model
             get { return _Poste; }
             set { _Poste = value; }
         }
-        [Column(DbType = "NVarchar(250)")]
+        [Column(DbType = "NVarChar(250)")]
         public string Logo
         {
             get { return _Logo; }
             set { _Logo = value; }
         }
-        [Column(DbType = "NVarchar(250)")]
+        [Column(DbType = "NVarChar(250)")]
         public string SiteWeb
         {
             get { return _SiteWeb; }

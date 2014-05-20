@@ -9,6 +9,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:vm="clr-namespace:GetMyCard.ViewModels"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -33,29 +34,28 @@
   
         <!--ContentPanel - placez tout contenu supplémentaire ici-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <controls:Pivot Title="Get My Card">
-                <controls:PivotItem Header="Contacts">
+            <controls:Pivot Title="{Binding Path=LocalizedResources.ApplicationTitle,  Source={StaticResource LocalizedStrings}}">
+                <controls:PivotItem Header="{Binding Path=LocalizedResources.PorteCartesPage,  Source={StaticResource LocalizedStrings}}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-
-                        <Border BorderBrush="White" Background="{StaticResource PhoneBackgroundBrush}">
+                        <Grid>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{Binding PhotoMoi, Mode=TwoWay}" Width="30" Height="60" />
-                                <TextBlock Grid.Column="1" Text="{Binding NomMoi, Mode=TwoWay}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                <TextBlock Grid.Column="2" Text="{Binding PrenomMoi, Mode=TwoWay}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <Image Grid.Column="0" Source="{Binding PhotoMoi}" Width="30" Height="60" />
+                                <TextBlock Grid.Column="1" Text="{Binding NomMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Column="2" Text="{Binding PrenomMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                             </Grid>
-                        </Border>
+                        </Grid>
+                        
+                        <ListBox Grid.Row="1"  ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}">
 
-                        <ListBox Grid.Row="1"  ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Border BorderThickness="0,0,0,4" BorderBrush="AliceBlue" Background="{StaticResource PhoneBackgroundBrush}">
@@ -67,14 +67,19 @@
                                             </toolkit:ContextMenu>
                                         </toolkit:ContextMenuService.ContextMenu>
 
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Tap">
+                                                <i:InvokeCommandAction Command="{Binding Path=DataContext.SelectedContact, ElementName=_this}" CommandParameter="{Binding}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Image     Grid.Column="0" Source="{Binding ImageProfil}" Width="30" Height="60" />
+                                            <Image     Grid.Column="0" Source="{Binding Photo}" Width="30" Height="60" />
                                             <TextBlock Grid.Column="1" Text="{Binding Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                                             <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                                         </Grid>
@@ -85,13 +90,9 @@
                         
                     </Grid>
                 </controls:PivotItem>
-                
-                
-                <controls:PivotItem Header="Partage">
-                    <controls:PivotItem.DataContext>
-                        <vm:ViewModelMaCarte/>
-                    </controls:PivotItem.DataContext>
 
+
+                <controls:PivotItem Header="{Binding Path=LocalizedResources.PartageTexte,  Source={StaticResource LocalizedStrings}}">
                     <StackPanel>
                         <Button Content="Partager ma carte de visite" Command="{Binding ShareCDVCommand}"/>
                     </StackPanel>

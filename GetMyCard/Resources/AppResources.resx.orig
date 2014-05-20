@@ -185,10 +185,15 @@
   <data name="ParamAgentTexte" xml:space="preserve">
     <value>Activer l'agent :</value>
   </data>
-  <data name="ContactInfoText" xml:space="preserve">
-    <value>Infos Contact</value>
+<<<<<<< HEAD
+  <data name="ContactTexte" xml:space="preserve">
+    <value>Contacts</value>
   </data>
   <data name="PartageTexte" xml:space="preserve">
     <value>Partage</value>
+=======
+  <data name="ContactInfoText" xml:space="preserve">
+    <value>Infos Contact</value>
+>>>>>>> c94389085213bb53abd529fc7a6f31e2b7653c00
   </data>
 </root>

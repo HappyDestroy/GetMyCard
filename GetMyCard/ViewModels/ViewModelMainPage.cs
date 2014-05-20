@@ -1,14 +1,18 @@
 ﻿using GetMyCard.Model;
+using Microsoft.Phone.Shell;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using Windows.Storage;
 using WP.Core;
 
 namespace GetMyCard.ViewModels
@@ -18,15 +22,15 @@ namespace GetMyCard.ViewModels
         #region Fields
 
         private DelegateCommand _DeleteContactCommand;
-        private DelegateCommand _AddContactCommand;
+        private DelegateCommand _SelectedContact;
 
         private ObservableCollection<Contact> _Contacts;
-
         private MaCarteVisite _MaCarteVisite;
+
         private ImageSource _PhotoMoi;
         private string _NomMoi;
         private string _PrenomMoi;
-
+        private Contact _Cont ;
         #endregion
 
 
@@ -38,11 +42,11 @@ namespace GetMyCard.ViewModels
             get { return _DeleteContactCommand; }
         }
 
-        public DelegateCommand AddContactCommand
+        public DelegateCommand SelectedContact
         {
-            get { return _AddContactCommand; }
-            set { _AddContactCommand = value; }
+            get { return _SelectedContact; }
         }
+
 
         public ObservableCollection<Contact> Contacts
         {
@@ -70,7 +74,7 @@ namespace GetMyCard.ViewModels
 
         public string PrenomMoi
         {
-            get { return _PrenomMoi; }
+            get { return _MaCarteVisite.Prenom; }
             set { Assign(ref _PrenomMoi, value); }
         }
 
@@ -82,34 +86,54 @@ namespace GetMyCard.ViewModels
 
         public ViewModelMainPage()
         {
-            Contact c = new Contact();
-            c.Nom = "Nico";
-            c.Prenom = "Sabou";
-            c.Photo = "Images/contact.png";
-            GetMyCardDataContext.Instance.Contact.InsertOnSubmit(c);
+            Contact addContact = new Contact();
+            addContact.Photo = "/Images/contact.png";
+            addContact.Nom = "Nico";
+            addContact.Prenom = "Sabou";
+
+            GetMyCardDataContext.Instance.Contact.InsertOnSubmit(addContact);
             GetMyCardDataContext.Instance.SubmitChanges();
 
-            _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
-            _AddContactCommand = new DelegateCommand(ExecuteAddContact, CanExecuteAddContact);
-            _Contacts = new ObservableCollection<Contact>();
 
-            
+
+            _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
+            _SelectedContact = new DelegateCommand(ExecuteSelectedContact, CanExecuteSelectContact);
+            _Contacts = new ObservableCollection<Contact>();
+           
+            Contact c;
+            c = new Contact();          
+            c.Nom = "Sab";
+            c.Prenom = "Nini";
+            c.Mail = "Nicolassab@nigwa.com";
+
+            GetMyCardDataContext.Instance.Contact.InsertOnSubmit(c);
+            GetMyCardDataContext.Instance.SubmitChanges();
 
             if(GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {
                 MaCarteVisite = GetMyCardDataContext.Instance.MaCarteVisite.First();
 
-                BitmapImage img = new BitmapImage();
-                img.UriSource = new Uri(MaCarteVisite.Photo, UriKind.RelativeOrAbsolute);
-                PhotoMoi = img;
+                BitmapImage retrievedImage = new BitmapImage();
+
+                //On récupère l'image depuis l'isolated storage
+                using(var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    using(var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
+                    {
+                        retrievedImage.SetSource(isoFileStream);
+                    }
+
+                    PhotoMoi = retrievedImage;
+                }
 
                 NomMoi = MaCarteVisite.Nom;
                 PrenomMoi = MaCarteVisite.Prenom;
             }
             else
             {
-                NomMoi = "test";
-                PrenomMoi = "test";
+                MaCarteVisite = new MaCarteVisite();
+                MaCarteVisite.Photo = "Images/contact.png";
+                NomMoi = "Vous n'avez pas encore enregistré votre carte de visite";
             }
         }
 
@@ -123,11 +147,10 @@ namespace GetMyCard.ViewModels
         private bool CanExecuteDeleteContact(object parameters)
         {
             //TODO : Vérifier que le contact existe
-
             return true;
         }
 
-        private bool CanExecuteAddContact(object parameters)
+        private bool CanExecuteSelectContact(object parameters)
         {
             return true;
         }
@@ -149,18 +172,15 @@ namespace GetMyCard.ViewModels
             }
         }
 
-        private void ExecuteAddContact(object parameters)
+
+        private void ExecuteSelectedContact(object parameters)
         {
-            Contact c = new Contact();
-            c.Nom = "Nico";
-            c.Prenom = "Sabou";
-            c.Photo = "Images/contact.png";
-            GetMyCardDataContext.Instance.Contact.InsertOnSubmit(c);
-            GetMyCardDataContext.Instance.SubmitChanges();
+            MessageBox.Show(((Contact)parameters).Nom.ToString());
+            string idContact = ((Contact)parameters).Identifiant.ToString();
 
-            _Contacts.Add(c);
+            PhoneApplicationService.Current.State["contact"] = parameters;
+            App.RootFrame.Navigate(new Uri("/Views/ContactInfo.xaml", UriKind.Relative));
         }
-
 
         public void LoadData()
         {
