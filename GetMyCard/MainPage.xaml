@@ -95,6 +95,7 @@
                 <controls:PivotItem Header="{Binding Path=LocalizedResources.PartageTexte,  Source={StaticResource LocalizedStrings}}">
                     <StackPanel>
                         <Button Content="Partager ma carte de visite" Command="{Binding ShareCDVCommand}"/>
+                        <Button Content="Recevoir une carte de visite" Command="{Binding RecieveCDVCommand}" />
                     </StackPanel>
 
                 </controls:PivotItem>

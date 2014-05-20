@@ -42,9 +42,12 @@ namespace GetMyCard.ViewModels
         private string _CP;
         private string _Pays;
 
+        private BitmapImage _ChoosenImage;
         private ImageSource _MaPhotoBox;
 
         private string _SrcPhoto;
+        private string _PathPhoto;
+
 
         private DelegateCommand _ValidateCommand;
         private DelegateCommand _ImportPhotoCommand;
@@ -157,6 +160,11 @@ namespace GetMyCard.ViewModels
             set { _ImportPhotoCommand = value; }
         }
 
+        public BitmapImage ChoosenImage
+        {
+            get { return _ChoosenImage; }
+            set { _ChoosenImage = value; }
+        }
 
         public ImageSource MaPhotoBox
         {
@@ -170,6 +178,12 @@ namespace GetMyCard.ViewModels
             set { Assign(ref _SrcPhoto, value); }
         }
 
+        public string PathPhoto
+        {
+            get { return _PathPhoto; }
+            set { Assign(ref _PathPhoto, value); }
+        }
+
         #endregion
 
 
@@ -180,6 +194,8 @@ namespace GetMyCard.ViewModels
         {
             _ValidateCommand = new DelegateCommand(ExecuteValidate, CanExecuteValidate);
             _ImportPhotoCommand = new DelegateCommand(ExecuteImportPhoto, CanExecuteImportPhoto);
+
+            _ChoosenImage = new BitmapImage();
 
             if(GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {
@@ -344,7 +360,19 @@ namespace GetMyCard.ViewModels
                 GetMyCardDataContext.Instance.MaCarteVisite.InsertOnSubmit(c);
                 GetMyCardDataContext.Instance.SubmitChanges();
             }
-            
+
+
+            //On enregistre l'image dans l'isolated storage
+            using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                var wb = new WriteableBitmap(ChoosenImage);
+
+                using (var isoFileStream = isoStore.CreateFile(PathPhoto))
+                {
+                    Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
+                }
+            }
+
             App.RootFrame.GoBack();
         }
 
@@ -371,25 +399,15 @@ namespace GetMyCard.ViewModels
                 BitmapImage img = new BitmapImage();
                 img.SetSource(MaPhoto.ChosenPhoto);
 
-                
                 //On affiche l'image
                 MaPhotoBox = img;
 
-                string nomPhoto = System.IO.Path.GetFileName(MaPhoto.OriginalFileName);
+                ChoosenImage = img;
+
+                PathPhoto = System.IO.Path.GetFileName(MaPhoto.OriginalFileName);
 
                 //On sauvegarde le chemin d'accès de l'image
-                SrcPhoto = nomPhoto;
-                
-                //On enregistre l'image dans l'isolated storage
-                using(var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
-                {
-                    var wb = new WriteableBitmap(img);
-
-                    using (var isoFileStream = isoStore.CreateFile(nomPhoto))
-                    {
-                        Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
-                    }
-                }
+                SrcPhoto = PathPhoto;
             }
         }
         #endregion

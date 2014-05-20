@@ -9,6 +9,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:vm="clr-namespace:GetMyCard.ViewModels"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -30,75 +31,92 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!--TitlePanel contient le nom de l'application et le titre de la page-->
-        <!--<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle,  Source={StaticResource LocalizedStrings}}"
-                       Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
-            <TextBlock Text="{Binding Path=LocalizedResources.PorteCartesPage, Source={StaticResource LocalizedStrings}}"
-                       Margin="9,-7,0,0" 
-                       Style="{StaticResource PhoneTextTitle2Style}"/>
-        </StackPanel>-->
   
         <!--ContentPanel - placez tout contenu supplémentaire ici-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <controls:Pivot Title="{Binding Path=LocalizedResources.ApplicationTitle,  Source={StaticResource LocalizedStrings}}">
+                <controls:PivotItem Header="{Binding Path=LocalizedResources.PorteCartesPage,  Source={StaticResource LocalizedStrings}}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 <<<<<<< HEAD
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <ListBox Grid.Row="0" x:Name="ContactList" ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
+
+                        <Border BorderBrush="White" Background="{StaticResource PhoneBackgroundBrush}">
 =======
-            <controls:Pivot Title="Get My Card">
-                <controls:PivotItem Header="Contacts">
-            <ListBox x:Name="ContactList" ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
->>>>>>> be1ae2ed47db1548aaabb57b5d93567647f5ad56
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderThickness="0,0,0,4" BorderBrush="AliceBlue" Background="{StaticResource PhoneBackgroundBrush}">
-                            <toolkit:ContextMenuService.ContextMenu>
-                                <toolkit:ContextMenu>
-                                    <toolkit:MenuItem Header="Supprimer"
-                                                              Command="{Binding Path=DataContext.DeleteContactCommand, ElementName=_this}"
-                                                              CommandParameter="{Binding}" />
-                                </toolkit:ContextMenu>
-                            </toolkit:ContextMenuService.ContextMenu>
-                            
+                        <Grid>
+>>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+<<<<<<< HEAD
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image     Grid.Column="0" Source="{Binding Photo}" Width="30" Height="60" />
-                                <TextBlock Grid.Column="1" Text="{Binding Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <Image Grid.Column="0" Source="{Binding PhotoMoi, Mode=TwoWay}" Width="30" Height="60" />
+                                <TextBlock Grid.Column="1" Text="{Binding NomMoi, Mode=TwoWay}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Column="2" Text="{Binding PrenomMoi, Mode=TwoWay}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                             </Grid>
                         </Border>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-<<<<<<< HEAD
-            
-            <Button Grid.Row="1" Content="Ajouter" Command="{Binding AddContactCommand}" />
+
+                        <ListBox Grid.Row="1"  ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
 =======
-            </controls:PivotItem>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="{Binding PhotoMoi}" Width="30" Height="60" />
+                                <TextBlock Grid.Column="1" Text="{Binding NomMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Column="2" Text="{Binding PrenomMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                            </Grid>
+                        </Grid>
+                        
+                        <ListBox Grid.Row="1"  ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}">
+>>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderThickness="0,0,0,4" BorderBrush="AliceBlue" Background="{StaticResource PhoneBackgroundBrush}">
+                                        <toolkit:ContextMenuService.ContextMenu>
+                                            <toolkit:ContextMenu>
+                                                <toolkit:MenuItem Header="Supprimer"
+                                                                  Command="{Binding Path=DataContext.DeleteContactCommand, ElementName=_this}"
+                                                                  CommandParameter="{Binding}" />
+                                            </toolkit:ContextMenu>
+                                        </toolkit:ContextMenuService.ContextMenu>
 
-                <controls:PivotItem Header="Partage">
-                    <controls:PivotItem.DataContext>
-                        <vm:ViewModelMaCarte/>
-                    </controls:PivotItem.DataContext>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="Tap">
+                                                <i:InvokeCommandAction Command="{Binding Path=DataContext.SelectedContact, ElementName=_this}" CommandParameter="{Binding}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
 
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Image     Grid.Column="0" Source="{Binding Photo}" Width="30" Height="60" />
+                                            <TextBlock Grid.Column="1" Text="{Binding Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        
+                    </Grid>
+                </controls:PivotItem>
+
+
+                <controls:PivotItem Header="{Binding Path=LocalizedResources.PartageTexte,  Source={StaticResource LocalizedStrings}}">
                     <StackPanel>
-                        <Button Content="Supprimer la base de données" Command="{Binding DeleteBDDCommand}"/>
+                        <Button Content="Partager ma carte de visite" Command="{Binding ShareCDVCommand}"/>
                     </StackPanel>
 
                 </controls:PivotItem>
 
             </controls:Pivot>
 
->>>>>>> be1ae2ed47db1548aaabb57b5d93567647f5ad56
         </Grid>
     </Grid>
     
