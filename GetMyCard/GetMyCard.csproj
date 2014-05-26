@@ -103,13 +103,14 @@
     <Compile Include="ViewModels\ViewModelContactInfo.cs" />
     <Compile Include="ViewModels\ViewModelMaCarte.cs" />
     <Compile Include="ViewModels\ViewModelMainPage.cs" />
+    <Compile Include="ViewModels\ViewModelPartage.cs" />
     <Compile Include="Views\ContactInfo.xaml.cs">
       <DependentUpon>ContactInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MaCarte.xaml.cs">
       <DependentUpon>MaCarte.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -135,7 +136,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

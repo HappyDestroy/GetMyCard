@@ -102,9 +102,26 @@
 
 
                 <controls:PivotItem Header="{Binding Path=LocalizedResources.PartageTexte,  Source={StaticResource LocalizedStrings}}">
+                    <controls:PivotItem.DataContext>
+                        <vm:ViewModelPartage/>
+                    </controls:PivotItem.DataContext>
                     <StackPanel>
-                        <Button Content="Partager ma carte de visite" Command="{Binding ShareCDVCommand}"/>
-                        <Button Content="Recevoir une carte de visite" Command="{Binding RecieveCDVCommand}" />
+                        <Button Content="{Binding Path=LocalizedResources.SearchPeriphTexte,  Source={StaticResource LocalizedStrings}}" Command="{Binding SearchPeerCommand}" />
+
+                        <TextBlock Text="{Binding PeerSearchInfo}" />
+                        
+                        <ListBox ItemsSource="{Binding PeerApps}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DisplayName}" FontSize="{StaticResource PhoneFontSizeMedium}" Margin="40,0,0,0"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+
+
+
+                        <Button Content="{Binding Path=LocalizedResources.ShareCDVTexte,  Source={StaticResource LocalizedStrings}}" Command="{Binding ShareCDVCommand}"/>
                     </StackPanel>
 
                 </controls:PivotItem>

@@ -191,4 +191,22 @@
   <data name="PartageTexte" xml:space="preserve">
     <value>Partage</value>
   </data>
+  <data name="PopupPartageTexte" xml:space="preserve">
+    <value>Voulez-vous recevoir la carte de visite de {0} ?</value>
+  </data>
+  <data name="PopupPartageTitre" xml:space="preserve">
+    <value>Demande de partage</value>
+  </data>
+  <data name="SearchPeriphTexte" xml:space="preserve">
+    <value>Rechercher des périphériques</value>
+  </data>
+  <data name="ShareCDVTexte" xml:space="preserve">
+    <value>Partager ma carte de visite</value>
+  </data>
+  <data name="NoPeersTexte" xml:space="preserve">
+    <value>Aucun appareil trouvé !</value>
+  </data>
+  <data name="PeersFoundTexte" xml:space="preserve">
+    <value>Appareil(s) trouvé(s) :</value>
+  </data>
 </root>
