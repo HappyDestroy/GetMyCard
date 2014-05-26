@@ -143,6 +143,8 @@ namespace GetMyCard.ViewModels
        }
        #endregion
 
+
+
        #region Methods
 
        private bool CanExecuteAdd(object parameters)
@@ -162,11 +164,6 @@ namespace GetMyCard.ViewModels
            _saveContactTask.HomeAddressZipCode = _CP;
            _saveContactTask.PersonalEmail = _Mail;
            _saveContactTask.Company = _Societe;
-           //_saveContactTask.JobTitle _Poste;
-       //private string _SiteWeb;
-       //private string _Adresse;
-       //private string _Ville;
-       //private string _Pays;
            _saveContactTask.Show();
        }
 

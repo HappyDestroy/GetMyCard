@@ -3,6 +3,7 @@ using Microsoft.Phone.Shell;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
@@ -12,7 +13,10 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using Windows.Networking.Proximity;
+using Windows.Networking.Sockets;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using WP.Core;
 
 namespace GetMyCard.ViewModels
@@ -23,6 +27,9 @@ namespace GetMyCard.ViewModels
 
         private DelegateCommand _DeleteContactCommand;
         private DelegateCommand _SelectedContact;
+        private DelegateCommand _ShareCDVCommand;
+        private DelegateCommand _RecieveCDVCommand;
+
         private ObservableCollection<Contact> _Contacts;
         private MaCarteVisite _MaCarteVisite;
 
@@ -32,7 +39,8 @@ namespace GetMyCard.ViewModels
         private string _PrenomMoi;
         private string _EntrepriseMoi;
         private string _PosteMoi;
-        private Contact _Cont ;
+        private Contact _Cont;
+
         #endregion
 
 
@@ -49,6 +57,17 @@ namespace GetMyCard.ViewModels
             get { return _SelectedContact; }
         }
 
+        public DelegateCommand ShareCDVCommand
+        {
+            get { return _ShareCDVCommand; }
+            set { Assign(ref _ShareCDVCommand, value); }
+        }
+
+        public DelegateCommand RecieveCDVCommand
+        {
+            get { return _RecieveCDVCommand; }
+            set { Assign(ref _RecieveCDVCommand, value); }
+        }
         public ObservableCollection<Contact> Contacts
         {
             get { return _Contacts; }
@@ -115,27 +134,22 @@ namespace GetMyCard.ViewModels
 
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _SelectedContact = new DelegateCommand(ExecuteSelectedContact, CanExecuteSelectContact);
+            _ShareCDVCommand = new DelegateCommand(ExecuteShareCDV, CanExecuteShareCDV);
+            _RecieveCDVCommand = new DelegateCommand(ExecuteRecieveCDV, CanExecuteRecieveCDV);
+
             _Contacts = new ObservableCollection<Contact>();
-           
-            //Contact c;
-            //c = new Contact();          
-            //c.Nom = "Sab";
-            //c.Prenom = "Nini";
-            //c.Mail = "Nicolassab@nigwa.com";
 
-            //GetMyCardDataContext.Instance.Contact.InsertOnSubmit(c);
-            //GetMyCardDataContext.Instance.SubmitChanges();
-
-            if(GetMyCardDataContext.Instance.MaCarteVisite.Any())
+            #region affiche de ma carte
+            if (GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {
                 MaCarteVisite = GetMyCardDataContext.Instance.MaCarteVisite.First();
 
                 BitmapImage retrievedImage = new BitmapImage();
 
                 //On récupère l'image depuis l'isolated storage
-                using(var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    using(var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
+                    using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
                     {
                         retrievedImage.SetSource(isoFileStream);
                     }
@@ -164,8 +178,9 @@ namespace GetMyCard.ViewModels
             {
                 MaCarteVisite = new MaCarteVisite();
                 MaCarteVisite.Photo = "Images/contact.png";
-                NomMoi = "Vous n'avez pas encore enregistré votre carte de visite";
+                NomMoi = "Vous n'avez pas de carte de visite";
             }
+            #endregion
         }
 
 
@@ -177,7 +192,6 @@ namespace GetMyCard.ViewModels
 
         private bool CanExecuteDeleteContact(object parameters)
         {
-            //TODO : Vérifier que le contact existe
             return true;
         }
 
@@ -190,11 +204,22 @@ namespace GetMyCard.ViewModels
             return true;
         }
 
+        private bool CanExecuteShareCDV(object parameters)
+        {
+            //TODO : verifier que l'utilisateur a une CDV
+            return true;
+        }
+
+        private bool CanExecuteRecieveCDV(object paramters)
+        {
+            return true;
+        }
+
         private void ExecuteDeleteContact(object parameters)
         {
             try
             {
-                if(MessageBoxResult.OK == MessageBox.Show("Êtes-vous sûr de supprimer ce contact ?", "Suppression", MessageBoxButton.OKCancel))
+                if (MessageBoxResult.OK == MessageBox.Show("Êtes-vous sûr de supprimer ce contact ?", "Suppression", MessageBoxButton.OKCancel))
                 {
                     GetMyCardDataContext.Instance.Contact.DeleteOnSubmit((Contact)parameters);
                     GetMyCardDataContext.Instance.SubmitChanges();
@@ -206,6 +231,7 @@ namespace GetMyCard.ViewModels
                 MessageBox.Show("Erreur de suppresion.");
             }
         }
+
 
 
         private void ExecuteSelectedContact(object parameters)
@@ -224,6 +250,22 @@ namespace GetMyCard.ViewModels
             {
                 Contacts.Add(contact);
             }
+        }
+
+
+
+
+
+
+        private void ExecuteShareCDV(object parameters)
+        {
+
+        }
+
+
+        private void ExecuteRecieveCDV(object parameters)
+        {
+
         }
 
         #endregion
