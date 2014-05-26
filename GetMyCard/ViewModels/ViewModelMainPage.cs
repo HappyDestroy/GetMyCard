@@ -27,8 +27,6 @@ namespace GetMyCard.ViewModels
 
         private DelegateCommand _DeleteContactCommand;
         private DelegateCommand _SelectedContact;
-        private DelegateCommand _ShareCDVCommand;
-        private DelegateCommand _RecieveCDVCommand;
 
 
         private ObservableCollection<Contact> _Contacts;
@@ -53,18 +51,6 @@ namespace GetMyCard.ViewModels
         public DelegateCommand SelectedContact
         {
             get { return _SelectedContact; }
-        }
-
-        public DelegateCommand ShareCDVCommand
-        {
-            get { return _ShareCDVCommand; }
-            set { Assign(ref _ShareCDVCommand, value); }
-        }
-
-        public DelegateCommand RecieveCDVCommand
-        {
-            get { return _RecieveCDVCommand; }
-            set { Assign(ref _RecieveCDVCommand, value); }
         }
 
         public ObservableCollection<Contact> Contacts
@@ -117,8 +103,6 @@ namespace GetMyCard.ViewModels
 
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _SelectedContact = new DelegateCommand(ExecuteSelectedContact, CanExecuteSelectContact);
-            _ShareCDVCommand = new DelegateCommand(ExecuteShareCDV, CanExecuteShareCDV);
-            _RecieveCDVCommand = new DelegateCommand(ExecuteRecieveCDV, CanExecuteRecieveCDV);
 
             _Contacts = new ObservableCollection<Contact>();
 
@@ -169,17 +153,6 @@ namespace GetMyCard.ViewModels
             return true;
         }
 
-        private bool CanExecuteShareCDV(object parameters)
-        {
-            //TODO : verifier que l'utilisateur a une CDV
-            return true;
-        }
-
-        private bool CanExecuteRecieveCDV(object paramters)
-        {
-            return true;
-        }
-
         private void ExecuteDeleteContact(object parameters)
         {
             try
@@ -214,22 +187,6 @@ namespace GetMyCard.ViewModels
             {
                 Contacts.Add(contact);
             }
-        }
-
-
-
-
-
-
-        private void ExecuteShareCDV(object parameters)
-        {
-
-        }
-
-
-        private void ExecuteRecieveCDV(object parameters)
-        {
-
         }
 
         #endregion
