@@ -1,11 +1,15 @@
 ﻿using GetMyCard.Model;
+using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using WP.Core;
 
 
@@ -33,6 +37,9 @@ namespace GetMyCard.ViewModels
 
        private DelegateCommand _AddContact;
        private SaveContactTask _saveContactTask;
+
+       private ImageSource _PhotoBox;
+
        #endregion
 
 
@@ -132,6 +139,13 @@ namespace GetMyCard.ViewModels
        {
            get { return _AddContact; }
        }
+
+        public ImageSource PhotoBox
+        {
+            get { return _PhotoBox; }
+            set { Assign(ref _PhotoBox, value); }
+        }
+
        #endregion
 
 
@@ -140,8 +154,88 @@ namespace GetMyCard.ViewModels
        public ViewModelContactInfo()
        {
            _AddContact = new DelegateCommand(ExecuteAdd, CanExecuteAdd);
+
+           Contact c = (Contact)PhoneApplicationService.Current.State["contact"];
+    
+               Nom = c.Nom;
+               Prenom = c.Prenom;
+    
+               #region verification des info de l'utilisateur
+               if (!string.IsNullOrEmpty(c.Photo))
+               {
+                   BitmapImage retrievedImage = new BitmapImage();
+    
+                   if(c.Photo == "/Images/contact.png")
+                   {
+                       retrievedImage.UriSource = new Uri(c.Photo, UriKind.RelativeOrAbsolute);
+                       PhotoBox = retrievedImage;
+                   }
+                   else
+                   {
+                       using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                       {
+                           using (var isoFileStream = isoStore.OpenFile(c.Photo, System.IO.FileMode.Open))
+                           {
+                               retrievedImage.SetSource(isoFileStream);
+                           }
+    
+                           PhotoBox = retrievedImage;
+                       }
+                   }
+               }
+               if (!string.IsNullOrEmpty(c.Mail))
+               {
+                   Mail = c.Mail;
+               }
+               if (c.TelFixe != 0)
+               {
+                   TelFixe = c.TelFixe.ToString();
+               }
+               if (c.TelPort != 0)
+               {
+                   Mail = c.TelPort.ToString();
+               }
+               if (!string.IsNullOrEmpty(c.Nationalite))
+               {
+                   Nationalite = c.Nationalite;
+               }
+               if (!string.IsNullOrEmpty(c.Societe))
+               {
+                   Societe = c.Societe;
+               }
+               if (!string.IsNullOrEmpty(c.Logo))
+               {
+                   Logo = c.Logo;
+               }
+               if (!string.IsNullOrEmpty(c.Poste))
+               {
+                   Poste = c.Poste;
+               }
+               if (!string.IsNullOrEmpty(c.SiteWeb))
+               {
+                   SiteWeb = c.SiteWeb;
+               }
+               if (!string.IsNullOrEmpty(c.Adresse))
+               {
+                   Adresse = c.Adresse;
+               }
+               if (!string.IsNullOrEmpty(c.Ville))
+               {
+                   Ville = c.Ville;
+               }
+               if (c.CP != 0)
+               {
+                   CP = c.CP.ToString();
+               }
+               if (!string.IsNullOrEmpty(c.Pays))
+               {
+                   Pays = c.Pays;
+               }
+               #endregion
        }
        #endregion
+
+
 
        #region Methods
 
@@ -162,11 +256,6 @@ namespace GetMyCard.ViewModels
            _saveContactTask.HomeAddressZipCode = _CP;
            _saveContactTask.PersonalEmail = _Mail;
            _saveContactTask.Company = _Societe;
-           //_saveContactTask.JobTitle _Poste;
-       //private string _SiteWeb;
-       //private string _Adresse;
-       //private string _Ville;
-       //private string _Pays;
            _saveContactTask.Show();
        }
 

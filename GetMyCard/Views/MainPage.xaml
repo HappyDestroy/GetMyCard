@@ -47,14 +47,24 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{Binding PhotoMoi}" Width="30" Height="60" />
-                                <TextBlock Grid.Column="1" Text="{Binding NomMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                <TextBlock Grid.Column="2" Text="{Binding PrenomMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image Grid.Row="0" Grid.Column="0" Source="{Binding PhotoMoi}" Height="100" Width="100" />
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding NomMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding PrenomMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <Image Grid.Row="0" Grid.Column="3" Source="{Binding MonLogo}" Width="30" Height="60" />
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding EntrepriseMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding PosteMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                             </Grid>
                         </Grid>
                         
                         <ListBox Grid.Row="1"  ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}">
+
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Border BorderThickness="0,0,0,4" BorderBrush="AliceBlue" Background="{StaticResource PhoneBackgroundBrush}">
@@ -80,11 +90,11 @@
                                             </Grid.ColumnDefinitions>
                                             <Image     Grid.Column="0" Source="{Binding Photo}" Width="30" Height="60" />
                                             <TextBlock Grid.Column="1" Text="{Binding Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                            <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                            <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>                              
                                         </Grid>
-                                    </Border>
+                                    </Border>                                    
                                 </DataTemplate>
-                            </ListBox.ItemTemplate>
+                            </ListBox.ItemTemplate>                            
                         </ListBox>
                         
                     </Grid>
@@ -95,9 +105,23 @@
                     <controls:PivotItem.DataContext>
                         <vm:ViewModelPartage/>
                     </controls:PivotItem.DataContext>
-                    
                     <StackPanel>
-                        <Button Content="Partager ma carte de visite" Command="{Binding ShareCDVCommand}"/>
+                        <Button Content="{Binding Path=LocalizedResources.SearchPeriphTexte,  Source={StaticResource LocalizedStrings}}" Command="{Binding SearchPeerCommand}" />
+
+                        <TextBlock Text="{Binding PeerSearchInfo}" />
+                        
+                        <ListBox ItemsSource="{Binding PeerApps}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding DisplayName}" FontSize="{StaticResource PhoneFontSizeMedium}" Margin="40,0,0,0"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+
+
+
+                        <Button Content="{Binding Path=LocalizedResources.ShareCDVTexte,  Source={StaticResource LocalizedStrings}}" Command="{Binding ShareCDVCommand}"/>
                     </StackPanel>
 
                 </controls:PivotItem>

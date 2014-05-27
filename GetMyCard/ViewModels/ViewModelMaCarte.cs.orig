@@ -16,6 +16,9 @@ using System.Windows.Media.Animation;
 using Microsoft.Phone.Controls;
 using System.IO;
 using System.Windows.Media.Imaging;
+using GetMyCard.Model;
+using Windows.Storage;
+using System.IO.IsolatedStorage;
 
 namespace GetMyCard.ViewModels
 {
@@ -25,7 +28,7 @@ namespace GetMyCard.ViewModels
 
         private string _Nom;
         private string _Prenom;
-        private string _Photo;
+        private ImageSource _MaPhotoBox;
         private string _Mail;
         private string _TelFixe;
         private string _TelPort;
@@ -39,14 +42,18 @@ namespace GetMyCard.ViewModels
         private string _CP;
         private string _Pays;
 
-        private string _ImportPhoto;
+        private string _SrcPhoto;
+
+        private string _SrcPhoto;
+
         private DelegateCommand _ValidateCommand;
         private DelegateCommand _ImportPhotoCommand;
+<<<<<<< HEAD
         private DelegateCommand _CameraPhotoCommand;
         private PhotoChooserTask _photoChooserTask;
-        private CameraCaptureTask _cameraCaptureTask;
         
         private PhotoChooserTask _PhotoChooserTask;
+
         private DelegateCommand _CameraPhotoCommand;
         private PhotoChooserTask _photoChooserTask;
         private CameraCaptureTask _cameraCaptureTask;
@@ -61,19 +68,19 @@ namespace GetMyCard.ViewModels
         public string Nom
         {
             get { return _Nom; }
-            set { Assign(ref _Nom, value); }
+            set { Assign(ref _Nom, value); ValidateCommand.OnCanExecuteChanged(); }
         }
 
         public string Prenom
         {
             get { return _Prenom; }
-            set { Assign(ref _Prenom, value); }
+            set { Assign(ref _Prenom, value); ValidateCommand.OnCanExecuteChanged(); }
         }
 
-        public string Photo
+        public ImageSource MaPhotoBox
         {
-            get { return _Photo; }
-            set { Assign(ref _Photo, value); }
+            get { return _MaPhotoBox; }
+            set { Assign(ref _MaPhotoBox, value); }
         }
 
         public string Mail
@@ -157,8 +164,10 @@ namespace GetMyCard.ViewModels
         public DelegateCommand ImportPhotoCommand
         {
             get { return _ImportPhotoCommand; }
-            set { Assign(ref _ImportPhotoCommand, value); }
+            set { _ImportPhotoCommand = value; }
         }
+
+        public string SrcPhoto
         public DelegateCommand CameraPhotoCommand
         {
             get { return _CameraPhotoCommand; }
@@ -169,86 +178,98 @@ namespace GetMyCard.ViewModels
             get {return _ImportPhoto; }
             set { Assign(ref _ImportPhoto, value); }
         }
-        public DelegateCommand CameraPhotoCommand
+
+        public ImageSource MaPhotoBox
+
+<<<<<<< HEAD
+=======
+        public string SrcPhoto
         {
-            get { return _CameraPhotoCommand; }
-            set { _CameraPhotoCommand = value; }
+            get { return _SrcPhoto; }
+            set { Assign(ref _SrcPhoto, value); }
         }
-        public string MaPhotoBox
-        {
-            get {return _ImportPhoto; }
-            set { Assign(ref _ImportPhoto, value); }
-        }
+
+>>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
         #endregion
 
 
 
         #region Constructeur
-        
+
         public ViewModelMaCarte()
         {
             _ValidateCommand = new DelegateCommand(ExecuteValidate, CanExecuteValidate);
             _ImportPhotoCommand = new DelegateCommand(ExecuteImportPhoto, CanExecuteImportPhoto);
-<<<<<<< HEAD
-=======
-            _CameraPhotoCommand = new DelegateCommand(ExecutecameraPhoto, CanExecuteCameraPhoto);
 
->>>>>>> f8e64903eef0eb000a044f1cdf38efe700f6220a
-
-            if (GetMyCardDataContext.Instance.MaCarteVisite.Count() > 0)
+            if(GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {
-                Nom = GetMyCardDataContext.Instance.MaCarteVisite.First().Nom;
-                Prenom = GetMyCardDataContext.Instance.MaCarteVisite.First().Prenom;
+                MaCarteVisite c = GetMyCardDataContext.Instance.MaCarteVisite.First();
 
-                if (string.IsNullOrEmpty(GetMyCardDataContext.Instance.MaCarteVisite.First().Photo))
-                {
-                    Photo = GetMyCardDataContext.Instance.MaCarteVisite.First().Photo;
-                }
-                if (string.IsNullOrEmpty(GetMyCardDataContext.Instance.MaCarteVisite.First().Mail))
-                {
-                    Mail = GetMyCardDataContext.Instance.MaCarteVisite.First().Mail;
-                }
-                if (GetMyCardDataContext.Instance.MaCarteVisite.First().TelFixe != 0)
-                {
-                    TelFixe = GetMyCardDataContext.Instance.MaCarteVisite.First().TelFixe.ToString();
-                }
-                if (GetMyCardDataContext.Instance.MaCarteVisite.First().TelPort != 0)
-                {
-                    TelPort = GetMyCardDataContext.Instance.MaCarteVisite.First().TelPort.ToString();
-                }
-                if (string.IsNullOrEmpty(GetMyCardDataContext.Instance.MaCarteVisite.First().Nationalite))
-                {
-                    Nationalite = GetMyCardDataContext.Instance.MaCarteVisite.First().Nationalite;
-                }
-                if (string.IsNullOrEmpty(GetMyCardDataContext.Instance.MaCarteVisite.First().Societe))
-                {
-                    Societe = GetMyCardDataContext.Instance.MaCarteVisite.First().Societe;
-                }
-                if (string.IsNullOrEmpty(GetMyCardDataContext.Instance.MaCarteVisite.First().Logo))
-                {
-                    Logo = GetMyCardDataContext.Instance.MaCarteVisite.First().Logo;
-                }
-                if (string.IsNullOrEmpty(GetMyCardDataContext.Instance.MaCarteVisite.First().Poste))
-                {
-                    Poste = GetMyCardDataContext.Instance.MaCarteVisite.First().Poste;
-                }
-                if (string.IsNullOrEmpty(GetMyCardDataContext.Instance.MaCarteVisite.First().SiteWeb))
-                {
-                    SiteWeb = GetMyCardDataContext.Instance.MaCarteVisite.First().SiteWeb;
-                }
-                if (string.IsNullOrEmpty(GetMyCardDataContext.Instance.MaCarteVisite.First().Adresse))
-                {
-                    Adresse = GetMyCardDataContext.Instance.MaCarteVisite.First().Adresse;
-                }
-                if (GetMyCardDataContext.Instance.MaCarteVisite.First().CP != 0)
-                {
-                    CP = GetMyCardDataContext.Instance.MaCarteVisite.First().CP.ToString();
-                }
-                if (string.IsNullOrEmpty(GetMyCardDataContext.Instance.MaCarteVisite.First().Pays))
-                {
-                    Pays = GetMyCardDataContext.Instance.MaCarteVisite.First().Pays;
-                }
+                Nom = c.Nom;
+                Prenom = c.Prenom;
 
+                #region verification des info de l'utilisateur
+                if (!string.IsNullOrEmpty(c.Photo))
+                {
+                    BitmapImage retrievedImage = new BitmapImage();
+                    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                    {
+                        using (var isoFileStream = isoStore.OpenFile(c.Photo, System.IO.FileMode.Open))
+                        {
+                            retrievedImage.SetSource(isoFileStream);
+                        }
+
+                        MaPhotoBox = retrievedImage;
+                    }
+                }
+                if (!string.IsNullOrEmpty(c.Mail))
+                {
+                    Mail = c.Mail;
+                }
+                if (c.TelFixe != 0)
+                {
+                    TelFixe = c.TelFixe.ToString();
+                }
+                if (c.TelPort != 0)
+                {
+                    Mail = c.TelPort.ToString();
+                }
+                if (!string.IsNullOrEmpty(c.Nationalite))
+                {
+                    Nationalite = c.Nationalite;
+                }
+                if (!string.IsNullOrEmpty(c.Societe))
+                {
+                    Societe = c.Societe;
+                }
+                if (!string.IsNullOrEmpty(c.Logo))
+                {
+                    Logo = c.Logo;
+                }
+                if (!string.IsNullOrEmpty(c.Poste))
+                {
+                    Poste = c.Poste;
+                }
+                if (!string.IsNullOrEmpty(c.SiteWeb))
+                {
+                    SiteWeb = c.SiteWeb;
+                }
+                if (!string.IsNullOrEmpty(c.Adresse))
+                {
+                    Adresse = c.Adresse;
+                }
+                if (!string.IsNullOrEmpty(c.Ville))
+                {
+                    Ville = c.Ville;
+                }
+                if (c.CP != 0)
+                {
+                    CP = c.CP.ToString();
+                }
+                if (!string.IsNullOrEmpty(c.Pays))
+                {
+                    Pays = c.Pays;
+                }
                 #endregion
             }
            
@@ -261,27 +282,89 @@ namespace GetMyCard.ViewModels
         #endregion
 
 
-
-
         #region Methods
 
         private bool CanExecuteValidate(object parameters)
         {
-            //return (!string.IsNullOrEmpty(Nom) && !string.IsNullOrEmpty(Prenom));
-            return true;
+<<<<<<< HEAD
+            return !string.IsNullOrWhiteSpace(Nom) && !string.IsNullOrEmpty(Prenom);
+=======
+            return !string.IsNullOrWhiteSpace(Nom) || !string.IsNullOrWhiteSpace(Prenom);
+>>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
         }
 
         private void ExecuteValidate(object parameters)
         {
-            //TODO : Enregistrer en base
-            MessageBox.Show("Nom : " + Nom + 
-                "\nPrénom : " + Prenom + 
+            MaCarteVisite c;
+            MaCarteVisite c = new MaCarteVisite();
+
+            c.Nom = Nom;
+            c.Prenom = Prenom;
+
+            if(string.IsNullOrEmpty(Photo))
+            {
+                c.Photo = Photo;
+            }
+            if (string.IsNullOrEmpty(Mail))
+            {
+                c.Mail = Mail;
+            }
+            if (TelFixe != null)
+            {
+                c.TelFixe = int.Parse(TelFixe);
+            }
+            if (TelPort != null)
+            {
+                c.TelPort = int.Parse(TelPort);
+            }
+            if (string.IsNullOrEmpty(Nationalite))
+            {
+                c.Nationalite = Nationalite;
+            }
+            if (string.IsNullOrEmpty(Societe))
+            {
+                c.Societe = Societe;
+            }
+            if (string.IsNullOrEmpty(Logo))
+            {
+                c.Logo = Logo;
+            }
+            if (string.IsNullOrEmpty(Poste))
+            {
+                c.Poste = Poste;
+            }
+            if (string.IsNullOrEmpty(SiteWeb))
+            {
+                c.SiteWeb = SiteWeb;
+            }
+            if (string.IsNullOrEmpty(Adresse))
+            {
+                c.Adresse = Adresse;
+            }
+            if (string.IsNullOrEmpty(Ville))
+            {
+                c.Ville = Ville;
+            }
+            if (CP != null)
+            {
+                c.CP = int.Parse(CP);
+            }
+            if (string.IsNullOrEmpty(Pays))
+            {
+                c.Pays = Pays;
+            }
+
+            /*GetMyCardDataContext.Instance.MaCarteVisite.InsertOnSubmit(c);
+            GetMyCardDataContext.Instance.SubmitChanges();*/
+
+            MessageBox.Show("Nom : " + Nom +
+                "\nPrénom : " + Prenom +
                 "\nPhoto : " + Photo +
                 "\nMail : " + Mail +
                 "\nTéléphone fixe : " + TelFixe +
                 "\nTéléphone portable : " + TelPort +
                 "\nNationalité : " + Nationalite +
-                "\nLogo : " + Logo + 
+                "\nLogo : " + Logo +
                 "\nPoste : " + Poste +
                 "\nSite web : " + SiteWeb +
                 "\nAdresse : " + Adresse +
@@ -290,86 +373,217 @@ namespace GetMyCard.ViewModels
                 "\n Pays : " + Pays);
                 if (!string.IsNullOrEmpty(Photo))
 
-                #endregion
-        }
-                if (!string.IsNullOrEmpty(SiteWeb))
-        public void ExecuteImportPhoto(object parameters)
-        {
+<<<<<<< HEAD
+            #region Verification champs
+            c.Nom = Nom;
+            c.Prenom = Prenom;
+
+            /*if(MaPhotoBox != null)
+            {
+                c.Photo = MaPhotoBox;
+            }*/
+
+            if (!string.IsNullOrEmpty(SrcPhoto))
+            {
+                c.Photo = SrcPhoto;
+            }
+            if (!string.IsNullOrEmpty(Mail))
+            {
+                c.Mail = Mail;
+            }
+            if (TelFixe != null)
+            {
+                c.TelFixe = int.Parse(TelFixe);
+            }
+            if (TelPort != null)
+            {
+                c.TelPort = int.Parse(TelPort);
+            }
+            if (!string.IsNullOrEmpty(Nationalite))
+            {
+                c.Nationalite = Nationalite;
+            }
+            if (!string.IsNullOrEmpty(Societe))
+            {
+                c.Societe = Societe;
+            }
+            if (!string.IsNullOrEmpty(Logo))
+            {
+                c.Logo = Logo;
+            }
+            if (!string.IsNullOrEmpty(Poste))
+            {
+                c.Poste = Poste;
+            }
+            if (!string.IsNullOrEmpty(SiteWeb))
+            {
+<<<<<<< HEAD
             _photoChooserTask = new PhotoChooserTask();
+            _photoChooserTask.ShowCamera = true;
             _photoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
             _photoChooserTask.Show();
-        }
-        public bool CanExecuteImportPhoto(object parameters)
-        {
-            return true;
-        }
-                if (!string.IsNullOrEmpty(Ville))
+=======
+            _PhotoChooserTask = new PhotoChooserTask();
+            _PhotoChooserTask.ShowCamera = true;
+            _PhotoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
+            _PhotoChooserTask.Show();
+>>>>>>> 8e9c3b71cf18605b4d72325f5503c65345865a42
+            }
+
+
+            {
+                c.Adresse = Adresse;
+            }
+            if (!string.IsNullOrEmpty(Ville))
+
+            {
+                c.Ville = Ville;
+            }
+            if (CP != null)
+            {
+                c.CP = int.Parse(CP);
+            }
+            if (!string.IsNullOrEmpty(Pays))
+=======
+            if(GetMyCardDataContext.Instance.MaCarteVisite.Any())
         void photoChooserTask_Completed(object sender, Microsoft.Phone.Tasks.PhotoResult MaPhoto)
         {
             if (MaPhoto.TaskResult == TaskResult.OK)
             {
- 
-                MessageBox.Show( MaPhoto.OriginalFileName);
-                
-                //Image à sauvegarder
-                var img = new BitmapImage();
-                //img.SetSource(MaPhoto.ChosenPhoto);
-                //MaPhotoBox = img;
-                App.RootFrame.GoBack();
-                #endregion
+<<<<<<< HEAD
+
+                c.Nom = Nom;
+                c.Prenom = Prenom;
+
+                GetMyCardDataContext.Instance.SubmitChanges();
             }
-        }
-        public bool CanExecuteCameraPhoto(object parameters)
-        {
-            return true;
+            else
+>>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
+            {
+                c = new MaCarteVisite();
+
+                c.Nom = Nom;
+                c.Prenom = Prenom;
+
+                #region verification des champs
+
+                if (!string.IsNullOrEmpty(SrcPhoto))
+                {
+                    c.Photo = SrcPhoto;
+                if (!string.IsNullOrEmpty(Mail))
+                {
+                    c.Mail = Mail;
             _PhotoChooserTask.Show();
 =======
             _photoChooserTask = new PhotoChooserTask();
             _photoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
             _photoChooserTask.Show();
 >>>>>>> f8e64903eef0eb000a044f1cdf38efe700f6220a
-        }
-        public void ExecutecameraPhoto(object parameters)
-        {
-            _cameraCaptureTask = new CameraCaptureTask();
-            _cameraCaptureTask.Completed += new EventHandler<PhotoResult>(cameraCaptureTask_Completed);
-            _cameraCaptureTask.Show();
-        }
-        public void cameraCaptureTask_Completed(object sender, PhotoResult e)
-        {
-            if (MaPhoto.TaskResult == TaskResult.OK)
-            {
-<<<<<<< HEAD
-                MessageBox.Show(e.OriginalFileName.ToString());
- 
-=======
-                MessageBox.Show(e.OriginalFileName);
-               MaPhotoBox = e.OriginalFileName;
->>>>>>> f8e64903eef0eb000a044f1cdf38efe700f6220a
-                //img.SetSource(MaPhoto.ChosenPhoto);
-                //MaPhotoBox = img;
+                }
+                if (!string.IsNullOrEmpty(Nationalite))
+                {
+                    c.Nationalite = Nationalite;
+                }
+                if (!string.IsNullOrEmpty(Societe))
+                {
+                    c.Societe = Societe;
+                }
+                if (!string.IsNullOrEmpty(Logo))
+                {
+                    c.Logo = Logo;
+                }
+                if (!string.IsNullOrEmpty(Poste))
+                {
+                    c.Poste = Poste;
+                }
+                if (!string.IsNullOrEmpty(SiteWeb))
+                {
+                    c.SiteWeb = SiteWeb;
+                }
+                if (!string.IsNullOrEmpty(Adresse))
+                {
+                    c.Adresse = Adresse;
+                }
+                if (!string.IsNullOrEmpty(Ville))
+                {
+                    c.Ville = Ville;
+                }
+                if (CP != null)
+                {
+                    c.CP = int.Parse(CP);
+                }
+                if (!string.IsNullOrEmpty(Pays))
+                {
+                    c.Pays = Pays;
+                }
+
+                #endregion
+
+                GetMyCardDataContext.Instance.MaCarteVisite.InsertOnSubmit(c);
+                GetMyCardDataContext.Instance.SubmitChanges();
             }
+
+            #endregion
+
+
+            GetMyCardDataContext.Instance.MaCarteVisite.InsertOnSubmit(c);
+            GetMyCardDataContext.Instance.SubmitChanges();
+            App.RootFrame.GoBack();
+
+            MessageBox.Show(MaPhotoBox.ToString());
+=======
+            
+            App.RootFrame.GoBack();
+>>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
         }
-        public bool CanExecuteCameraPhoto(object parameters)
+
+
+        public void ExecuteImportPhoto(object parameters)
+        {
+            _PhotoChooserTask = new PhotoChooserTask();
+            _PhotoChooserTask.ShowCamera = true;
+            _PhotoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
+            _PhotoChooserTask.Show();
+        }
+
+
+        public bool CanExecuteImportPhoto(object parameters)
         {
             return true;
         }
-        public void ExecutecameraPhoto(object parameters)
+
+
+        void photoChooserTask_Completed(object sender, Microsoft.Phone.Tasks.PhotoResult MaPhoto)
         {
-            _cameraCaptureTask = new CameraCaptureTask();
-            _cameraCaptureTask.Completed += new EventHandler<PhotoResult>(cameraCaptureTask_Completed);
-            _cameraCaptureTask.Show();
-        }
-        public void cameraCaptureTask_Completed(object sender, PhotoResult e)
-        {
-            if (e.TaskResult == TaskResult.OK)
+            if (MaPhoto.TaskResult == TaskResult.OK)
             {
-                MessageBox.Show(e.OriginalFileName);
-               MaPhotoBox = e.OriginalFileName;
-                //Code to display the photo on the page in an image control named myImage.
-                //System.Windows.Media.Imaging.BitmapImage bmp = new System.Windows.Media.Imaging.BitmapImage();
-                //bmp.SetSource(e.ChosenPhoto);
-                //myImage.Source = bmp;
+                BitmapImage img = new BitmapImage();
+                img.SetSource(MaPhoto.ChosenPhoto);
+
+<<<<<<< HEAD
+                SrcPhoto = MaPhoto.OriginalFileName;
+
+=======
+                
+                //On affiche l'image
+>>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
+                MaPhotoBox = img;
+
+                string nomPhoto = System.IO.Path.GetFileName(MaPhoto.OriginalFileName);
+
+                //On sauvegarde le chemin d'accès de l'image
+                SrcPhoto = nomPhoto;
+                
+                //On enregistre l'image dans l'isolated storage
+                using(var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    var wb = new WriteableBitmap(img);
+
+                    using (var isoFileStream = isoStore.CreateFile(nomPhoto))
+                    {
+                        Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
+                    }
+                }
             }
         }
         #endregion
