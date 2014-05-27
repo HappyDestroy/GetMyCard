@@ -92,6 +92,10 @@
 
 
                 <controls:PivotItem Header="{Binding Path=LocalizedResources.PartageTexte,  Source={StaticResource LocalizedStrings}}">
+                    <controls:PivotItem.DataContext>
+                        <vm:ViewModelPartage/>
+                    </controls:PivotItem.DataContext>
+                    
                     <StackPanel>
                         <Button Content="Partager ma carte de visite" Command="{Binding ShareCDVCommand}"/>
                     </StackPanel>

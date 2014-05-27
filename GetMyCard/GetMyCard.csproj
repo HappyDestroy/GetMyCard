@@ -103,6 +103,7 @@
     <Compile Include="ViewModels\ViewModelContactInfo.cs" />
     <Compile Include="ViewModels\ViewModelMaCarte.cs" />
     <Compile Include="ViewModels\ViewModelMainPage.cs" />
+    <Compile Include="ViewModels\ViewModelPartage.cs" />
     <Compile Include="Views\ContactInfo.xaml.cs">
       <DependentUpon>ContactInfo.xaml</DependentUpon>
     </Compile>
