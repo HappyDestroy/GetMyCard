@@ -3,22 +3,20 @@ using Microsoft.Phone.Shell;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-<<<<<<< HEAD
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-=======
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using Windows.Networking.Proximity;
+using Windows.Networking.Sockets;
 using Windows.Storage;
->>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
+using Windows.Storage.Streams;
 using WP.Core;
 
 namespace GetMyCard.ViewModels
@@ -29,22 +27,20 @@ namespace GetMyCard.ViewModels
 
         private DelegateCommand _DeleteContactCommand;
         private DelegateCommand _SelectedContact;
+        private DelegateCommand _ShareCDVCommand;
+        private DelegateCommand _RecieveCDVCommand;
 
         private ObservableCollection<Contact> _Contacts;
         private MaCarteVisite _MaCarteVisite;
 
-<<<<<<< HEAD
-        private MaCarteVisite _MaCarteVisite;
         private ImageSource _PhotoMoi;
+        private ImageSource _LogoMoi;
         private string _NomMoi;
         private string _PrenomMoi;
+        private string _EntrepriseMoi;
+        private string _PosteMoi;
+        private Contact _Cont;
 
-=======
-        private ImageSource _PhotoMoi;
-        private string _NomMoi;
-        private string _PrenomMoi;
-        private Contact _Cont ;
->>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
         #endregion
 
 
@@ -61,7 +57,17 @@ namespace GetMyCard.ViewModels
             get { return _SelectedContact; }
         }
 
+        public DelegateCommand ShareCDVCommand
+        {
+            get { return _ShareCDVCommand; }
+            set { Assign(ref _ShareCDVCommand, value); }
+        }
 
+        public DelegateCommand RecieveCDVCommand
+        {
+            get { return _RecieveCDVCommand; }
+            set { Assign(ref _RecieveCDVCommand, value); }
+        }
         public ObservableCollection<Contact> Contacts
         {
             get { return _Contacts; }
@@ -88,14 +94,26 @@ namespace GetMyCard.ViewModels
 
         public string PrenomMoi
         {
-<<<<<<< HEAD
             get { return _PrenomMoi; }
-=======
-            get { return _MaCarteVisite.Prenom; }
->>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
             set { Assign(ref _PrenomMoi, value); }
         }
+        public ImageSource LogoMoi
+        {
+            get { return _LogoMoi; }
+            set { Assign(ref _LogoMoi, value); }
+        }
 
+        public string EntrepriseMoi
+        {
+            get { return _EntrepriseMoi; }
+            set { Assign(ref _EntrepriseMoi, value); }
+        }
+
+        public string PosteMoi
+        {
+            get { return _PosteMoi; }
+            set { Assign(ref _PosteMoi, value); }
+        }
         #endregion
 
 
@@ -104,71 +122,73 @@ namespace GetMyCard.ViewModels
 
         public ViewModelMainPage()
         {
-            Contact addContact = new Contact();
+            /*Contact addContact = new Contact();
             addContact.Photo = "/Images/contact.png";
             addContact.Nom = "Nico";
             addContact.Prenom = "Sabou";
 
             GetMyCardDataContext.Instance.Contact.InsertOnSubmit(addContact);
-            GetMyCardDataContext.Instance.SubmitChanges();
+            GetMyCardDataContext.Instance.SubmitChanges();*/
 
 
 
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _SelectedContact = new DelegateCommand(ExecuteSelectedContact, CanExecuteSelectContact);
+            _ShareCDVCommand = new DelegateCommand(ExecuteShareCDV, CanExecuteShareCDV);
+            _RecieveCDVCommand = new DelegateCommand(ExecuteRecieveCDV, CanExecuteRecieveCDV);
+
             _Contacts = new ObservableCollection<Contact>();
-<<<<<<< HEAD
 
-            
-=======
-           
-            Contact c;
-            c = new Contact();          
-            c.Nom = "Sab";
-            c.Prenom = "Nini";
-            c.Mail = "Nicolassab@nigwa.com";
-
-            GetMyCardDataContext.Instance.Contact.InsertOnSubmit(c);
-            GetMyCardDataContext.Instance.SubmitChanges();
->>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
-
-            if(GetMyCardDataContext.Instance.MaCarteVisite.Any())
+            #region affiche de ma carte
+            if (GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {
                 MaCarteVisite = GetMyCardDataContext.Instance.MaCarteVisite.First();
 
-<<<<<<< HEAD
-                BitmapImage img = new BitmapImage();
-                img.UriSource = new Uri(MaCarteVisite.Photo, UriKind.RelativeOrAbsolute);
-                PhotoMoi = img;
-=======
                 BitmapImage retrievedImage = new BitmapImage();
 
                 //On récupère l'image depuis l'isolated storage
-                using(var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    using(var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
+                    /*using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
                     {
                         retrievedImage.SetSource(isoFileStream);
+                        PhotoMoi = retrievedImage;
                     }
 
-                    PhotoMoi = retrievedImage;
+<<<<<<< HEAD
+                    PhotoMoi = retrievedImage;*/
+=======
+                   
+>>>>>>> 7e8ac6cf00d37a1921e2a65e7075d777c695bac6
                 }
->>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
+                //On récupère le logo depuis l'isolated storage
+                //using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                //{
+                //    LogoMoi = retrievedImage;
+                //    if (LogoMoi != null)
+                //    {
+                //        // Récupération du logo
+                //        using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Logo, System.IO.FileMode.Open))
+                //        {
+                //            retrievedImage.SetSource(isoFileStream);
+                //        }
+
+                //        LogoMoi = retrievedImage;
+                //    }
+                //}
 
                 NomMoi = MaCarteVisite.Nom;
                 PrenomMoi = MaCarteVisite.Prenom;
+                EntrepriseMoi = MaCarteVisite.Societe;
+                PosteMoi = MaCarteVisite.Poste;
             }
             else
             {
-<<<<<<< HEAD
-                NomMoi = "test";
-                PrenomMoi = "test";
-=======
                 MaCarteVisite = new MaCarteVisite();
                 MaCarteVisite.Photo = "Images/contact.png";
-                NomMoi = "Vous n'avez pas encore enregistré votre carte de visite";
->>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
+                NomMoi = "Vous n'avez pas de carte de visite";
             }
+            #endregion
         }
 
 
@@ -180,11 +200,25 @@ namespace GetMyCard.ViewModels
 
         private bool CanExecuteDeleteContact(object parameters)
         {
-            //TODO : Vérifier que le contact existe
             return true;
         }
 
         private bool CanExecuteSelectContact(object parameters)
+        {
+            return true;
+        }
+        private bool CanExecuteSelectedContact(object parameters)
+        {
+            return true;
+        }
+
+        private bool CanExecuteShareCDV(object parameters)
+        {
+            //TODO : verifier que l'utilisateur a une CDV
+            return true;
+        }
+
+        private bool CanExecuteRecieveCDV(object paramters)
         {
             return true;
         }
@@ -193,7 +227,7 @@ namespace GetMyCard.ViewModels
         {
             try
             {
-                if(MessageBoxResult.OK == MessageBox.Show("Êtes-vous sûr de supprimer ce contact ?", "Suppression", MessageBoxButton.OKCancel))
+                if (MessageBoxResult.OK == MessageBox.Show("Êtes-vous sûr de supprimer ce contact ?", "Suppression", MessageBoxButton.OKCancel))
                 {
                     GetMyCardDataContext.Instance.Contact.DeleteOnSubmit((Contact)parameters);
                     GetMyCardDataContext.Instance.SubmitChanges();
@@ -207,6 +241,7 @@ namespace GetMyCard.ViewModels
         }
 
 
+
         private void ExecuteSelectedContact(object parameters)
         {
             MessageBox.Show(((Contact)parameters).Nom.ToString());
@@ -215,6 +250,7 @@ namespace GetMyCard.ViewModels
             PhoneApplicationService.Current.State["contact"] = parameters;
             App.RootFrame.Navigate(new Uri("/Views/ContactInfo.xaml", UriKind.Relative));
         }
+       
 
         public void LoadData()
         {
@@ -222,6 +258,66 @@ namespace GetMyCard.ViewModels
             {
                 Contacts.Add(contact);
             }
+            if (GetMyCardDataContext.Instance.MaCarteVisite.Any())
+            {
+                MaCarteVisite = GetMyCardDataContext.Instance.MaCarteVisite.First();
+
+                BitmapImage retrievedImage = new BitmapImage();
+
+                //On récupère l'image depuis l'isolated storage
+                using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
+                    {
+                        retrievedImage.SetSource(isoFileStream);
+                        PhotoMoi = retrievedImage;
+                    }
+
+
+                }
+                //On récupère le logo depuis l'isolated storage
+                //using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                //{
+                //    LogoMoi = retrievedImage;
+                //    if (LogoMoi != null)
+                //    {
+                //        // Récupération du logo
+                //        using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Logo, System.IO.FileMode.Open))
+                //        {
+                //            retrievedImage.SetSource(isoFileStream);
+                //        }
+
+                //        LogoMoi = retrievedImage;
+                //    }
+                //}
+
+                NomMoi = MaCarteVisite.Nom;
+                PrenomMoi = MaCarteVisite.Prenom;
+                EntrepriseMoi = MaCarteVisite.Societe;
+                PosteMoi = MaCarteVisite.Poste;
+            }
+            else
+            {
+                MaCarteVisite = new MaCarteVisite();
+                MaCarteVisite.Photo = "Images/contact.png";
+                NomMoi = "Vous n'avez pas de carte de visite";
+            }
+        }
+
+
+
+
+
+
+        private void ExecuteShareCDV(object parameters)
+        {
+
+        }
+
+
+        private void ExecuteRecieveCDV(object parameters)
+        {
+
         }
 
         #endregion

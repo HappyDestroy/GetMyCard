@@ -27,8 +27,6 @@ namespace GetMyCard.ViewModels
 
         private DelegateCommand _DeleteContactCommand;
         private DelegateCommand _SelectedContact;
-        private DelegateCommand _ShareCDVCommand;
-        private DelegateCommand _RecieveCDVCommand;
 
         private ObservableCollection<Contact> _Contacts;
         private MaCarteVisite _MaCarteVisite;
@@ -57,17 +55,6 @@ namespace GetMyCard.ViewModels
             get { return _SelectedContact; }
         }
 
-        public DelegateCommand ShareCDVCommand
-        {
-            get { return _ShareCDVCommand; }
-            set { Assign(ref _ShareCDVCommand, value); }
-        }
-
-        public DelegateCommand RecieveCDVCommand
-        {
-            get { return _RecieveCDVCommand; }
-            set { Assign(ref _RecieveCDVCommand, value); }
-        }
         public ObservableCollection<Contact> Contacts
         {
             get { return _Contacts; }
@@ -97,6 +84,7 @@ namespace GetMyCard.ViewModels
             get { return _PrenomMoi; }
             set { Assign(ref _PrenomMoi, value); }
         }
+
         public ImageSource LogoMoi
         {
             get { return _LogoMoi; }
@@ -122,69 +110,20 @@ namespace GetMyCard.ViewModels
 
         public ViewModelMainPage()
         {
-            /*Contact addContact = new Contact();
+            Contact addContact = new Contact();
             addContact.Photo = "/Images/contact.png";
             addContact.Nom = "Nico";
             addContact.Prenom = "Sabou";
 
             GetMyCardDataContext.Instance.Contact.InsertOnSubmit(addContact);
-            GetMyCardDataContext.Instance.SubmitChanges();*/
+            GetMyCardDataContext.Instance.SubmitChanges();
 
 
 
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _SelectedContact = new DelegateCommand(ExecuteSelectedContact, CanExecuteSelectContact);
-            _ShareCDVCommand = new DelegateCommand(ExecuteShareCDV, CanExecuteShareCDV);
-            _RecieveCDVCommand = new DelegateCommand(ExecuteRecieveCDV, CanExecuteRecieveCDV);
 
             _Contacts = new ObservableCollection<Contact>();
-
-            #region affiche de ma carte
-            if (GetMyCardDataContext.Instance.MaCarteVisite.Any())
-            {
-                MaCarteVisite = GetMyCardDataContext.Instance.MaCarteVisite.First();
-
-                BitmapImage retrievedImage = new BitmapImage();
-
-                //On récupère l'image depuis l'isolated storage
-                using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
-                {
-                    using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
-                    {
-                        retrievedImage.SetSource(isoFileStream);
-                        PhotoMoi = retrievedImage;
-                    }
-
-                   
-                }
-                //On récupère le logo depuis l'isolated storage
-                //using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
-                //{
-                //    LogoMoi = retrievedImage;
-                //    if (LogoMoi != null)
-                //    {
-                //        // Récupération du logo
-                //        using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Logo, System.IO.FileMode.Open))
-                //        {
-                //            retrievedImage.SetSource(isoFileStream);
-                //        }
-
-                //        LogoMoi = retrievedImage;
-                //    }
-                //}
-
-                NomMoi = MaCarteVisite.Nom;
-                PrenomMoi = MaCarteVisite.Prenom;
-                EntrepriseMoi = MaCarteVisite.Societe;
-                PosteMoi = MaCarteVisite.Poste;
-            }
-            else
-            {
-                MaCarteVisite = new MaCarteVisite();
-                MaCarteVisite.Photo = "Images/contact.png";
-                NomMoi = "Vous n'avez pas de carte de visite";
-            }
-            #endregion
         }
 
 
@@ -250,42 +189,49 @@ namespace GetMyCard.ViewModels
 
         public void LoadData()
         {
+            //On charge tous les contacts
             foreach (Contact contact in GetMyCardDataContext.Instance.Contact)
             {
                 Contacts.Add(contact);
             }
+
+            //On charge les infos de sa carte
             if (GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {
                 MaCarteVisite = GetMyCardDataContext.Instance.MaCarteVisite.First();
 
-                BitmapImage retrievedImage = new BitmapImage();
-
-                //On récupère l'image depuis l'isolated storage
-                using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                if (!string.IsNullOrEmpty(MaCarteVisite.Photo))
                 {
-                    using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
+                    BitmapImage retrievedImage = new BitmapImage();
+
+                    //On récupère l'image depuis l'isolated storage
+                    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
                     {
-                        retrievedImage.SetSource(isoFileStream);
-                        PhotoMoi = retrievedImage;
+                        using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
+                        {
+                            retrievedImage.SetSource(isoFileStream);
+                            PhotoMoi = retrievedImage;
+                        }
                     }
-
-
                 }
-                //On récupère le logo depuis l'isolated storage
-                //using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
-                //{
-                //    LogoMoi = retrievedImage;
-                //    if (LogoMoi != null)
-                //    {
-                //        // Récupération du logo
-                //        using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Logo, System.IO.FileMode.Open))
-                //        {
-                //            retrievedImage.SetSource(isoFileStream);
-                //        }
+               
 
-                //        LogoMoi = retrievedImage;
-                //    }
-                //}
+                if(!string.IsNullOrEmpty(MaCarteVisite.Logo))
+                {
+                    BitmapImage retrievedImage = new BitmapImage();
+
+                    //On récupère le logo depuis l'isolated storage
+                    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                    {
+                        // Récupération du logo
+                        using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Logo, System.IO.FileMode.Open))
+                        {
+                            retrievedImage.SetSource(isoFileStream);
+                            LogoMoi = retrievedImage;
+                        }
+
+                    }
+                }
 
                 NomMoi = MaCarteVisite.Nom;
                 PrenomMoi = MaCarteVisite.Prenom;
@@ -299,23 +245,6 @@ namespace GetMyCard.ViewModels
                 NomMoi = "Vous n'avez pas de carte de visite";
             }
         }
-
-
-
-
-
-
-        private void ExecuteShareCDV(object parameters)
-        {
-
-        }
-
-
-        private void ExecuteRecieveCDV(object parameters)
-        {
-
-        }
-
         #endregion
     }
 }
