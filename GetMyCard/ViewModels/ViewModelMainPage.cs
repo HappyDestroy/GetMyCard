@@ -37,7 +37,6 @@ namespace GetMyCard.ViewModels
         private string _PrenomMoi;
         private string _EntrepriseMoi;
         private string _PosteMoi;
-        private Contact _Cont;
 
         #endregion
 

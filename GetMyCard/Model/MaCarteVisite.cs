@@ -38,112 +38,99 @@ namespace GetMyCard.Model
         public long Identifiant
         {
             get { return _Identifiant; }
-            set { _Identifiant = value; }
+            set { Assign(ref _Identifiant, value); }
         }
         [Column(DbType = "NVarChar(250) NOT NULL", CanBeNull = false)]
         public string Nom
         {
             get { return _Nom; }
-            set { _Nom = value; }
+            set { Assign(ref _Nom, value); }
         }
         [Column(DbType = "NVarChar(250) NOT NULL", CanBeNull = false)]
         public string Prenom
         {
             get { return _Prenom; }
-            set { _Prenom = value; }
+            set { Assign(ref _Prenom, value); }
         }
         [Column(DbType = "NVarChar(250)")]
         public string Photo
         {
             get { return _Photo; }
-            set { _Photo = value; }
+            set { Assign(ref _Photo, value); }
         }
         [Column(DbType = "NVarChar(250)")]
         public string Mail
         {
             get { return _Mail; }
-            set { _Mail = value; }
+            set { Assign(ref _Mail, value); }
         }
         [Column(DbType = "Int")]
         public int TelFixe
         {
             get { return _TelFixe; }
-            set { _TelFixe = value; }
+            set { Assign(ref _TelFixe, value); }
         }
         [Column(DbType = "Int")]
         public int TelPort
         {
             get { return _TelPort; }
-            set { _TelPort = value; }
+            set { Assign(ref _TelPort, value); }
         }
         [Column(DbType = "NVarChar(250)")]
         public string Nationalite
         {
             get { return _Nationalite; }
-            set { _Nationalite = value; }
+            set { Assign(ref _Nationalite, value); }
         }
         [Column(DbType = "NVarChar(250)")]
         public string Societe
         {
             get { return _Societe; }
-            set { _Societe = value; }
+            set { Assign(ref _Societe, value); }
         }
         [Column(DbType = "NVarChar(250)")]
         public string Poste
         {
             get { return _Poste; }
-            set { _Poste = value; }
+            set { Assign(ref _Poste, value); }
         }
         [Column(DbType = "NVarChar(250)")]
         public string Logo
         {
             get { return _Logo; }
-            set { _Logo = value; }
+            set { Assign(ref _Logo, value); }
         }
         [Column(DbType = "NVarChar(250)")]
         public string SiteWeb
         {
             get { return _SiteWeb; }
-            set { _SiteWeb = value; }
+            set { Assign(ref _SiteWeb, value); }
         }
         [Column(DbType = "NVarChar(250)")]
         public string Adresse
         {
             get { return _Adresse; }
-            set { _Adresse = value; }
+            set { Assign(ref _Adresse, value); }
         }
         [Column(DbType = "NVarChar(250)")]
         public string Ville
         {
             get { return _Ville; }
-            set { _Ville = value; }
+            set { Assign(ref _Ville, value); }
         }
         [Column(DbType = "Int")]
         public int CP
         {
             get { return _CP; }
-            set { _CP = value; }
+            set { Assign(ref _CP, value); }
         }
         [Column(DbType = "NVarChar(250)")]
         public string Pays
         {
             get { return _Pays; }
-            set { _Pays = value; }
+            set { Assign(ref _Pays, value); }
         }
-        //[Association(Storage = "Categorie", ThisKey = "IdentifiantCategory", IsForeignKey = true)]
-        //public Categorie Categoryie
-        //{
-        //    get { return _CategorieRef.Entity; }
-        //    set { _CategorieRef.Entity = value; }
 
-        //}
-        #endregion
-
-        #region Constructors
-        //public Contact()
-        //{
-        //    _CategorieRef = new EntityRef<Categorie>();
-        //}
         #endregion
     }
 }

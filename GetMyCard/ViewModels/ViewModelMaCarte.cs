@@ -43,8 +43,8 @@ namespace GetMyCard.ViewModels
         private string _CP;
         private string _Pays;
 
-        private BitmapImage _ChoosenImage;
-        private BitmapImage _ChoosenLogo;
+        private BitmapImage _ChosenImage;
+        private BitmapImage _ChosenLogo;
         private ImageSource _MaPhotoBox;
         private ImageSource _MonLogoBox;
 
@@ -60,8 +60,6 @@ namespace GetMyCard.ViewModels
         private PhotoChooserTask _LogoChooserTask;
 
         #endregion
-
-
 
         #region Properties
 
@@ -173,8 +171,8 @@ namespace GetMyCard.ViewModels
         }
         public BitmapImage ChoosenImage
         {
-            get { return _ChoosenImage; }
-            set { _ChoosenImage = value; }
+            get { return _ChosenImage; }
+            set { _ChosenImage = value; }
         }
 
         public ImageSource MaPhotoBox
@@ -197,8 +195,8 @@ namespace GetMyCard.ViewModels
 
         public BitmapImage ChoosenLogo
         {
-            get { return _ChoosenLogo; }
-            set { _ChoosenLogo = value; }
+            get { return _ChosenLogo; }
+            set { _ChosenLogo = value; }
         }
         public ImageSource MonLogoBox
         {
@@ -229,8 +227,8 @@ namespace GetMyCard.ViewModels
             _ValidateCommand = new DelegateCommand(ExecuteValidate, CanExecuteValidate);
             _ImportPhotoCommand = new DelegateCommand(ExecuteImportPhoto, CanExecuteImportPhoto);
             _ImportLogoCommand = new DelegateCommand(ExecuteImportLogo, CanExecuteImportLogo);
-            _ChoosenImage = new BitmapImage();
-            _ChoosenLogo = new BitmapImage();
+            _ChosenImage = new BitmapImage();
+            _ChosenLogo = new BitmapImage();
 
             if(GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {

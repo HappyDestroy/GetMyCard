@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,10 @@ namespace GetMyCard.ViewModels
 
         private DelegateCommand _ShareCDVCommand;
         private DelegateCommand _SearchPeerCommand;
+        private DelegateCommand _CancelCommand;
+        private DelegateCommand _CloseConnectionCommand;
+
+        private bool _IsConnecting;
 
         private MaCarteVisite _MaCarte;
 
@@ -41,14 +46,19 @@ namespace GetMyCard.ViewModels
         private const uint ERR_BLUETOOTH_OFF = 0x8007048F;      // Le bluetooth est désactivé
         private const uint ERR_MISSING_CAPS = 0x80070005;       // Il manque une définition dans le manifest
         private const uint ERR_NOT_ADVERTISING = 0x8000000E;    // On n'indique pas notre présence avec PeerFinder.Start()
-        
+
+
+        private PeerAppInfo _SelectedContact;
+
+        private DataReader _DataReader;
+        private DataWriter _DataWriter;
+
+
         #endregion
 
-
-
-
-
         #region Properties
+
+        #region Commands
 
         public DelegateCommand ShareCDVCommand
         {
@@ -62,16 +72,44 @@ namespace GetMyCard.ViewModels
             set { Assign(ref _SearchPeerCommand, value); }
         }
 
+        public DelegateCommand CancelCommand
+        {
+            get { return _CancelCommand; }
+            set { Assign(ref _CancelCommand, value); }
+        }
+
+        public DelegateCommand CloseConnectionCommand
+        {
+            get { return _CloseConnectionCommand; }
+            set { Assign(ref _CloseConnectionCommand, value); }
+        }
+
+        #endregion
+
         public MaCarteVisite MaCarte
         {
             get { return _MaCarte; }
             set { Assign(ref _MaCarte, value); }
         }
 
+        #region Bluetooth
+
         public ObservableCollection<PeerAppInfo> PeerApps
         {
             get { return _PeerApps; }
             set { Assign(ref _PeerApps, value); }
+        }
+
+        public PeerAppInfo SelectedContact
+        {
+            get { return _SelectedContact; }
+            set { Assign(ref _SelectedContact, value); }
+        }
+
+        public bool IsConnecting
+        {
+            get { return _IsConnecting; }
+            set { Assign(ref _IsConnecting, value); }
         }
 
         public StreamSocket Socket
@@ -92,23 +130,33 @@ namespace GetMyCard.ViewModels
             set { Assign(ref _PeerSearchInfo, value); }
         }
 
+        public DataReader DataReader
+        {
+            get { return _DataReader; }
+            set { Assign(ref _DataReader, value); }
+        }
+
+        public DataWriter DataWriter
+        {
+            get { return _DataWriter; }
+            set { Assign(ref _DataWriter, value); }
+        }
+
         #endregion
 
-
-
+        #endregion
 
         #region Constructeur
 
         public ViewModelPartage()
         {
+            _IsConnecting = false;
             _ShareCDVCommand = new DelegateCommand(ExecuteShareCDV, CanExecuteShareCDV);
             _SearchPeerCommand = new DelegateCommand(ExecuteSearchPeer, CanExecuteSearchPeer);
-
+            _CloseConnectionCommand = new DelegateCommand(ExecuteCloseConnection, CanExecuteCloseConnection);
+            _CancelCommand = new DelegateCommand(ExecuteCancel, CanExecuteCancel);
 
             _PeerApps = new ObservableCollection<PeerAppInfo>();
-
-            //PeerFinder.ConnectionRequested += PeerFinder_ConnectionRequested;
-
 
             MaCarte = new MaCarteVisite();
 
@@ -124,23 +172,67 @@ namespace GetMyCard.ViewModels
 
         #endregion
 
-
-
         #region Methods
+
+        #region System
+
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            base.OnPropertyChanged(propertyName);
+
+            switch (propertyName)
+            {
+                case "SelectedContact":
+                    if (SelectedContact != null)
+                    {
+                        PeerInformation peer = SelectedContact.PeerInfo;
+                        ConnectToPeer(peer);
+                    }
+                    else if (Socket != null)
+                    {
+                        CloseConnection(true);
+                    }
+                    break;
+                case "IsConnecting":
+                    this.CancelCommand.OnCanExecuteChanged();
+                    break;
+                case "Socket":
+                    this.CloseConnectionCommand.OnCanExecuteChanged();
+                    this.ShareCDVCommand.OnCanExecuteChanged();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region Commands
+
+        #region ShareCDV
 
         private bool CanExecuteShareCDV(object parameters)
         {
-            return true;
-        }
-
-        private bool CanExecuteSearchPeer(object paramters)
-        {
-            return true;
+            return Socket != null;
         }
 
         private void ExecuteShareCDV(object parameters)
         {
+            //On se connecte à l'appareil selectionné
+            PeerInformation peer = SelectedContact.PeerInfo;
 
+            SendMessage("lol");
+
+
+        }
+
+        #endregion
+
+        #region SearchPeer
+
+        private bool CanExecuteSearchPeer(object paramters)
+        {
+            return true;
         }
 
         private void ExecuteSearchPeer(object parameters)
@@ -148,15 +240,46 @@ namespace GetMyCard.ViewModels
             RefreshPeerAppList();
         }
 
+        #endregion
 
-        /// <summary>
-        /// Asynchronous call to re-populate the ListBox of peers.
-        /// </summary>
+        #region Cancel
+
+        private bool CanExecuteCancel(object paramters)
+        {
+            return this._IsConnecting;
+        }
+
+        private void ExecuteCancel(object parameters)
+        {
+            this.IsConnecting = false;
+            this.SelectedContact = null;
+        }
+
+        #endregion
+
+        #region CloseConnection
+
+        private bool CanExecuteCloseConnection(object paramters)
+        {
+            return this.Socket != null;
+        }
+
+        private void ExecuteCloseConnection(object parameters)
+        {
+            this.CloseConnection(true);
+            this.SelectedContact = null;
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Rafraichissement des appareils
         private async void RefreshPeerAppList()
         {
             try
             {
-                StartProgress("Finding peers ...");
+                StartProgress("Recheche d'appareils ...");
 
                 var peers = await PeerFinder.FindAllPeersAsync();
 
@@ -169,7 +292,7 @@ namespace GetMyCard.ViewModels
                 else
                 {
                     PeerSearchInfo = String.Format(AppResources.PeersFoundTexte, peers.Count);
-                    
+
                     //On affiche les appareils dans la liste
                     foreach (var peer in peers)
                     {
@@ -205,8 +328,87 @@ namespace GetMyCard.ViewModels
                 StopProgress();
             }
         }
+        #endregion
 
+        #region Connecxion management
 
+        async Task ConnectToPeer(PeerInformation peer)
+        {
+            try
+            {
+                IsConnecting = true;
+                Socket = await PeerFinder.ConnectAsync(peer);
+                IsConnecting = false;
+                //On arrête d'indiquer notre présence
+                //TODO : ^Proposer un bouton pour arrêter / démarrer le PeerFinder
+                //PeerFinder.Stop();
+
+                PeerName = peer.DisplayName;
+                //UpdateChatBox(AppResources.Msg_ChatStarted, true);
+
+                ListenForIncomingMessage();
+                _ShareCDVCommand.OnCanExecuteChanged();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                CloseConnection(true);
+            }
+        }
+
+        private void CloseConnection(bool continueAdvertise)
+        {
+            if (DataReader != null)
+            {
+                DataReader.Dispose();
+                DataReader = null;
+            }
+
+            if (DataWriter != null)
+            {
+                DataWriter.Dispose();
+                DataWriter = null;
+            }
+
+            if (Socket != null)
+            {
+                Socket.Dispose();
+                Socket = null;
+                this._ShareCDVCommand.OnCanExecuteChanged();
+            }
+
+            if (continueAdvertise)
+            {
+                PeerFinder.Start();
+            }
+            else
+            {
+                PeerFinder.Stop();
+            }
+        }
+
+        private async void ListenForIncomingMessage()
+        {
+            try
+            {
+                var message = await GetMessage();
+                if (!string.IsNullOrWhiteSpace(message))
+                {
+                    MessageBox.Show(message);
+                }
+
+                ListenForIncomingMessage();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                CloseConnection(true);
+            }
+        }
+
+        #endregion
+
+        #region PrgressBar
         private void StartProgress(string message)
         {
             SystemTray.ProgressIndicator.Text = message;
@@ -222,6 +424,54 @@ namespace GetMyCard.ViewModels
                 SystemTray.ProgressIndicator.IsIndeterminate = false;
             }
         }
+        #endregion
+
+        #region SendAndGetMessage
+
+        private async Task SendMessage(string message)
+        {
+            if (message.Trim().Length == 0)
+            {
+                MessageBox.Show("Pas de message à envoyer", "Erreur", MessageBoxButton.OK);
+                return;
+            }
+
+            if (Socket == null)
+            {
+                MessageBox.Show("Non connecté", "Erreur", MessageBoxButton.OK);
+                return;
+            }
+
+            if (DataWriter == null)
+                DataWriter = new DataWriter(Socket.OutputStream);
+
+            // Chaque message est envoyé en 2 blocs.
+            // Le premier est la taille du message.
+            // Et le 2ème est le message.
+            DataWriter.WriteInt32(message.Length);
+            await DataWriter.StoreAsync();
+
+            DataWriter.WriteString(message);
+            await DataWriter.StoreAsync();
+
+            //UpdateChatBox(message, false);
+        }
+
+        private async Task<string> GetMessage()
+        {
+            if (DataReader == null)
+                DataReader = new DataReader(Socket.InputStream);
+
+            // Chaque message est envoyé en 2 blocs.
+            // Le premier est la taille du message.
+            // Et le 2ème est le message.
+            await DataReader.LoadAsync(4);
+            uint messageLen = (uint)DataReader.ReadInt32();
+            await DataReader.LoadAsync(messageLen);
+            return DataReader.ReadString(messageLen);
+        }
+
+        #endregion
 
         private void ShowBluetoothControlPanel()
         {
