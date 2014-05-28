@@ -19,26 +19,27 @@ namespace GetMyCard.ViewModels
    {
        #region Fields
 
-       private string _Nom;
-       private string _Prenom;
-       private string _Photo;
-       private string _Mail;
-       private string _TelFixe;
-       private string _TelPort;
-       private string _Nationalite;
-       private string _Societe;
-       private string _Logo;
-       private string _Poste;
-       private string _SiteWeb;
-       private string _Adresse;
-       private string _Ville;
-       private string _CP;
-       private string _Pays;
+       private string _NomContact;
+       private string _PrenomContact;
+       private string _PhotoContact;
+       private string _MailContact;
+       private string _TelFixeContact;
+       private string _TelPortContact;
+       private string _NationaliteContact;
+       private string _SocieteContact;
+       private string _LogoContact;
+       private string _PosteContact;
+       private string _SiteWebContact;
+       private string _AdresseContact;
+       private string _VilleContact;
+       private string _CPContact;
+       private string _PaysContact;
 
        private DelegateCommand _AddContact;
        private SaveContactTask _saveContactTask;
 
-       private ImageSource _PhotoBox;
+       private ImageSource _ContactPhotoBox;
+       private ImageSource _ContactLogoBox;
 
        #endregion
 
@@ -46,106 +47,111 @@ namespace GetMyCard.ViewModels
 
        #region Properties
 
-       public string Nom
+       public string NomContact
        {
-           get { return _Nom; }
-           set { Assign(ref _Nom, value); }
+           get { return _NomContact; }
+           set { Assign(ref _NomContact, value); }
        }
 
-       public string Prenom
+       public string PrenomContact
        {
-           get { return _Prenom; }
-           set { Assign(ref _Prenom, value); }
+           get { return _PrenomContact; }
+           set { Assign(ref _PrenomContact, value); }
        }
 
-       public string Photo
+       public string PhotoContact
        {
-           get { return _Photo; }
-           set { Assign(ref _Photo, value); }
+           get { return _PhotoContact; }
+           set { Assign(ref _PhotoContact, value); }
        }
 
-       public string Mail
+       public string MailContact
        {
-           get { return _Mail; }
-           set { Assign(ref _Mail, value); }
+           get { return _MailContact; }
+           set { Assign(ref _MailContact, value); }
        }
 
-       public string TelFixe
+       public string TelFixeContact
        {
-           get { return _TelFixe; }
-           set { Assign(ref _TelFixe, value); }
+           get { return _TelFixeContact; }
+           set { Assign(ref _TelFixeContact, value); }
        }
 
-       public string TelPort
+       public string TelPortContact
        {
-           get { return _TelPort; }
-           set { Assign(ref _TelPort, value); }
+           get { return _TelPortContact; }
+           set { Assign(ref _TelPortContact, value); }
        }
 
-       public string Nationalite
+       public string NationaliteContact
        {
-           get { return _Nationalite; }
-           set { Assign(ref _Nationalite, value); }
+           get { return _NationaliteContact; }
+           set { Assign(ref _NationaliteContact, value); }
        }
 
-       public string Societe
+       public string SocieteContact
        {
-           get { return _Societe; }
-           set { Assign(ref _Societe, value); }
+           get { return _SocieteContact; }
+           set { Assign(ref _SocieteContact, value); }
        }
 
-       public string Logo
+       public string LogoContact
        {
-           get { return _Logo; }
-           set { Assign(ref _Logo, value); }
+           get { return _LogoContact; }
+           set { Assign(ref _LogoContact, value); }
        }
 
-       public string Poste
+       public string PosteContact
        {
-           get { return _Poste; }
-           set { Assign(ref _Poste, value); }
+           get { return _PosteContact; }
+           set { Assign(ref _PosteContact, value); }
        }
 
-       public string SiteWeb
+       public string SiteWebContact
        {
-           get { return _SiteWeb; }
-           set { Assign(ref _SiteWeb, value); }
+           get { return _SiteWebContact; }
+           set { Assign(ref _SiteWebContact, value); }
        }
 
-       public string Adresse
+       public string AdresseContact
        {
-           get { return _Adresse; }
-           set { Assign(ref _Adresse, value); }
+           get { return _AdresseContact; }
+           set { Assign(ref _AdresseContact, value); }
        }
 
-       public string Ville
+       public string VilleContact
        {
-           get { return _Ville; }
-           set { Assign(ref _Ville, value); }
+           get { return _VilleContact; }
+           set { Assign(ref _VilleContact, value); }
        }
 
-       public string CP
+       public string CPContact
        {
-           get { return _CP; }
-           set { Assign(ref _CP, value); }
+           get { return _CPContact; }
+           set { Assign(ref _CPContact, value); }
        }
 
-       public string Pays
+       public string PaysContact
        {
-           get { return _Pays; }
-           set { Assign(ref _Pays, value); }
+           get { return _PaysContact; }
+           set { Assign(ref _PaysContact, value); }
        }
        public DelegateCommand AddContact
        {
            get { return _AddContact; }
        }
 
-        public ImageSource PhotoBox
+       public ImageSource ContactPhotoBox
         {
-            get { return _PhotoBox; }
-            set { Assign(ref _PhotoBox, value); }
+            get { return _ContactPhotoBox; }
+            set { Assign(ref _ContactPhotoBox, value); }
         }
 
+       public ImageSource ContactLogoBox
+       {
+           get { return _ContactLogoBox; }
+           set { Assign(ref _ContactLogoBox, value); }
+       }
        #endregion
 
 
@@ -157,9 +163,9 @@ namespace GetMyCard.ViewModels
 
            Contact c = (Contact)PhoneApplicationService.Current.State["contact"];
     
-               Nom = c.Nom;
-               Prenom = c.Prenom;
-               MessageBox.Show(Nom + Prenom);
+               NomContact = c.Nom;
+               PrenomContact = c.Prenom;
+               
     
                #region verification des info de l'utilisateur
                if (!string.IsNullOrEmpty(c.Photo))
@@ -169,7 +175,7 @@ namespace GetMyCard.ViewModels
                    if(c.Photo == "/Images/contact.png")
                    {
                        retrievedImage.UriSource = new Uri(c.Photo, UriKind.RelativeOrAbsolute);
-                       PhotoBox = retrievedImage;
+                       ContactPhotoBox = retrievedImage;
                    }
                    else
                    {
@@ -178,59 +184,79 @@ namespace GetMyCard.ViewModels
                            using (var isoFileStream = isoStore.OpenFile(c.Photo, System.IO.FileMode.Open))
                            {
                                retrievedImage.SetSource(isoFileStream);
+                               ContactPhotoBox = retrievedImage;
                            }
-    
-                           PhotoBox = retrievedImage;
+
+                           
                        }
                    }
                }
                if (!string.IsNullOrEmpty(c.Mail))
                {
-                   Mail = c.Mail;
+                   MailContact = c.Mail;
                }
                if (c.TelFixe != 0)
                {
-                   TelFixe = c.TelFixe.ToString();
+                   TelFixeContact = c.TelFixe.ToString();
                }
                if (c.TelPort != 0)
                {
-                   Mail = c.TelPort.ToString();
+                   TelPortContact = c.TelPort.ToString();
                }
                if (!string.IsNullOrEmpty(c.Nationalite))
                {
-                   Nationalite = c.Nationalite;
+                   NationaliteContact = c.Nationalite;
                }
                if (!string.IsNullOrEmpty(c.Societe))
                {
-                   Societe = c.Societe;
+                   SocieteContact = c.Societe;
                }
                if (!string.IsNullOrEmpty(c.Logo))
                {
-                   Logo = c.Logo;
+                   BitmapImage retrievedImage = new BitmapImage();
+
+                   if (c.Logo == "/Images/contact.png")
+                   {
+                       retrievedImage.UriSource = new Uri(c.Logo, UriKind.RelativeOrAbsolute);
+                       ContactLogoBox = retrievedImage;
+                   }
+                   else
+                   {
+                       using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                       {
+                           using (var isoFileStream = isoStore.OpenFile(c.Logo, System.IO.FileMode.Open))
+                           {
+                               retrievedImage.SetSource(isoFileStream);
+                               ContactLogoBox = retrievedImage;
+                           }
+
+
+                       }
+                   }
                }
                if (!string.IsNullOrEmpty(c.Poste))
                {
-                   Poste = c.Poste;
+                   PosteContact = c.Poste;
                }
                if (!string.IsNullOrEmpty(c.SiteWeb))
                {
-                   SiteWeb = c.SiteWeb;
+                   SiteWebContact = c.SiteWeb;
                }
                if (!string.IsNullOrEmpty(c.Adresse))
                {
-                   Adresse = c.Adresse;
+                   AdresseContact = c.Adresse;
                }
                if (!string.IsNullOrEmpty(c.Ville))
                {
-                   Ville = c.Ville;
+                   VilleContact = c.Ville;
                }
                if (c.CP != 0)
                {
-                   CP = c.CP.ToString();
+                   CPContact = c.CP.ToString();
                }
                if (!string.IsNullOrEmpty(c.Pays))
                {
-                   Pays = c.Pays;
+                   PaysContact = c.Pays;
                }
                #endregion
        }
@@ -249,18 +275,18 @@ namespace GetMyCard.ViewModels
        {
            _saveContactTask = new SaveContactTask();
            _saveContactTask.Completed += new EventHandler<SaveContactResult>(saveContactTask_Completed);
-           _saveContactTask.FirstName = _Prenom;
-           _saveContactTask.LastName = _Nom;
-           _saveContactTask.MobilePhone = _TelPort;
-           _saveContactTask.HomePhone = _TelFixe;
-           _saveContactTask.PersonalEmail = _Mail;
-           _saveContactTask.Company = _Societe;
-           _saveContactTask.JobTitle = _Poste;
-           _saveContactTask.Website = _Mail;
-           _saveContactTask.WorkAddressCity = _Ville;
-           _saveContactTask.WorkAddressStreet = _Adresse;
-           _saveContactTask.WorkAddressZipCode = _CP;
-           _saveContactTask.WorkAddressCountry = _Pays;
+           _saveContactTask.FirstName = _PrenomContact;
+           _saveContactTask.LastName = _NomContact;
+           _saveContactTask.MobilePhone = _TelPortContact;
+           _saveContactTask.HomePhone = _TelFixeContact;
+           _saveContactTask.PersonalEmail = _MailContact;
+           _saveContactTask.Company = _SocieteContact;
+           _saveContactTask.JobTitle = _PosteContact;
+           _saveContactTask.Website = _MailContact;
+           _saveContactTask.WorkAddressCity = _VilleContact;
+           _saveContactTask.WorkAddressStreet = _AdresseContact;
+           _saveContactTask.WorkAddressZipCode = _CPContact;
+           _saveContactTask.WorkAddressCountry = _PaysContact;
            _saveContactTask.Show();
        }
 

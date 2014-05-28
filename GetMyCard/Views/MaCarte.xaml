@@ -16,6 +16,7 @@
     toolkit:TiltEffect.IsTiltEnabled="True"
     shell:SystemTray.IsVisible="True">
 
+    
     <phone:PhoneApplicationPage.DataContext>
         <vm:ViewModelMaCarte/>
     </phone:PhoneApplicationPage.DataContext>
@@ -98,8 +99,19 @@
                     <TextBox Text="{Binding CP, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Pays, Mode=TwoWay}" InputScope="AddressCountryName"/>
-                    
+                    <!--<TextBox Text="{Binding Pays, Mode=TwoWay}"  InputScope="AddressCountryName" />-->
+                    <toolkit:AutoCompleteBox  ItemsSource="{Binding ListePays}"
+                                    ValueMemberPath="Pays"
+                                    SelectedItem="{Binding SelectedPays, Mode=TwoWay}"
+                                    FilterMode="Contains">
+                        <toolkit:AutoCompleteBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Pays}" Style="{StaticResource PhoneTextAccentStyle}"/>
+                            </DataTemplate>
+                        </toolkit:AutoCompleteBox.ItemTemplate>
+
+                    </toolkit:AutoCompleteBox>
+
                     <Button Content="Valider" Command="{Binding ValidateCommand, Mode=TwoWay}" />
                 </StackPanel>
             </ScrollViewer>

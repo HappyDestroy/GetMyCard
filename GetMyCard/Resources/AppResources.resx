@@ -209,4 +209,7 @@
   <data name="PeersFoundTexte" xml:space="preserve">
     <value>Appareil(s) trouvé(s) :</value>
   </data>
+  <data name="AddTexte" xml:space="preserve">
+    <value>Ajouter contact</value>
+  </data>
 </root>

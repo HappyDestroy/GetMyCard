@@ -37,7 +37,7 @@ namespace GetMyCard.ViewModels
         private string _PrenomMoi;
         private string _EntrepriseMoi;
         private string _PosteMoi;
-        private Contact _Cont;
+        
 
         #endregion
 
@@ -112,8 +112,20 @@ namespace GetMyCard.ViewModels
         {
             Contact addContact = new Contact();
             addContact.Photo = "/Images/contact.png";
-            addContact.Nom = "Nico";
-            addContact.Prenom = "Sabou";
+            addContact.Nom = "Martin";
+            addContact.Prenom = "Cesbron";
+            addContact.Adresse = "12 rue des kk";
+            addContact.CP = 49000;
+            addContact.Mail = "kk@jkjkj.fr";
+            addContact.Pays = "France";
+            addContact.Poste = "Directeur";
+            addContact.SiteWeb = "www.GetMyCard.com";
+            addContact.Societe = "GetMyCard";
+            addContact.TelFixe = 0241548742;
+            addContact.TelPort = 0602010405;
+            addContact.Ville = "ANGERS";
+            
+
 
             GetMyCardDataContext.Instance.Contact.InsertOnSubmit(addContact);
             GetMyCardDataContext.Instance.SubmitChanges();

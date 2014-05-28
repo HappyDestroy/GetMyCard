@@ -61,6 +61,15 @@ namespace GetMyCard.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Ajouter contact.
+        /// </summary>
+        public static string AddTexte {
+            get {
+                return ResourceManager.GetString("AddTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Adresse :.
         /// </summary>
         public static string AdresseTexte {
