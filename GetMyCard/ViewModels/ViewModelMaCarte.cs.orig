@@ -19,6 +19,7 @@ using System.Windows.Media.Imaging;
 using GetMyCard.Model;
 using Windows.Storage;
 using System.IO.IsolatedStorage;
+using System.Windows.Navigation;
 
 namespace GetMyCard.ViewModels
 {
@@ -28,7 +29,7 @@ namespace GetMyCard.ViewModels
 
         private string _Nom;
         private string _Prenom;
-        private ImageSource _MaPhotoBox;
+        private string _Photo;
         private string _Mail;
         private string _TelFixe;
         private string _TelPort;
@@ -42,23 +43,22 @@ namespace GetMyCard.ViewModels
         private string _CP;
         private string _Pays;
 
-        private string _SrcPhoto;
+        private BitmapImage _ChoosenImage;
+        private BitmapImage _ChoosenLogo;
+        private ImageSource _MaPhotoBox;
+        private ImageSource _MonLogoBox;
 
         private string _SrcPhoto;
+        private string _PathPhoto;
+        private string _SrcLogo;
+        private string _PathLogo;
 
         private DelegateCommand _ValidateCommand;
         private DelegateCommand _ImportPhotoCommand;
-<<<<<<< HEAD
-        private DelegateCommand _CameraPhotoCommand;
-        private PhotoChooserTask _photoChooserTask;
-        
+        private DelegateCommand _ImportLogoCommand;
         private PhotoChooserTask _PhotoChooserTask;
+        private PhotoChooserTask _LogoChooserTask;
 
-        private DelegateCommand _CameraPhotoCommand;
-        private PhotoChooserTask _photoChooserTask;
-        private CameraCaptureTask _cameraCaptureTask;
-        
->>>>>>> f8e64903eef0eb000a044f1cdf38efe700f6220a
         #endregion
 
 
@@ -77,10 +77,10 @@ namespace GetMyCard.ViewModels
             set { Assign(ref _Prenom, value); ValidateCommand.OnCanExecuteChanged(); }
         }
 
-        public ImageSource MaPhotoBox
+        public string Photo
         {
-            get { return _MaPhotoBox; }
-            set { Assign(ref _MaPhotoBox, value); }
+            get { return _Photo; }
+            set { Assign(ref _Photo, value); }
         }
 
         public string Mail
@@ -158,7 +158,6 @@ namespace GetMyCard.ViewModels
         public DelegateCommand ValidateCommand
         {
             get { return _ValidateCommand; }
-            set { Assign(ref _ValidateCommand, value); }
         }
 
         public DelegateCommand ImportPhotoCommand
@@ -167,29 +166,58 @@ namespace GetMyCard.ViewModels
             set { _ImportPhotoCommand = value; }
         }
 
-        public string SrcPhoto
-        public DelegateCommand CameraPhotoCommand
+        public DelegateCommand ImportLogoCommand
         {
-            get { return _CameraPhotoCommand; }
-            set { _CameraPhotoCommand = value; }
+            get { return _ImportLogoCommand; }
+            set { _ImportLogoCommand = value; }
         }
-        public string MaPhotoBox
+        public BitmapImage ChoosenImage
         {
-            get {return _ImportPhoto; }
-            set { Assign(ref _ImportPhoto, value); }
+            get { return _ChoosenImage; }
+            set { _ChoosenImage = value; }
         }
 
         public ImageSource MaPhotoBox
+        {
+            get { return _MaPhotoBox; }
+            set { Assign(ref _MaPhotoBox, value); }
+        }
 
-<<<<<<< HEAD
-=======
         public string SrcPhoto
         {
             get { return _SrcPhoto; }
             set { Assign(ref _SrcPhoto, value); }
         }
 
->>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
+        public string PathPhoto
+        {
+            get { return _PathPhoto; }
+            set { Assign(ref _PathPhoto, value); }
+        }
+
+        public BitmapImage ChoosenLogo
+        {
+            get { return _ChoosenLogo; }
+            set { _ChoosenLogo = value; }
+        }
+        public ImageSource MonLogoBox
+        {
+            get { return _MonLogoBox; }
+            set { Assign(ref _MonLogoBox, value); }
+        }
+
+        public string SrcLogo
+        {
+            get { return _SrcLogo; }
+            set { Assign(ref _SrcLogo, value); }
+        }
+
+        public string PathLogo
+        {
+            get { return _PathLogo; }
+            set { Assign(ref _PathLogo, value); }
+        }
+
         #endregion
 
 
@@ -200,6 +228,9 @@ namespace GetMyCard.ViewModels
         {
             _ValidateCommand = new DelegateCommand(ExecuteValidate, CanExecuteValidate);
             _ImportPhotoCommand = new DelegateCommand(ExecuteImportPhoto, CanExecuteImportPhoto);
+            _ImportLogoCommand = new DelegateCommand(ExecuteImportLogo, CanExecuteImportLogo);
+            _ChoosenImage = new BitmapImage();
+            _ChoosenLogo = new BitmapImage();
 
             if(GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {
@@ -209,6 +240,7 @@ namespace GetMyCard.ViewModels
                 Prenom = c.Prenom;
 
                 #region verification des info de l'utilisateur
+                //image avatar
                 if (!string.IsNullOrEmpty(c.Photo))
                 {
                     BitmapImage retrievedImage = new BitmapImage();
@@ -220,6 +252,20 @@ namespace GetMyCard.ViewModels
                         }
 
                         MaPhotoBox = retrievedImage;
+                    }
+                }
+                //image Logo
+                if (!string.IsNullOrEmpty(c.Logo))
+                {
+                    BitmapImage retrievedImage = new BitmapImage();
+                    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                    {
+                        using (var isoFileStream = isoStore.OpenFile(c.Logo, System.IO.FileMode.Open))
+                        {
+                            retrievedImage.SetSource(isoFileStream);
+                        }
+
+                        MonLogoBox = retrievedImage;
                     }
                 }
                 if (!string.IsNullOrEmpty(c.Mail))
@@ -241,10 +287,6 @@ namespace GetMyCard.ViewModels
                 if (!string.IsNullOrEmpty(c.Societe))
                 {
                     Societe = c.Societe;
-                }
-                if (!string.IsNullOrEmpty(c.Logo))
-                {
-                    Logo = c.Logo;
                 }
                 if (!string.IsNullOrEmpty(c.Poste))
                 {
@@ -270,13 +312,10 @@ namespace GetMyCard.ViewModels
                 {
                     Pays = c.Pays;
                 }
+
+
                 #endregion
             }
-           
-=======
-            _CameraPhotoCommand = new DelegateCommand(ExecutecameraPhoto, CanExecuteCameraPhoto);
-          
->>>>>>> f8e64903eef0eb000a044f1cdf38efe700f6220a
         }
 
         #endregion
@@ -286,179 +325,98 @@ namespace GetMyCard.ViewModels
 
         private bool CanExecuteValidate(object parameters)
         {
-<<<<<<< HEAD
-            return !string.IsNullOrWhiteSpace(Nom) && !string.IsNullOrEmpty(Prenom);
-=======
             return !string.IsNullOrWhiteSpace(Nom) || !string.IsNullOrWhiteSpace(Prenom);
->>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
         }
 
         private void ExecuteValidate(object parameters)
         {
             MaCarteVisite c;
-            MaCarteVisite c = new MaCarteVisite();
 
-            c.Nom = Nom;
-            c.Prenom = Prenom;
-
-            if(string.IsNullOrEmpty(Photo))
-            {
-                c.Photo = Photo;
-            }
-            if (string.IsNullOrEmpty(Mail))
-            {
-                c.Mail = Mail;
-            }
-            if (TelFixe != null)
-            {
-                c.TelFixe = int.Parse(TelFixe);
-            }
-            if (TelPort != null)
-            {
-                c.TelPort = int.Parse(TelPort);
-            }
-            if (string.IsNullOrEmpty(Nationalite))
-            {
-                c.Nationalite = Nationalite;
-            }
-            if (string.IsNullOrEmpty(Societe))
-            {
-                c.Societe = Societe;
-            }
-            if (string.IsNullOrEmpty(Logo))
-            {
-                c.Logo = Logo;
-            }
-            if (string.IsNullOrEmpty(Poste))
-            {
-                c.Poste = Poste;
-            }
-            if (string.IsNullOrEmpty(SiteWeb))
-            {
-                c.SiteWeb = SiteWeb;
-            }
-            if (string.IsNullOrEmpty(Adresse))
-            {
-                c.Adresse = Adresse;
-            }
-            if (string.IsNullOrEmpty(Ville))
-            {
-                c.Ville = Ville;
-            }
-            if (CP != null)
-            {
-                c.CP = int.Parse(CP);
-            }
-            if (string.IsNullOrEmpty(Pays))
-            {
-                c.Pays = Pays;
-            }
-
-            /*GetMyCardDataContext.Instance.MaCarteVisite.InsertOnSubmit(c);
-            GetMyCardDataContext.Instance.SubmitChanges();*/
-
-            MessageBox.Show("Nom : " + Nom +
-                "\nPrénom : " + Prenom +
-                "\nPhoto : " + Photo +
-                "\nMail : " + Mail +
-                "\nTéléphone fixe : " + TelFixe +
-                "\nTéléphone portable : " + TelPort +
-                "\nNationalité : " + Nationalite +
-                "\nLogo : " + Logo +
-                "\nPoste : " + Poste +
-                "\nSite web : " + SiteWeb +
-                "\nAdresse : " + Adresse +
-                "\nVille : " + Ville +
-                "\nCode postal : " + CP +
-                "\n Pays : " + Pays);
-                if (!string.IsNullOrEmpty(Photo))
-
-<<<<<<< HEAD
-            #region Verification champs
-            c.Nom = Nom;
-            c.Prenom = Prenom;
-
-            /*if(MaPhotoBox != null)
-            {
-                c.Photo = MaPhotoBox;
-            }*/
-
-            if (!string.IsNullOrEmpty(SrcPhoto))
-            {
-                c.Photo = SrcPhoto;
-            }
-            if (!string.IsNullOrEmpty(Mail))
-            {
-                c.Mail = Mail;
-            }
-            if (TelFixe != null)
-            {
-                c.TelFixe = int.Parse(TelFixe);
-            }
-            if (TelPort != null)
-            {
-                c.TelPort = int.Parse(TelPort);
-            }
-            if (!string.IsNullOrEmpty(Nationalite))
-            {
-                c.Nationalite = Nationalite;
-            }
-            if (!string.IsNullOrEmpty(Societe))
-            {
-                c.Societe = Societe;
-            }
-            if (!string.IsNullOrEmpty(Logo))
-            {
-                c.Logo = Logo;
-            }
-            if (!string.IsNullOrEmpty(Poste))
-            {
-                c.Poste = Poste;
-            }
-            if (!string.IsNullOrEmpty(SiteWeb))
-            {
-<<<<<<< HEAD
-            _photoChooserTask = new PhotoChooserTask();
-            _photoChooserTask.ShowCamera = true;
-            _photoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
-            _photoChooserTask.Show();
-=======
-            _PhotoChooserTask = new PhotoChooserTask();
-            _PhotoChooserTask.ShowCamera = true;
-            _PhotoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
-            _PhotoChooserTask.Show();
->>>>>>> 8e9c3b71cf18605b4d72325f5503c65345865a42
-            }
-
-
-            {
-                c.Adresse = Adresse;
-            }
-            if (!string.IsNullOrEmpty(Ville))
-
-            {
-                c.Ville = Ville;
-            }
-            if (CP != null)
-            {
-                c.CP = int.Parse(CP);
-            }
-            if (!string.IsNullOrEmpty(Pays))
-=======
             if(GetMyCardDataContext.Instance.MaCarteVisite.Any())
-        void photoChooserTask_Completed(object sender, Microsoft.Phone.Tasks.PhotoResult MaPhoto)
-        {
-            if (MaPhoto.TaskResult == TaskResult.OK)
             {
-<<<<<<< HEAD
+                c = GetMyCardDataContext.Instance.MaCarteVisite.First();
 
                 c.Nom = Nom;
                 c.Prenom = Prenom;
+                //if (!string.IsNullOrEmpty(SrcPhoto))
+                //{
+                //    Random random = new Random();
+                //    int num = random.Next();
+                //    c.Photo = SrcPhoto;// "Avatar_" + Nom + "_" + "_" + Prenom + num;// +".jpg"; 
+                //    //On enregistre l'image dans l'isolated storage
+                //    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                //    {
+                //        var wb = new WriteableBitmap(ChoosenImage);
 
+                //        using (var isoFileStream = isoStore.CreateFile(PathPhoto))
+                //        {
+                //            Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
+                //        }
+                //    }
+                //}
+                //if (!string.IsNullOrEmpty(SrcLogo))
+                //{
+                //    Random random = new Random();
+                //    int num = random.Next();
+                //    c.Logo = SrcLogo;// "Logo_" + Nom + "_" + "_" + Prenom + num;// +".jpg";
+                //    //On enregistre l'image dans l'isolated storage
+                //    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                //    {
+                //        var wb = new WriteableBitmap(ChoosenLogo);
+
+                //        using (var isoFileStream = isoStore.CreateFile(PathPhoto))
+                //        {
+                //            Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
+                //        }
+                //    }
+                //}
+                if (!string.IsNullOrEmpty(Mail))
+                {
+                    c.Mail = Mail;
+                }
+                if (TelFixe != null)
+                {
+                    c.TelFixe = int.Parse(TelFixe);
+                }
+                if (TelPort != null)
+                {
+                    c.TelPort = int.Parse(TelPort);
+                }
+                if (!string.IsNullOrEmpty(Nationalite))
+                {
+                    c.Nationalite = Nationalite;
+                }
+                if (!string.IsNullOrEmpty(Societe))
+                {
+                    c.Societe = Societe;
+                }
+                if (!string.IsNullOrEmpty(Poste))
+                {
+                    c.Poste = Poste;
+                }
+                if (!string.IsNullOrEmpty(SiteWeb))
+                {
+                    c.SiteWeb = SiteWeb;
+                }
+                if (!string.IsNullOrEmpty(Adresse))
+                {
+                    c.Adresse = Adresse;
+                }
+                if (!string.IsNullOrEmpty(Ville))
+                {
+                    c.Ville = Ville;
+                }
+                if (CP != null)
+                {
+                    c.CP = int.Parse(CP);
+                }
+                if (!string.IsNullOrEmpty(Pays))
+                {
+                    c.Pays = Pays;
+                }
                 GetMyCardDataContext.Instance.SubmitChanges();
             }
             else
->>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
             {
                 c = new MaCarteVisite();
 
@@ -469,16 +427,54 @@ namespace GetMyCard.ViewModels
 
                 if (!string.IsNullOrEmpty(SrcPhoto))
                 {
-                    c.Photo = SrcPhoto;
+<<<<<<< HEAD
+                    //On récupère l'extention de l'image
+                    string ext = (string)SrcPhoto.Split(".".ToCharArray()).Last();
+
+                    c.Photo = Nom + "-" + Prenom + "." + ext;
+=======
+                    Random random = new Random();
+                    int num = random.Next();
+                    c.Photo = SrcPhoto;// "Avatar_" + Nom + "_" + "_" + Prenom + num;// +".jpg"; 
+                    //On enregistre l'image dans l'isolated storage
+                    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                    {
+                        var wb = new WriteableBitmap(ChoosenImage);
+
+                        using (var isoFileStream = isoStore.CreateFile(PathPhoto))
+                        {
+                            Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
+                        }
+                    }
+                }
+                if (!string.IsNullOrEmpty(SrcLogo))
+                {
+                    Random random = new Random();
+                    int num = random.Next();
+                    c.Logo = SrcLogo;// "Logo_" + Nom + "_" + "_" + Prenom + num;// +".jpg";
+                    //On enregistre l'image dans l'isolated storage
+                    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                    {
+                        var wb = new WriteableBitmap(ChoosenLogo);
+
+                        using (var isoFileStream = isoStore.CreateFile(PathPhoto))
+                        {
+                            Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
+                        }
+                    }
+>>>>>>> 7e8ac6cf00d37a1921e2a65e7075d777c695bac6
+                }
                 if (!string.IsNullOrEmpty(Mail))
                 {
                     c.Mail = Mail;
-            _PhotoChooserTask.Show();
-=======
-            _photoChooserTask = new PhotoChooserTask();
-            _photoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
-            _photoChooserTask.Show();
->>>>>>> f8e64903eef0eb000a044f1cdf38efe700f6220a
+                }
+                if (TelFixe != null)
+                {
+                    c.TelFixe = int.Parse(TelFixe);
+                }
+                if (TelPort != null)
+                {
+                    c.TelPort = int.Parse(TelPort);
                 }
                 if (!string.IsNullOrEmpty(Nationalite))
                 {
@@ -487,10 +483,6 @@ namespace GetMyCard.ViewModels
                 if (!string.IsNullOrEmpty(Societe))
                 {
                     c.Societe = Societe;
-                }
-                if (!string.IsNullOrEmpty(Logo))
-                {
-                    c.Logo = Logo;
                 }
                 if (!string.IsNullOrEmpty(Poste))
                 {
@@ -523,18 +515,10 @@ namespace GetMyCard.ViewModels
                 GetMyCardDataContext.Instance.SubmitChanges();
             }
 
-            #endregion
 
-
-            GetMyCardDataContext.Instance.MaCarteVisite.InsertOnSubmit(c);
-            GetMyCardDataContext.Instance.SubmitChanges();
-            App.RootFrame.GoBack();
-
-            MessageBox.Show(MaPhotoBox.ToString());
-=======
             
+           
             App.RootFrame.GoBack();
->>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
         }
 
 
@@ -560,30 +544,46 @@ namespace GetMyCard.ViewModels
                 BitmapImage img = new BitmapImage();
                 img.SetSource(MaPhoto.ChosenPhoto);
 
-<<<<<<< HEAD
-                SrcPhoto = MaPhoto.OriginalFileName;
-
-=======
-                
                 //On affiche l'image
->>>>>>> ac4b3bac0418ea4c1b988114f618e0bff3062c58
                 MaPhotoBox = img;
 
-                string nomPhoto = System.IO.Path.GetFileName(MaPhoto.OriginalFileName);
+                ChoosenImage = img;
+
+                PathPhoto = System.IO.Path.GetFileName(MaPhoto.OriginalFileName);// "Avatar_" + Nom + "_" + "_" + Prenom + DateTime.Now;
 
                 //On sauvegarde le chemin d'accès de l'image
-                SrcPhoto = nomPhoto;
-                
-                //On enregistre l'image dans l'isolated storage
-                using(var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
-                {
-                    var wb = new WriteableBitmap(img);
+                SrcPhoto = PathPhoto;
+            }
+        }
+        public void ExecuteImportLogo(object parameters)
+        {
+            _LogoChooserTask = new PhotoChooserTask();
+            _LogoChooserTask.ShowCamera = true;
+            _LogoChooserTask.Completed += new EventHandler<PhotoResult>(logoChooserTask_Completed);
+            _LogoChooserTask.Show();
+        }
 
-                    using (var isoFileStream = isoStore.CreateFile(nomPhoto))
-                    {
-                        Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
-                    }
-                }
+
+        public bool CanExecuteImportLogo(object parameters)
+        {
+            return true;
+        }
+        void logoChooserTask_Completed(object sender, Microsoft.Phone.Tasks.PhotoResult MonLogo)
+        {
+            if (MonLogo.TaskResult == TaskResult.OK)
+            {
+                BitmapImage img = new BitmapImage();
+                img.SetSource(MonLogo.ChosenPhoto);
+
+                //On affiche le logo
+                MonLogoBox = img;
+
+                ChoosenLogo = img;
+
+                PathPhoto = System.IO.Path.GetFileName(MonLogo.OriginalFileName); //"Logo_" + Nom + "_" + "_" + Prenom + DateTime.Now;
+
+                //On sauvegarde le chemin d'accès du logo
+                SrcPhoto = PathPhoto;
             }
         }
         #endregion
