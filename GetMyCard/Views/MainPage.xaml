@@ -42,25 +42,24 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Image Grid.Column="0" Source="{Binding PhotoMoi}" Width="100" Stretch="Uniform"/>
+                            
+                            <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Image Grid.Row="0" Grid.Column="0" Source="{Binding PhotoMoi}" Height="100" Width="100" />
-                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding MaCarteVisite.Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding MaCarteVisite.Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                <Image Grid.Row="0" Grid.Column="3" Source="{Binding LogoMoi}" Width="30" Height="60" />
-                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding MaCarteVisite.Societe}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding MaCarteVisite.Poste}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Row="0" Text="{Binding MaCarteVisite.Nom}" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Row="1" Text="{Binding MaCarteVisite.Prenom}" Style="{StaticResource PhoneTextTitle2Style}"/>
                             </Grid>
+                            
+                            <Image Grid.Column="3" Source="{Binding LogoMoi}" Width="100" Stretch="Uniform"/>
                         </Grid>
                         
                         <ListBox Grid.Row="1"  ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}">
@@ -82,7 +81,7 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
 
-                                        <Grid>
+                                        <!--<Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="Auto"/>
@@ -91,7 +90,30 @@
                                             <Image Grid.Column="0" Source="{Binding Photo}" Width="30" Height="60" />
                                             <TextBlock Grid.Column="1" Text="{Binding Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                                             <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>                              
+                                        </Grid>-->
+                                        
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Image Grid.Column="0" Source="{Binding Photo}" Width="100" Stretch="Uniform"/>
+
+                                            <Grid Grid.Column="1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Grid.Row="0" Text="{Binding Nom}" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                                <TextBlock Grid.Row="1" Text="{Binding Prenom}" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                            </Grid>
+
+                                            <Image Grid.Column="3" Source="{Binding Logo}" Width="100" Stretch="Uniform"/>
                                         </Grid>
+
+
                                     </Border>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>                            
@@ -147,7 +169,5 @@
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
-    
-    
     
 </phone:PhoneApplicationPage>

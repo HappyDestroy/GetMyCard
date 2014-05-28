@@ -57,7 +57,7 @@
                                 <BitmapImage UriSource="{Binding ContactLogoBox, Mode=TwoWay}"/>
                             </Image.Source>
                         </Image>
-                        <Button Grid.Column="2" Width="80" Height="80" Command="{Binding AddContact}" TextInput="{Binding Path=LocalizedResources.AddTexte, Source={StaticResource LocalizedStrings}}">
+                        <Button Grid.Column="2" Width="80" Height="80" Command="{Binding AddContact}">
                             <Image Source="/Images/Btn_add.png"/>
                         </Button>
                     </Grid>
