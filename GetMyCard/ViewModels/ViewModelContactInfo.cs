@@ -159,6 +159,7 @@ namespace GetMyCard.ViewModels
     
                Nom = c.Nom;
                Prenom = c.Prenom;
+               MessageBox.Show(Nom + Prenom);
     
                #region verification des info de l'utilisateur
                if (!string.IsNullOrEmpty(c.Photo))
@@ -252,10 +253,14 @@ namespace GetMyCard.ViewModels
            _saveContactTask.LastName = _Nom;
            _saveContactTask.MobilePhone = _TelPort;
            _saveContactTask.HomePhone = _TelFixe;
-           _saveContactTask.HomeAddressStreet = _Adresse;
-           _saveContactTask.HomeAddressZipCode = _CP;
            _saveContactTask.PersonalEmail = _Mail;
            _saveContactTask.Company = _Societe;
+           _saveContactTask.JobTitle = _Poste;
+           _saveContactTask.Website = _Mail;
+           _saveContactTask.WorkAddressCity = _Ville;
+           _saveContactTask.WorkAddressStreet = _Adresse;
+           _saveContactTask.WorkAddressZipCode = _CP;
+           _saveContactTask.WorkAddressCountry = _Pays;
            _saveContactTask.Show();
        }
 
