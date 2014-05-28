@@ -304,7 +304,10 @@ namespace GetMyCard.ViewModels
 
                 if (!string.IsNullOrEmpty(SrcPhoto))
                 {
-                    c.Photo = SrcPhoto;
+                    //On récupère l'extention de l'image
+                    string ext = (string)SrcPhoto.Split(".".ToCharArray()).Last();
+
+                    c.Photo = Nom + "-" + Prenom + "." + ext;
                 }
                 if (!string.IsNullOrEmpty(Mail))
                 {

@@ -116,12 +116,12 @@ namespace GetMyCard.ViewModels
                 //On récupère l'image depuis l'isolated storage
                 using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
+                    /*using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
                     {
                         retrievedImage.SetSource(isoFileStream);
                     }
 
-                    PhotoMoi = retrievedImage;
+                    PhotoMoi = retrievedImage;*/
                 }
 
                 NomMoi = MaCarteVisite.Nom;

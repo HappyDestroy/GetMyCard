@@ -156,7 +156,7 @@ namespace GetMyCard.ViewModels
         {
             try
             {
-                //StartProgress("finding peers ...");
+                StartProgress("Finding peers ...");
 
                 var peers = await PeerFinder.FindAllPeersAsync();
 
