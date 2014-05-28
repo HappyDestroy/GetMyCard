@@ -38,7 +38,7 @@ namespace GetMyCard.Model
         public long Identifiant
         {
             get { return _Identifiant; }
-            set { Assign(ref _Identifiant, value); }
+            set { Assign(ref _Identifiant, value); OnPropertyChanged(); }
         }
         [Column(DbType = "NVarChar(250) NOT NULL", CanBeNull = false)]
         public string Nom

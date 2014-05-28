@@ -33,11 +33,6 @@ namespace GetMyCard.ViewModels
 
         private ImageSource _PhotoMoi;
         private ImageSource _LogoMoi;
-        private string _NomMoi;
-        private string _PrenomMoi;
-        private string _EntrepriseMoi;
-        private string _PosteMoi;
-
         #endregion
 
 
@@ -72,35 +67,12 @@ namespace GetMyCard.ViewModels
             set { Assign(ref _PhotoMoi, value); }
         }
 
-        public string NomMoi
-        {
-            get { return _NomMoi; }
-            set { Assign(ref _NomMoi, value); }
-        }
-
-        public string PrenomMoi
-        {
-            get { return _PrenomMoi; }
-            set { Assign(ref _PrenomMoi, value); }
-        }
-
         public ImageSource LogoMoi
         {
             get { return _LogoMoi; }
             set { Assign(ref _LogoMoi, value); }
         }
 
-        public string EntrepriseMoi
-        {
-            get { return _EntrepriseMoi; }
-            set { Assign(ref _EntrepriseMoi, value); }
-        }
-
-        public string PosteMoi
-        {
-            get { return _PosteMoi; }
-            set { Assign(ref _PosteMoi, value); }
-        }
         #endregion
 
 
@@ -116,8 +88,6 @@ namespace GetMyCard.ViewModels
 
             GetMyCardDataContext.Instance.Contact.InsertOnSubmit(addContact);
             GetMyCardDataContext.Instance.SubmitChanges();
-
-
 
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _SelectedContact = new DelegateCommand(ExecuteSelectedContact, CanExecuteSelectContact);
@@ -138,21 +108,6 @@ namespace GetMyCard.ViewModels
         }
 
         private bool CanExecuteSelectContact(object parameters)
-        {
-            return true;
-        }
-        private bool CanExecuteSelectedContact(object parameters)
-        {
-            return true;
-        }
-
-        private bool CanExecuteShareCDV(object parameters)
-        {
-            //TODO : verifier que l'utilisateur a une CDV
-            return true;
-        }
-
-        private bool CanExecuteRecieveCDV(object paramters)
         {
             return true;
         }
@@ -231,17 +186,12 @@ namespace GetMyCard.ViewModels
 
                     }
                 }
-
-                NomMoi = MaCarteVisite.Nom;
-                PrenomMoi = MaCarteVisite.Prenom;
-                EntrepriseMoi = MaCarteVisite.Societe;
-                PosteMoi = MaCarteVisite.Poste;
             }
             else
             {
                 MaCarteVisite = new MaCarteVisite();
                 MaCarteVisite.Photo = "Images/contact.png";
-                NomMoi = "Vous n'avez pas de carte de visite";
+                MaCarteVisite.Nom = "Vous n'avez pas de carte de visite";
             }
         }
         #endregion

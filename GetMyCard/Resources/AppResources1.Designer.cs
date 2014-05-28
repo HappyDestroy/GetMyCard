@@ -70,6 +70,15 @@ namespace GetMyCard.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Annuler.
+        /// </summary>
+        public static string AnnulerTexte {
+            get {
+                return ResourceManager.GetString("AnnulerTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Get My Card.
         /// </summary>
         public static string ApplicationTitle {
@@ -93,6 +102,24 @@ namespace GetMyCard.Resources {
         public static string CPTexte {
             get {
                 return ResourceManager.GetString("CPTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Deconnecter.
+        /// </summary>
+        public static string DeconnecterTexte {
+            get {
+                return ResourceManager.GetString("DeconnecterTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Importer.
+        /// </summary>
+        public static string ImportTexte {
+            get {
+                return ResourceManager.GetString("ImportTexte", resourceCulture);
             }
         }
         
@@ -304,6 +331,15 @@ namespace GetMyCard.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Supprimer.
+        /// </summary>
+        public static string SupprimerTexte {
+            get {
+                return ResourceManager.GetString("SupprimerTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Téléphone fixe :.
         /// </summary>
         public static string TelFixeTexte {
@@ -318,6 +354,15 @@ namespace GetMyCard.Resources {
         public static string TelPortTexte {
             get {
                 return ResourceManager.GetString("TelPortTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Valider.
+        /// </summary>
+        public static string ValidateTexte {
+            get {
+                return ResourceManager.GetString("ValidateTexte", resourceCulture);
             }
         }
         

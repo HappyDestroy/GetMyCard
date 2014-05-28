@@ -209,4 +209,19 @@
   <data name="PeersFoundTexte" xml:space="preserve">
     <value>Appareil(s) trouvé(s) :</value>
   </data>
+  <data name="ImportTexte" xml:space="preserve">
+    <value>Importer</value>
+  </data>
+  <data name="SupprimerTexte" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="ValidateTexte" xml:space="preserve">
+    <value>Valider</value>
+  </data>
+  <data name="AnnulerTexte" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="DeconnecterTexte" xml:space="preserve">
+    <value>Deconnecter</value>
+  </data>
 </root>
