@@ -16,6 +16,7 @@
     toolkit:TiltEffect.IsTiltEnabled="True"
     shell:SystemTray.IsVisible="True">
 
+    
     <phone:PhoneApplicationPage.DataContext>
         <vm:ViewModelMaCarte/>
     </phone:PhoneApplicationPage.DataContext>
@@ -41,10 +42,10 @@
             <ScrollViewer>
                 <StackPanel>
                     <TextBlock Text="{Binding Path=LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Nom, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.Nom, Mode=TwoWay}"/>
                     
                     <TextBlock Text="{Binding Path=LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Prenom, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.Prenom, Mode=TwoWay}"/>
                     
                     <TextBlock Text="{Binding Path=LocalizedResources.PhotoTexte, Source={StaticResource LocalizedStrings}}" />
                     
@@ -53,67 +54,78 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
-<<<<<<< HEAD
-                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="Import" Command="{Binding ImportPhotoCommand}"/>
-                        <Image Grid.Column="2" Width="120">
-                            <Image.Source>
-                                <BitmapImage UriSource="{Binding MaPhotoBox, Mode=TwoWay}" />
-                            </Image.Source>
-                        </Image>
-=======
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="Import" Command="{Binding ImportPhotoCommand}"/>
-                        <Image Grid.Column="1" Width="120" Source="{Binding MaPhotoBox, Mode=TwoWay}"/>
->>>>>>> c94389085213bb53abd529fc7a6f31e2b7653c00
+                        <Button Grid.Column="0" Content="{Binding Path=LocalizedResources.ImportTexte, Source={StaticResource LocalizedStrings}}" Command="{Binding ImportPhotoCommand}"/>
+                        <Image Grid.Column="1" Width="120" Height="100" Source="{Binding MaPhotoBox, Mode=TwoWay}"/>
                     </Grid>
-                   
+                    
                     <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Mail, Mode=TwoWay}" InputScope="EmailUserName"/>
+                    <TextBox Text="{Binding MaCarteVisite.Mail, Mode=TwoWay}" InputScope="EmailUserName"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelFixeTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding TelFixe, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre"/>
+                    <TextBox Text="{Binding MaCarteVisite.TelFixe, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelPortTexte, Source={StaticResource LocalizedStrings}}" />
-<<<<<<< HEAD
-                    <TextBox Text="{Binding TelPort, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre"/>
-=======
-                    <TextBox Text="{Binding TelPort, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
->>>>>>> c94389085213bb53abd529fc7a6f31e2b7653c00
+                    <TextBox Text="{Binding MaCarteVisite.TelPort, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.NationaliteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Nationalite, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.Nationalite, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.SocieteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Societe, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.Societe, Mode=TwoWay}"/>
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.LogoTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Logo, Mode=TwoWay}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="{Binding Path=LocalizedResources.ImportTexte, Source={StaticResource LocalizedStrings}}" Command="{Binding ImportLogoCommand}"/>
+                        <Image Grid.Column="1" Width="120" Height="100" Source="{Binding MonLogoBox, Mode=TwoWay}"/>
+                    </Grid>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PosteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Poste, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.Poste, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.SiteWebTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding SiteWeb, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.SiteWeb, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.AdresseTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Adresse, Mode=TwoWay}" InputScope="AddressCity"/>
+                    <TextBox Text="{Binding MaCarteVisite.Adresse, Mode=TwoWay}" InputScope="AddressCity"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.VilleTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Ville, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.Ville, Mode=TwoWay}"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.CPTexte, Source={StaticResource LocalizedStrings}}" />
-<<<<<<< HEAD
-                    <TextBox Text="{Binding CP, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre"/>
-=======
-                    <TextBox Text="{Binding CP, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
->>>>>>> c94389085213bb53abd529fc7a6f31e2b7653c00
+                    <TextBox Text="{Binding MaCarteVisite.CP, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding Pays, Mode=TwoWay}" InputScope="AddressCountryName"/>
-                    
-                    <Button Content="Valider" Command="{Binding ValidateCommand, Mode=TwoWay}" />
+                    <!--<TextBox Text="{Binding Pays, Mode=TwoWay}"  InputScope="AddressCountryName" />-->
+                    <toolkit:AutoCompleteBox  ItemsSource="{Binding ListePays}"
+                                    ValueMemberPath="Pays"
+                                    SelectedItem="{Binding SelectedPays, Mode=TwoWay}"
+                                    FilterMode="Contains">
+                        <toolkit:AutoCompleteBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Pays}" Style="{StaticResource PhoneTextAccentStyle}"/>
+                            </DataTemplate>
+                        </toolkit:AutoCompleteBox.ItemTemplate>
+
+                    </toolkit:AutoCompleteBox>
+
+
+                    <toolkit:AutoCompleteBox  ItemsSource="{Binding ListePays}"
+                                    ValueMemberPath="Pays"
+                                    SelectedItem="{Binding SelectedPays, Mode=TwoWay}"
+                                    FilterMode="Contains">
+                        <toolkit:AutoCompleteBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Pays}" Style="{StaticResource PhoneTextAccentStyle}"/>
+                            </DataTemplate>
+                        </toolkit:AutoCompleteBox.ItemTemplate>
+
+                    </toolkit:AutoCompleteBox>
+
+                    <Button Content="{Binding Path=LocalizedResources.ValidateTexte, Source={StaticResource LocalizedStrings}}" Command="{Binding ValidateCommand, Mode=TwoWay}" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>
