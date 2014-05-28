@@ -55,11 +55,11 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Image Grid.Row="0" Grid.Column="0" Source="{Binding PhotoMoi}" Height="100" Width="100" />
-                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding NomMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding PrenomMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding MaCarteVisite.Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding MaCarteVisite.Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                                 <Image Grid.Row="0" Grid.Column="3" Source="{Binding LogoMoi}" Width="30" Height="60" />
-                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding EntrepriseMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding PosteMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding MaCarteVisite.Societe}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding MaCarteVisite.Poste}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                             </Grid>
                         </Grid>
                         
@@ -70,7 +70,7 @@
                                     <Border BorderThickness="0,0,0,4" BorderBrush="AliceBlue" Background="{StaticResource PhoneBackgroundBrush}">
                                         <toolkit:ContextMenuService.ContextMenu>
                                             <toolkit:ContextMenu>
-                                                <toolkit:MenuItem Header="Supprimer"
+                                                <toolkit:MenuItem Header="{Binding Path=LocalizedResources.SupprimerTexte, Source={StaticResource LocalizedStrings}}"
                                                                   Command="{Binding Path=DataContext.DeleteContactCommand, ElementName=_this}"
                                                                   CommandParameter="{Binding}" />
                                             </toolkit:ContextMenu>
@@ -88,11 +88,11 @@
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
-                                            <Image     Grid.Column="0" Source="{Binding Photo}" Width="30" Height="60" />
+                                            <Image Grid.Column="0" Source="{Binding Photo}" Width="30" Height="60" />
                                             <TextBlock Grid.Column="1" Text="{Binding Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                                             <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>                              
                                         </Grid>
-                                    </Border>                                    
+                                    </Border>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>                            
                         </ListBox>
@@ -110,7 +110,7 @@
 
                         <TextBlock Text="{Binding PeerSearchInfo}" />
                         
-                        <ListBox ItemsSource="{Binding PeerApps}">
+                        <ListBox ItemsSource="{Binding PeerApps}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding DisplayName}" FontSize="{StaticResource PhoneFontSizeMedium}" Margin="40,0,0,0"/>
@@ -122,6 +122,9 @@
 
 
                         <Button Content="{Binding Path=LocalizedResources.ShareCDVTexte,  Source={StaticResource LocalizedStrings}}" Command="{Binding ShareCDVCommand}"/>
+                        <Button Content="{Binding Path=LocalizedResources.AnnulerTexte, Source={StaticResource LocalizedStrings}}"       Command="{Binding CancelCommand}"/>
+                        <Button Content="{Binding Path=LocalizedResources.DeconnecterTexte, Source={StaticResource LocalizedStrings}}"   Command="{Binding CloseConnectionCommand}"/>
+                    
                     </StackPanel>
 
                 </controls:PivotItem>
