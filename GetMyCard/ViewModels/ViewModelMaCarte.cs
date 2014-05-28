@@ -39,6 +39,7 @@ namespace GetMyCard.ViewModels
         private string _PathPhoto;
         private string _SrcLogo;
         private string _PathLogo;
+        private string _SelectedPays;
 
         private DelegateCommand _ValidateCommand;
         private DelegateCommand _ImportPhotoCommand;
@@ -112,6 +113,12 @@ namespace GetMyCard.ViewModels
         {
             get { return _PathLogo; }
             set { Assign(ref _PathLogo, value); }
+        }
+
+        public string SelectedPays
+        {
+            get { return _SelectedPays; }
+            set { Assign(ref _SelectedPays, value); }
         }
 
         public MaCarteVisite MaCarteVisite

@@ -41,6 +41,7 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <ScrollViewer>
                 <StackPanel>
+
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -58,47 +59,47 @@
                             </Image.Source>
                         </Image>
                         <Button Grid.Column="2" Width="80" Height="80" Command="{Binding AddContact}">
-                            <Image Source="/Images/Btn_add.png"/>
+                            <Image Grid.Column="0" Source="/Images/Btn_add.png"/>
                         </Button>
                     </Grid>
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
-                    <TextBlock Text="{Binding NomContact, Mode=TwoWay}" Style="{StaticResource PhoneTextNormalStyle}" />
+                    <TextBlock Text="{Binding LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding NomContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}" />
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
                     <TextBlock Text="{Binding PrenomContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}" />
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding LocalizedResources.MailTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
                     <TextBlock Text="{Binding MailContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}"/>
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.TelFixeTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding LocalizedResources.TelFixeTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
                     <TextBlock Text="{Binding TelFixeContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}"/>
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.TelPortTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding LocalizedResources.TelPortTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
                     <TextBlock Text="{Binding TelPortContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}"/>
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.NationaliteTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding LocalizedResources.NationaliteTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
                     <TextBlock Text="{Binding TelFixeContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}"/>
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.SocieteTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding LocalizedResources.SocieteTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
                     <TextBlock Text="{Binding SocieteContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}" />
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.PosteTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding LocalizedResources.PosteTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
                     <TextBlock Text="{Binding PosteContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}"/>
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.SiteWebTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding LocalizedResources.SiteWebTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
                     <TextBlock Text="{Binding SiteWebContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}"/>
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.AdresseTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding LocalizedResources.AdresseTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
                     <TextBlock Text="{Binding AdresseContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}"/>
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.VilleTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding LocalizedResources.VilleTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
                     <TextBlock Text="{Binding VilleContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}"/>
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.CPTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding LocalizedResources.CPTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
                     <TextBlock Text="{Binding CPContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}"/>
 
-                    <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
+                    <TextBlock Text="{Binding LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextTitle3Style}"/>
                     <TextBlock Text="{Binding PaysContact, Mode=TwoWay}" Style="{StaticResource PhoneTextAccentStyle}"/>
                 </StackPanel>
             </ScrollViewer>

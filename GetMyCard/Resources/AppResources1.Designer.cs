@@ -97,11 +97,29 @@ namespace GetMyCard.Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Sauvegarde annulée.
+        /// </summary>
+        public static string CancelSave {
+            get {
+                return ResourceManager.GetString("CancelSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Infos Contact.
         /// </summary>
         public static string ContactInfoText {
             get {
                 return ResourceManager.GetString("ContactInfoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Contact sauvegardé.
+        /// </summary>
+        public static string ContactSaveTexte {
+            get {
+                return ResourceManager.GetString("ContactSaveTexte", resourceCulture);
             }
         }
         
@@ -120,6 +138,15 @@ namespace GetMyCard.Resources {
         public static string DeconnecterTexte {
             get {
                 return ResourceManager.GetString("DeconnecterTexte", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Erreur lors de la sauvegarde.
+        /// </summary>
+        public static string ErrorSaveContact {
+            get {
+                return ResourceManager.GetString("ErrorSaveContact", resourceCulture);
             }
         }
         

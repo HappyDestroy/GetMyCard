@@ -1,4 +1,5 @@
 ﻿using GetMyCard.Model;
+using GetMyCard.Resources;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using System;
@@ -296,17 +297,17 @@ namespace GetMyCard.ViewModels
            {
                //Logic for when the contact was saved successfully
                case TaskResult.OK:
-                   MessageBox.Show("Contact saved.");
+                   MessageBox.Show(AppResources.ContactSaveTexte);
                    break;
 
                //Logic for when the task was cancelled by the user
                case TaskResult.Cancel:
-                   MessageBox.Show("Save cancelled.");
+                   MessageBox.Show(AppResources.CancelSave);
                    break;
 
                //Logic for when the contact could not be saved
                case TaskResult.None:
-                   MessageBox.Show("Contact could not be saved.");
+                   MessageBox.Show(AppResources.ErrorSaveContact);
                    break;
            }
        }

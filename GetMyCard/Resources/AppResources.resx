@@ -224,7 +224,16 @@
   <data name="DeconnecterTexte" xml:space="preserve">
     <value>Deconnecter</value>
   </data>
-    <data name="AddTexte" xml:space="preserve">
+  <data name="AddTexte" xml:space="preserve">
     <value>Ajouter contact</value>
+  </data>
+  <data name="CancelSave" xml:space="preserve">
+    <value>Sauvegarde annulée</value>
+  </data>
+  <data name="ContactSaveTexte" xml:space="preserve">
+    <value>Contact sauvegardé</value>
+  </data>
+  <data name="ErrorSaveContact" xml:space="preserve">
+    <value>Erreur lors de la sauvegarde</value>
   </data>
 </root>
