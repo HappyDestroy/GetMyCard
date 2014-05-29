@@ -43,8 +43,8 @@ namespace GetMyCard.ViewModels
         private string _CP;
         private string _Pays;
 
-        private BitmapImage _ChoosenImage;
-        private BitmapImage _ChoosenLogo;
+        private BitmapImage _ChosenImage;
+        private BitmapImage _ChosenLogo;
         private ImageSource _MaPhotoBox;
         private ImageSource _MonLogoBox;
 
@@ -158,23 +158,24 @@ namespace GetMyCard.ViewModels
         public DelegateCommand ValidateCommand
         {
             get { return _ValidateCommand; }
+            set { Assign(ref _ValidateCommand, value); }
         }
 
         public DelegateCommand ImportPhotoCommand
         {
             get { return _ImportPhotoCommand; }
-            set { _ImportPhotoCommand = value; }
+            set { Assign(ref _ImportPhotoCommand, value); }
         }
 
         public DelegateCommand ImportLogoCommand
         {
             get { return _ImportLogoCommand; }
-            set { _ImportLogoCommand = value; }
+            set { Assign(ref _ImportLogoCommand, value); }
         }
-        public BitmapImage ChoosenImage
+        public BitmapImage ChosenImage
         {
-            get { return _ChoosenImage; }
-            set { _ChoosenImage = value; }
+            get { return _ChosenImage; }
+            set { Assign(ref _ChosenImage, value); }
         }
 
         public ImageSource MaPhotoBox
@@ -195,10 +196,10 @@ namespace GetMyCard.ViewModels
             set { Assign(ref _PathPhoto, value); }
         }
 
-        public BitmapImage ChoosenLogo
+        public BitmapImage ChosenLogo
         {
-            get { return _ChoosenLogo; }
-            set { _ChoosenLogo = value; }
+            get { return _ChosenLogo; }
+            set { Assign(ref _ChosenLogo, value); }
         }
         public ImageSource MonLogoBox
         {
@@ -229,8 +230,8 @@ namespace GetMyCard.ViewModels
             _ValidateCommand = new DelegateCommand(ExecuteValidate, CanExecuteValidate);
             _ImportPhotoCommand = new DelegateCommand(ExecuteImportPhoto, CanExecuteImportPhoto);
             _ImportLogoCommand = new DelegateCommand(ExecuteImportLogo, CanExecuteImportLogo);
-            _ChoosenImage = new BitmapImage();
-            _ChoosenLogo = new BitmapImage();
+            _ChosenImage = new BitmapImage();
+            _ChosenLogo = new BitmapImage();
 
             if(GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {
@@ -338,38 +339,54 @@ namespace GetMyCard.ViewModels
 
                 c.Nom = Nom;
                 c.Prenom = Prenom;
-                //if (!string.IsNullOrEmpty(SrcPhoto))
-                //{
-                //    Random random = new Random();
-                //    int num = random.Next();
-                //    c.Photo = SrcPhoto;// "Avatar_" + Nom + "_" + "_" + Prenom + num;// +".jpg"; 
-                //    //On enregistre l'image dans l'isolated storage
-                //    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
-                //    {
-                //        var wb = new WriteableBitmap(ChoosenImage);
 
-                //        using (var isoFileStream = isoStore.CreateFile(PathPhoto))
-                //        {
-                //            Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
-                //        }
-                //    }
-                //}
-                //if (!string.IsNullOrEmpty(SrcLogo))
-                //{
-                //    Random random = new Random();
-                //    int num = random.Next();
-                //    c.Logo = SrcLogo;// "Logo_" + Nom + "_" + "_" + Prenom + num;// +".jpg";
-                //    //On enregistre l'image dans l'isolated storage
-                //    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
-                //    {
-                //        var wb = new WriteableBitmap(ChoosenLogo);
+                #region Enregistrement photo
+                if (!string.IsNullOrEmpty(SrcPhoto))
+                {
+                    Random random = new Random();
+                    int num = random.Next(1, 1000);
 
-                //        using (var isoFileStream = isoStore.CreateFile(PathPhoto))
-                //        {
-                //            Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
-                //        }
-                //    }
-                //}
+                    string ext = (string)SrcPhoto.Split(".".ToCharArray()).Last();
+
+                    PathPhoto = "photo_" + Nom + "-" + Prenom + "-" + num + "." + ext;
+                    c.Photo = PathPhoto;
+
+                    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                    {
+                        var wb = new WriteableBitmap(ChosenImage);
+
+                        using (var isoFileStream = isoStore.CreateFile(PathPhoto))
+                        {
+                            Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
+                        }
+                    }
+                }
+                #endregion
+
+                #region Enregistrement logo
+                if (!string.IsNullOrEmpty(SrcLogo))
+                {
+                    Random random = new Random();
+                    int num = random.Next(1, 1000);
+
+                    string ext = (string)SrcLogo.Split(".".ToCharArray()).Last();
+
+                    PathLogo = "logo_" + Nom + "-" + Prenom + "-" + num + "." + ext;
+                    c.Logo = PathLogo;
+
+                    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                    {
+                        var wb = new WriteableBitmap(ChosenLogo);
+
+                        using (var isoFileStream = isoStore.CreateFile(PathLogo))
+                        {
+                            Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
+                        }
+                    }
+                }
+                #endregion
+
+
                 if (!string.IsNullOrEmpty(Mail))
                 {
                     c.Mail = Mail;
@@ -414,6 +431,7 @@ namespace GetMyCard.ViewModels
                 {
                     c.Pays = Pays;
                 }
+
                 GetMyCardDataContext.Instance.SubmitChanges();
             }
             else
@@ -428,12 +446,17 @@ namespace GetMyCard.ViewModels
                 if (!string.IsNullOrEmpty(SrcPhoto))
                 {
                     Random random = new Random();
-                    int num = random.Next();
-                    c.Photo = SrcPhoto;// "Avatar_" + Nom + "_" + "_" + Prenom + num;// +".jpg"; 
+                    int num = random.Next(1, 1000);
+
+                    string ext = (string)SrcPhoto.Split(".".ToCharArray()).Last();
+
+                    PathPhoto = "photo_" + Nom + "-" + Prenom + "-" + num + "." + ext;
+                    c.Photo = PathPhoto;
+
                     //On enregistre l'image dans l'isolated storage
                     using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
                     {
-                        var wb = new WriteableBitmap(ChoosenImage);
+                        var wb = new WriteableBitmap(ChosenImage);
 
                         using (var isoFileStream = isoStore.CreateFile(PathPhoto))
                         {
@@ -444,14 +467,19 @@ namespace GetMyCard.ViewModels
                 if (!string.IsNullOrEmpty(SrcLogo))
                 {
                     Random random = new Random();
-                    int num = random.Next();
-                    c.Logo = SrcLogo;// "Logo_" + Nom + "_" + "_" + Prenom + num;// +".jpg";
+                    int num = random.Next(1, 1000);
+
+                    string ext = (string)SrcLogo.Split(".".ToCharArray()).Last();
+
+                    PathLogo = "logo_" + Nom + "-" + Prenom + "-" + num + "." + ext;
+                    c.Logo = PathLogo;
+
                     //On enregistre l'image dans l'isolated storage
                     using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
                     {
-                        var wb = new WriteableBitmap(ChoosenLogo);
+                        var wb = new WriteableBitmap(ChosenLogo);
 
-                        using (var isoFileStream = isoStore.CreateFile(PathPhoto))
+                        using (var isoFileStream = isoStore.CreateFile(PathLogo))
                         {
                             Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
                         }
@@ -540,14 +568,15 @@ namespace GetMyCard.ViewModels
                 //On affiche l'image
                 MaPhotoBox = img;
 
-                ChoosenImage = img;
-
-                PathPhoto = System.IO.Path.GetFileName(MaPhoto.OriginalFileName);// "Avatar_" + Nom + "_" + "_" + Prenom + DateTime.Now;
+                //On sauvegarde l'objet image
+                ChosenImage = img;
 
                 //On sauvegarde le chemin d'accès de l'image
-                SrcPhoto = PathPhoto;
+                SrcPhoto = System.IO.Path.GetFileName(MaPhoto.OriginalFileName); ;
             }
         }
+
+
         public void ExecuteImportLogo(object parameters)
         {
             _LogoChooserTask = new PhotoChooserTask();
@@ -561,6 +590,8 @@ namespace GetMyCard.ViewModels
         {
             return true;
         }
+
+
         void logoChooserTask_Completed(object sender, Microsoft.Phone.Tasks.PhotoResult MonLogo)
         {
             if (MonLogo.TaskResult == TaskResult.OK)
@@ -571,12 +602,11 @@ namespace GetMyCard.ViewModels
                 //On affiche le logo
                 MonLogoBox = img;
 
-                ChoosenLogo = img;
-
-                PathPhoto = System.IO.Path.GetFileName(MonLogo.OriginalFileName); //"Logo_" + Nom + "_" + "_" + Prenom + DateTime.Now;
+                //On récupère l'objet image
+                ChosenLogo = img;
 
                 //On sauvegarde le chemin d'accès du logo
-                SrcPhoto = PathPhoto;
+                SrcLogo = System.IO.Path.GetFileName(MonLogo.OriginalFileName); ;
             }
         }
         #endregion

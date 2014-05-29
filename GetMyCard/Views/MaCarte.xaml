@@ -54,7 +54,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="Import" Command="{Binding ImportPhotoCommand}"/>
+                        <Button Grid.Column="0" Content="{Binding Path=LocalizedResources.ImporterPhotoTexte, Source={StaticResource LocalizedStrings}}" Command="{Binding ImportPhotoCommand}"/>
                         <Image Grid.Column="1" Width="120" Height="100" Source="{Binding MaPhotoBox, Mode=TwoWay}"/>
                     </Grid>
                     
@@ -78,7 +78,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="Import" Command="{Binding ImportLogoCommand}"/>
+                        <Button Grid.Column="0" Content="{Binding Path=LocalizedResources.ImporterPhotoTexte, Source={StaticResource LocalizedStrings}}" Command="{Binding ImportLogoCommand}"/>
                         <Image Grid.Column="1" Width="120" Height="100" Source="{Binding MonLogoBox, Mode=TwoWay}"/>
                     </Grid>
 

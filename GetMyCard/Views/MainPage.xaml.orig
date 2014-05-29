@@ -57,7 +57,7 @@
                                 <Image Grid.Row="0" Grid.Column="0" Source="{Binding PhotoMoi}" Height="100" Width="100" />
                                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding NomMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                                 <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding PrenomMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                <Image Grid.Row="0" Grid.Column="3" Source="{Binding LogoMoi}" Width="30" Height="60" />
+                                <Image Grid.Row="0" Grid.Column="3" Source="{Binding MonLogo}" Width="30" Height="60" />
                                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding EntrepriseMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                                 <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding PosteMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                             </Grid>
@@ -105,6 +105,10 @@
                     <controls:PivotItem.DataContext>
                         <vm:ViewModelPartage/>
                     </controls:PivotItem.DataContext>
+<<<<<<< HEAD:GetMyCard/MainPage.xaml
+                    
+=======
+>>>>>>> 8ce477dc8226302cdeca663d9d806a5e506b7597:GetMyCard/Views/MainPage.xaml
                     <StackPanel>
                         <Button Content="{Binding Path=LocalizedResources.SearchPeriphTexte,  Source={StaticResource LocalizedStrings}}" Command="{Binding SearchPeerCommand}" />
 

@@ -209,4 +209,7 @@
   <data name="PeersFoundTexte" xml:space="preserve">
     <value>Appareil(s) trouvé(s) :</value>
   </data>
+  <data name="ImporterPhotoTexte" xml:space="preserve">
+    <value>Importer</value>
+  </data>
 </root>
