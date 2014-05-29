@@ -33,12 +33,6 @@ namespace GetMyCard.ViewModels
 
         private ImageSource _PhotoMoi;
         private ImageSource _LogoMoi;
-        private string _NomMoi;
-        private string _PrenomMoi;
-        private string _EntrepriseMoi;
-        private string _PosteMoi;
-        private Contact _Cont;
-
         #endregion
 
 
@@ -73,34 +67,12 @@ namespace GetMyCard.ViewModels
             set { Assign(ref _PhotoMoi, value); }
         }
 
-        public string NomMoi
-        {
-            get { return _NomMoi; }
-            set { Assign(ref _NomMoi, value); }
-        }
-
-        public string PrenomMoi
-        {
-            get { return _PrenomMoi; }
-            set { Assign(ref _PrenomMoi, value); }
-        }
         public ImageSource LogoMoi
         {
             get { return _LogoMoi; }
             set { Assign(ref _LogoMoi, value); }
         }
 
-        public string EntrepriseMoi
-        {
-            get { return _EntrepriseMoi; }
-            set { Assign(ref _EntrepriseMoi, value); }
-        }
-
-        public string PosteMoi
-        {
-            get { return _PosteMoi; }
-            set { Assign(ref _PosteMoi, value); }
-        }
         #endregion
 
 
@@ -116,8 +88,6 @@ namespace GetMyCard.ViewModels
 
             GetMyCardDataContext.Instance.Contact.InsertOnSubmit(addContact);
             GetMyCardDataContext.Instance.SubmitChanges();
-
-
 
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _SelectedContact = new DelegateCommand(ExecuteSelectedContact, CanExecuteSelectContact);
@@ -138,10 +108,6 @@ namespace GetMyCard.ViewModels
         }
 
         private bool CanExecuteSelectContact(object parameters)
-        {
-            return true;
-        }
-        private bool CanExecuteSelectedContact(object parameters)
         {
             return true;
         }
@@ -177,34 +143,39 @@ namespace GetMyCard.ViewModels
 
         public void LoadData()
         {
-            //On charge tous les autres contacts
+            //On charge tous les contacts
             foreach (Contact contact in GetMyCardDataContext.Instance.Contact)
             {
                 Contacts.Add(contact);
             }
 
-            //On charge nos informations
+            //On charge les infos de sa carte
             if (GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {
                 MaCarteVisite = GetMyCardDataContext.Instance.MaCarteVisite.First();
 
-                BitmapImage retrievedImage = new BitmapImage();
-
-                //On récupère l'image depuis l'isolated storage
-                using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                if (!string.IsNullOrEmpty(MaCarteVisite.Photo))
                 {
-                    using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
+                    BitmapImage retrievedImage = new BitmapImage();
+
+                    //On récupère l'image depuis l'isolated storage
+                    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
                     {
-                        retrievedImage.SetSource(isoFileStream);
-                        PhotoMoi = retrievedImage;
+                        using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
+                        {
+                            retrievedImage.SetSource(isoFileStream);
+                            PhotoMoi = retrievedImage;
+                        }
                     }
                 }
+               
 
-                //On récupère le logo depuis l'isolated storage
-                using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                if(!string.IsNullOrEmpty(MaCarteVisite.Logo))
                 {
-                    LogoMoi = retrievedImage;
-                    if (LogoMoi != null)
+                    BitmapImage retrievedImage = new BitmapImage();
+
+                    //On récupère le logo depuis l'isolated storage
+                    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
                     {
                         // Récupération du logo
                         using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Logo, System.IO.FileMode.Open))
@@ -212,22 +183,17 @@ namespace GetMyCard.ViewModels
                             retrievedImage.SetSource(isoFileStream);
                             LogoMoi = retrievedImage;
                         }
+
                     }
                 }
-
-                NomMoi = MaCarteVisite.Nom;
-                PrenomMoi = MaCarteVisite.Prenom;
-                EntrepriseMoi = MaCarteVisite.Societe;
-                PosteMoi = MaCarteVisite.Poste;
             }
             else
             {
                 MaCarteVisite = new MaCarteVisite();
                 MaCarteVisite.Photo = "Images/contact.png";
-                NomMoi = "Vous n'avez pas de carte de visite";
+                MaCarteVisite.Nom = "Vous n'avez pas de carte de visite";
             }
         }
-
         #endregion
     }
 }

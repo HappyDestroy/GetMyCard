@@ -185,15 +185,48 @@
   <data name="ParamAgentTexte" xml:space="preserve">
     <value>Activer l'agent :</value>
   </data>
-<<<<<<< HEAD
-  <data name="ContactTexte" xml:space="preserve">
-    <value>Contacts</value>
+  <data name="ContactInfoText" xml:space="preserve">
+    <value>Infos Contact</value>
   </data>
   <data name="PartageTexte" xml:space="preserve">
     <value>Partage</value>
+  </data>
+  <data name="PopupPartageTexte" xml:space="preserve">
+    <value>Voulez-vous recevoir la carte de visite de {0} ?</value>
+  </data>
+  <data name="PopupPartageTitre" xml:space="preserve">
+    <value>Demande de partage</value>
+  </data>
+  <data name="SearchPeriphTexte" xml:space="preserve">
+    <value>Rechercher des périphériques</value>
+  </data>
+  <data name="ShareCDVTexte" xml:space="preserve">
+    <value>Partager ma carte de visite</value>
+  </data>
+  <data name="NoPeersTexte" xml:space="preserve">
+    <value>Aucun appareil trouvé !</value>
+  </data>
+  <data name="PeersFoundTexte" xml:space="preserve">
+    <value>Appareil(s) trouvé(s) :</value>
+  </data>
+<<<<<<< HEAD
+  <data name="AddTexte" xml:space="preserve">
+    <value>Ajouter contact</value>
 =======
-  <data name="ContactInfoText" xml:space="preserve">
-    <value>Infos Contact</value>
->>>>>>> c94389085213bb53abd529fc7a6f31e2b7653c00
+  <data name="ImportTexte" xml:space="preserve">
+    <value>Importer</value>
+  </data>
+  <data name="SupprimerTexte" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="ValidateTexte" xml:space="preserve">
+    <value>Valider</value>
+  </data>
+  <data name="AnnulerTexte" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="DeconnecterTexte" xml:space="preserve">
+    <value>Deconnecter</value>
+>>>>>>> eaac5d6485b34ad2055b16ba174b2950b064e039
   </data>
 </root>

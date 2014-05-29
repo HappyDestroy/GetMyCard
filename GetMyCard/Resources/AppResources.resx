@@ -209,7 +209,31 @@
   <data name="PeersFoundTexte" xml:space="preserve">
     <value>Appareil(s) trouvé(s) :</value>
   </data>
-  <data name="ImporterPhotoTexte" xml:space="preserve">
+  <data name="ImportTexte" xml:space="preserve">
     <value>Importer</value>
+  </data>
+  <data name="SupprimerTexte" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="ValidateTexte" xml:space="preserve">
+    <value>Valider</value>
+  </data>
+  <data name="AnnulerTexte" xml:space="preserve">
+    <value>Annuler</value>
+  </data>
+  <data name="DeconnecterTexte" xml:space="preserve">
+    <value>Deconnecter</value>
+  </data>
+  <data name="AddTexte" xml:space="preserve">
+    <value>Ajouter contact</value>
+  </data>
+  <data name="CancelSave" xml:space="preserve">
+    <value>Sauvegarde annulée</value>
+  </data>
+  <data name="ContactSaveTexte" xml:space="preserve">
+    <value>Contact sauvegardé</value>
+  </data>
+  <data name="ErrorSaveContact" xml:space="preserve">
+    <value>Erreur lors de la sauvegarde</value>
   </data>
 </root>

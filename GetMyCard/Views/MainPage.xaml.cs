@@ -18,6 +18,7 @@ namespace GetMyCard
         public MainPage()
         {
             InitializeComponent();
+            SystemTray.SetProgressIndicator(this, new ProgressIndicator());
         }
 
         //Lors du click sur le bouton "Ma carte" du menu
