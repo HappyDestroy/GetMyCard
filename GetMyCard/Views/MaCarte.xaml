@@ -21,7 +21,6 @@
         <vm:ViewModelMaCarte/>
     </phone:PhoneApplicationPage.DataContext>
 
-
     <!--LayoutRoot est la grille racine où tout le contenu de la page est placé-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -42,10 +41,10 @@
             <ScrollViewer>
                 <StackPanel>
                     <TextBlock Text="{Binding Path=LocalizedResources.NomTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding MaCarteVisite.Nom, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.Nom, Mode=TwoWay}" InputScope="PersonalFullName"/>
                     
                     <TextBlock Text="{Binding Path=LocalizedResources.PrenomTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding MaCarteVisite.Prenom, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.Prenom, Mode=TwoWay}" InputScope="PersonalFullName"/>
                     
                     <TextBlock Text="{Binding Path=LocalizedResources.PhotoTexte, Source={StaticResource LocalizedStrings}}" />
                     
@@ -63,16 +62,15 @@
                     <TextBox Text="{Binding MaCarteVisite.Mail, Mode=TwoWay}" InputScope="EmailUserName"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.TelFixeTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding MaCarteVisite.TelFixe, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre"/>
-
+                    <TextBox Text="{Binding MaCarteVisite.TelFixe, Mode=TwoWay, StringFormat=00 00 00 00 00}" InputScope="Number" KeyDown="VerifNombre" MaxLength="14"/>
                     <TextBlock Text="{Binding Path=LocalizedResources.TelPortTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding MaCarteVisite.TelPort, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
+                    <TextBox Text="{Binding MaCarteVisite.TelPort, Mode=TwoWay, StringFormat=00 00 00 00 00}" InputScope="Number" KeyDown="VerifNombre" MaxLength="14"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.NationaliteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding MaCarteVisite.Nationalite, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.Nationalite, Mode=TwoWay}" InputScope="PersonalFullName"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.SocieteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding MaCarteVisite.Societe, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.Societe, Mode=TwoWay}" InputScope="PersonalFullName"/>
 
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -84,33 +82,22 @@
                     </Grid>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PosteTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding MaCarteVisite.Poste, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.Poste, Mode=TwoWay}" InputScope="PersonalFullName"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.SiteWebTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding MaCarteVisite.SiteWeb, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.SiteWeb, Mode=TwoWay}" InputScope="Url"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.AdresseTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding MaCarteVisite.Adresse, Mode=TwoWay}" InputScope="AddressCity"/>
+                    <TextBox Text="{Binding MaCarteVisite.Adresse, Mode=TwoWay}" InputScope="AddressStreet"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.VilleTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding MaCarteVisite.Ville, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding MaCarteVisite.Ville, Mode=TwoWay}" InputScope="AddressCity"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.CPTexte, Source={StaticResource LocalizedStrings}}" />
-                    <TextBox Text="{Binding MaCarteVisite.CP, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
+                    <TextBox Text="{Binding MaCarteVisite.CP, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" MaxLength="5"/>
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
-
-                    <toolkit:AutoCompleteBox  ItemsSource="{Binding ListePays}"
-                                    ValueMemberPath="Pays"
-                                    SelectedItem="{Binding SelectedPays, Mode=TwoWay}"
-                                    FilterMode="Contains">
-                        <toolkit:AutoCompleteBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Pays}" Style="{StaticResource PhoneTextAccentStyle}"/>
-                            </DataTemplate>
-                        </toolkit:AutoCompleteBox.ItemTemplate>
-
-                    </toolkit:AutoCompleteBox>
+                    <toolkit:AutoCompleteBox Text="{Binding MaCarteVisite.Pays, Mode=TwoWay}" ItemsSource="{Binding ListePays}" FilterMode="StartsWith" InputScope="AddressCountryName"/>
 
                     <Button Content="{Binding Path=LocalizedResources.ValidateTexte, Source={StaticResource LocalizedStrings}}" Command="{Binding ValidateCommand, Mode=TwoWay}" />
                 </StackPanel>

@@ -187,6 +187,7 @@ namespace GetMyCard.ViewModels
                     {
                         PeerInformation peer = SelectedContact.PeerInfo;
                         ConnectToPeer(peer);
+                        StartProgress("Connexion en cours ...");
                     }
                     else if (Socket != null)
                     {
@@ -253,6 +254,7 @@ namespace GetMyCard.ViewModels
         {
             this.IsConnecting = false;
             this.SelectedContact = null;
+            StopProgress();
         }
 
         #endregion
@@ -304,7 +306,7 @@ namespace GetMyCard.ViewModels
             {
                 if ((uint)ex.HResult == ERR_BLUETOOTH_OFF)
                 {
-                    var result = MessageBox.Show("Le bluetooth est désactivé.", "Bluetooth desactivé", MessageBoxButton.OKCancel);
+                    var result = MessageBox.Show("Le bluetooth est désactivé, cliquez sur \"OK\" pour l'activer.", "Bluetooth desactivé", MessageBoxButton.OKCancel);
                     if (result == MessageBoxResult.OK)
                     {
                         ShowBluetoothControlPanel();
@@ -316,7 +318,7 @@ namespace GetMyCard.ViewModels
                 }
                 else if ((uint)ex.HResult == ERR_NOT_ADVERTISING)
                 {
-                    MessageBox.Show("Notre présence n'est pas indiqué (PeerFind.start())");
+                    MessageBox.Show("Vous n'avez pas de carte de visite.");
                 }
                 else
                 {
@@ -330,7 +332,7 @@ namespace GetMyCard.ViewModels
         }
         #endregion
 
-        #region Connecxion management
+        #region Connexion management
 
         async Task ConnectToPeer(PeerInformation peer)
         {
@@ -339,20 +341,25 @@ namespace GetMyCard.ViewModels
                 IsConnecting = true;
                 Socket = await PeerFinder.ConnectAsync(peer);
                 IsConnecting = false;
+                StopProgress();
+
                 //On arrête d'indiquer notre présence
-                //TODO : ^Proposer un bouton pour arrêter / démarrer le PeerFinder
+                //TODO : Proposer un bouton pour arrêter / démarrer le PeerFinder
                 //PeerFinder.Stop();
 
                 PeerName = peer.DisplayName;
-                //UpdateChatBox(AppResources.Msg_ChatStarted, true);
 
                 ListenForIncomingMessage();
                 _ShareCDVCommand.OnCanExecuteChanged();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Connexion non établie : La personne n'a pas accepté.", "Erreur", MessageBoxButton.OK);
                 CloseConnection(true);
+
+                this.IsConnecting = false;
+                this.SelectedContact = null;
+                StopProgress();
             }
         }
 
@@ -408,7 +415,7 @@ namespace GetMyCard.ViewModels
 
         #endregion
 
-        #region PrgressBar
+        #region ProgressBar
         private void StartProgress(string message)
         {
             SystemTray.ProgressIndicator.Text = message;

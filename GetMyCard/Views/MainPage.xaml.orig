@@ -42,25 +42,33 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Image Grid.Column="0" Source="{Binding PhotoMoi}" Width="100" Stretch="Uniform"/>
+                            
+                            <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
+<<<<<<< HEAD
                                 <Image Grid.Row="0" Grid.Column="0" Source="{Binding PhotoMoi}" Height="100" Width="100" />
                                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding NomMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                                 <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding PrenomMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                <Image Grid.Row="0" Grid.Column="3" Source="{Binding MonLogo}" Width="30" Height="60" />
+                                <Image Grid.Row="0" Grid.Column="3" Source="{Binding LogoMoi}" Width="30" Height="60" />
                                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding EntrepriseMoi}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                                 <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding PosteMoi}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
+=======
+                                <TextBlock Grid.Row="0" Text="{Binding MaCarteVisite.Nom}" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                <TextBlock Grid.Row="1" Text="{Binding MaCarteVisite.Prenom}" Style="{StaticResource PhoneTextTitle2Style}"/>
+>>>>>>> e06ea5f32fa08d42d7234dd1deecdeb4bf657d52
                             </Grid>
+                            
+                            <Image Grid.Column="3" Source="{Binding LogoMoi}" Width="100" Stretch="Uniform"/>
                         </Grid>
                         
                         <ListBox Grid.Row="1"  ItemsSource="{Binding Contacts}" Style="{StaticResource ListBoxStyle}">
@@ -70,7 +78,7 @@
                                     <Border BorderThickness="0,0,0,4" BorderBrush="AliceBlue" Background="{StaticResource PhoneBackgroundBrush}">
                                         <toolkit:ContextMenuService.ContextMenu>
                                             <toolkit:ContextMenu>
-                                                <toolkit:MenuItem Header="Supprimer"
+                                                <toolkit:MenuItem Header="{Binding Path=LocalizedResources.SupprimerTexte, Source={StaticResource LocalizedStrings}}"
                                                                   Command="{Binding Path=DataContext.DeleteContactCommand, ElementName=_this}"
                                                                   CommandParameter="{Binding}" />
                                             </toolkit:ContextMenu>
@@ -82,17 +90,40 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
 
-                                        <Grid>
+                                        <!--<Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
-                                            <Image     Grid.Column="0" Source="{Binding Photo}" Width="30" Height="60" />
+                                            <Image Grid.Column="0" Source="{Binding Photo}" Width="30" Height="60" />
                                             <TextBlock Grid.Column="1" Text="{Binding Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
                                             <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>                              
+                                        </Grid>-->
+                                        
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Image Grid.Column="0" Source="{Binding Photo}" Width="100" Stretch="Uniform"/>
+
+                                            <Grid Grid.Column="1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Grid.Row="0" Text="{Binding Nom}" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                                <TextBlock Grid.Row="1" Text="{Binding Prenom}" Style="{StaticResource PhoneTextTitle2Style}"/>
+                                            </Grid>
+
+                                            <Image Grid.Column="3" Source="{Binding Logo}" Width="100" Stretch="Uniform"/>
                                         </Grid>
-                                    </Border>                                    
+
+
+                                    </Border>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>                            
                         </ListBox>
@@ -105,16 +136,12 @@
                     <controls:PivotItem.DataContext>
                         <vm:ViewModelPartage/>
                     </controls:PivotItem.DataContext>
-<<<<<<< HEAD:GetMyCard/MainPage.xaml
-                    
-=======
->>>>>>> 8ce477dc8226302cdeca663d9d806a5e506b7597:GetMyCard/Views/MainPage.xaml
                     <StackPanel>
                         <Button Content="{Binding Path=LocalizedResources.SearchPeriphTexte,  Source={StaticResource LocalizedStrings}}" Command="{Binding SearchPeerCommand}" />
 
                         <TextBlock Text="{Binding PeerSearchInfo}" />
                         
-                        <ListBox ItemsSource="{Binding PeerApps}">
+                        <ListBox ItemsSource="{Binding PeerApps}" SelectedItem="{Binding SelectedContact, Mode=TwoWay}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding DisplayName}" FontSize="{StaticResource PhoneFontSizeMedium}" Margin="40,0,0,0"/>
@@ -126,6 +153,9 @@
 
 
                         <Button Content="{Binding Path=LocalizedResources.ShareCDVTexte,  Source={StaticResource LocalizedStrings}}" Command="{Binding ShareCDVCommand}"/>
+                        <Button Content="{Binding Path=LocalizedResources.AnnulerTexte, Source={StaticResource LocalizedStrings}}"       Command="{Binding CancelCommand}"/>
+                        <Button Content="{Binding Path=LocalizedResources.DeconnecterTexte, Source={StaticResource LocalizedStrings}}"   Command="{Binding CloseConnectionCommand}"/>
+                    
                     </StackPanel>
 
                 </controls:PivotItem>
@@ -148,7 +178,5 @@
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
-    
-    
     
 </phone:PhoneApplicationPage>

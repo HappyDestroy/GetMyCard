@@ -33,15 +33,6 @@ namespace GetMyCard.ViewModels
 
         private ImageSource _PhotoMoi;
         private ImageSource _LogoMoi;
-<<<<<<< HEAD
-        private string _NomMoi;
-        private string _PrenomMoi;
-        private string _EntrepriseMoi;
-        private string _PosteMoi;
-        
-
-=======
->>>>>>> eaac5d6485b34ad2055b16ba174b2950b064e039
         #endregion
 
 
@@ -92,23 +83,16 @@ namespace GetMyCard.ViewModels
         {
             Contact addContact = new Contact();
             addContact.Photo = "/Images/contact.png";
-            addContact.Nom = "Martin";
-            addContact.Prenom = "Cesbron";
-            addContact.Adresse = "12 rue des kk";
-            addContact.CP = 49000;
-            addContact.Mail = "kk@jkjkj.fr";
-            addContact.Pays = "France";
-            addContact.Poste = "Directeur";
-            addContact.SiteWeb = "www.GetMyCard.com";
-            addContact.Societe = "GetMyCard";
-            addContact.TelFixe = 0241548742;
-            addContact.TelPort = 0602010405;
-            addContact.Ville = "ANGERS";
-            
-
+            addContact.Nom = "Nico";
+            addContact.Prenom = "Sabou";
 
             GetMyCardDataContext.Instance.Contact.InsertOnSubmit(addContact);
             GetMyCardDataContext.Instance.SubmitChanges();
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> e06ea5f32fa08d42d7234dd1deecdeb4bf657d52
 
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _SelectedContact = new DelegateCommand(ExecuteSelectedContact, CanExecuteSelectContact);
@@ -132,6 +116,13 @@ namespace GetMyCard.ViewModels
         {
             return true;
         }
+<<<<<<< HEAD
+        private bool CanExecuteSelectedContact(object parameters)
+        {
+            return true;
+        }
+=======
+>>>>>>> e06ea5f32fa08d42d7234dd1deecdeb4bf657d52
 
         private void ExecuteDeleteContact(object parameters)
         {
@@ -164,13 +155,21 @@ namespace GetMyCard.ViewModels
 
         public void LoadData()
         {
+<<<<<<< HEAD
+            //On charge tous les autres contacts
+=======
             //On charge tous les contacts
+>>>>>>> e06ea5f32fa08d42d7234dd1deecdeb4bf657d52
             foreach (Contact contact in GetMyCardDataContext.Instance.Contact)
             {
                 Contacts.Add(contact);
             }
 
+<<<<<<< HEAD
+            //On charge nos informations
+=======
             //On charge les infos de sa carte
+>>>>>>> e06ea5f32fa08d42d7234dd1deecdeb4bf657d52
             if (GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {
                 MaCarteVisite = GetMyCardDataContext.Instance.MaCarteVisite.First();
@@ -188,6 +187,29 @@ namespace GetMyCard.ViewModels
                             PhotoMoi = retrievedImage;
                         }
                     }
+<<<<<<< HEAD
+                }
+
+                //On récupère le logo depuis l'isolated storage
+                using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    LogoMoi = retrievedImage;
+                    if (LogoMoi != null)
+                    {
+                        // Récupération du logo
+                        using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Logo, System.IO.FileMode.Open))
+                        {
+                            retrievedImage.SetSource(isoFileStream);
+                            LogoMoi = retrievedImage;
+                        }
+                    }
+                }
+
+                NomMoi = MaCarteVisite.Nom;
+                PrenomMoi = MaCarteVisite.Prenom;
+                EntrepriseMoi = MaCarteVisite.Societe;
+                PosteMoi = MaCarteVisite.Poste;
+=======
                 }
                
 
@@ -207,6 +229,7 @@ namespace GetMyCard.ViewModels
 
                     }
                 }
+>>>>>>> e06ea5f32fa08d42d7234dd1deecdeb4bf657d52
             }
             else
             {
@@ -215,6 +238,10 @@ namespace GetMyCard.ViewModels
                 MaCarteVisite.Nom = "Vous n'avez pas de carte de visite";
             }
         }
+<<<<<<< HEAD
+
+=======
+>>>>>>> e06ea5f32fa08d42d7234dd1deecdeb4bf657d52
         #endregion
     }
 }

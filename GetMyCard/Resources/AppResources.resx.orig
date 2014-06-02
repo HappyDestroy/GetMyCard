@@ -210,8 +210,9 @@
     <value>Appareil(s) trouvé(s) :</value>
   </data>
 <<<<<<< HEAD
-  <data name="AddTexte" xml:space="preserve">
-    <value>Ajouter contact</value>
+  <data name="ImporterPhotoTexte" xml:space="preserve">
+    <value>Importer</value>
+  </data>
 =======
   <data name="ImportTexte" xml:space="preserve">
     <value>Importer</value>
@@ -227,6 +228,18 @@
   </data>
   <data name="DeconnecterTexte" xml:space="preserve">
     <value>Deconnecter</value>
->>>>>>> eaac5d6485b34ad2055b16ba174b2950b064e039
   </data>
+  <data name="AddTexte" xml:space="preserve">
+    <value>Ajouter contact</value>
+  </data>
+  <data name="CancelSave" xml:space="preserve">
+    <value>Sauvegarde annulée</value>
+  </data>
+  <data name="ContactSaveTexte" xml:space="preserve">
+    <value>Contact sauvegardé</value>
+  </data>
+  <data name="ErrorSaveContact" xml:space="preserve">
+    <value>Erreur lors de la sauvegarde</value>
+  </data>
+>>>>>>> e06ea5f32fa08d42d7234dd1deecdeb4bf657d52
 </root>

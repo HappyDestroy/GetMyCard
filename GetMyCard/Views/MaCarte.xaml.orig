@@ -55,7 +55,11 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
+<<<<<<< HEAD
+                        <Button Grid.Column="0" Content="{Binding Path=LocalizedResources.ImporterPhotoTexte, Source={StaticResource LocalizedStrings}}" Command="{Binding ImportPhotoCommand}"/>
+=======
                         <Button Grid.Column="0" Content="{Binding Path=LocalizedResources.ImportTexte, Source={StaticResource LocalizedStrings}}" Command="{Binding ImportPhotoCommand}"/>
+>>>>>>> e06ea5f32fa08d42d7234dd1deecdeb4bf657d52
                         <Image Grid.Column="1" Width="120" Height="100" Source="{Binding MaPhotoBox, Mode=TwoWay}"/>
                     </Grid>
                     
@@ -79,7 +83,11 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
+<<<<<<< HEAD
+                        <Button Grid.Column="0" Content="{Binding Path=LocalizedResources.ImporterPhotoTexte, Source={StaticResource LocalizedStrings}}" Command="{Binding ImportLogoCommand}"/>
+=======
                         <Button Grid.Column="0" Content="{Binding Path=LocalizedResources.ImportTexte, Source={StaticResource LocalizedStrings}}" Command="{Binding ImportLogoCommand}"/>
+>>>>>>> e06ea5f32fa08d42d7234dd1deecdeb4bf657d52
                         <Image Grid.Column="1" Width="120" Height="100" Source="{Binding MonLogoBox, Mode=TwoWay}"/>
                     </Grid>
 
@@ -99,19 +107,6 @@
                     <TextBox Text="{Binding MaCarteVisite.CP, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
-                    <!--<TextBox Text="{Binding Pays, Mode=TwoWay}"  InputScope="AddressCountryName" />-->
-                    <toolkit:AutoCompleteBox  ItemsSource="{Binding ListePays}"
-                                    ValueMemberPath="Pays"
-                                    SelectedItem="{Binding SelectedPays, Mode=TwoWay}"
-                                    FilterMode="Contains">
-                        <toolkit:AutoCompleteBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Pays}" Style="{StaticResource PhoneTextAccentStyle}"/>
-                            </DataTemplate>
-                        </toolkit:AutoCompleteBox.ItemTemplate>
-
-                    </toolkit:AutoCompleteBox>
-
 
                     <toolkit:AutoCompleteBox  ItemsSource="{Binding ListePays}"
                                     ValueMemberPath="Pays"
