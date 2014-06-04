@@ -349,9 +349,9 @@ namespace GetMyCard.ViewModels
                 ListenForIncomingMessage();
                 _ShareCDVCommand.OnCanExecuteChanged();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Déconnecté !");
                 CloseConnection(true);
             }
         }

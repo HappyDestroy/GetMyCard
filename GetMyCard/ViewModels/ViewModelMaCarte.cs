@@ -31,7 +31,8 @@ namespace GetMyCard.ViewModels
 
         private BitmapImage _ChosenImage;
         private BitmapImage _ChosenLogo;
-        private List<string> ListePays = new List<string>();
+        private List<string> _ListePays;
+
         private ImageSource _MaPhotoBox;
         private ImageSource _MonLogoBox;
 
@@ -39,7 +40,6 @@ namespace GetMyCard.ViewModels
         private string _PathPhoto;
         private string _SrcLogo;
         private string _PathLogo;
-        private string _SelectedPays;
 
         private DelegateCommand _ValidateCommand;
         private DelegateCommand _ImportPhotoCommand;
@@ -95,7 +95,7 @@ namespace GetMyCard.ViewModels
         public BitmapImage ChoosenLogo
         {
             get { return _ChosenLogo; }
-            set { _ChosenLogo = value; }
+            set { Assign(ref _ChosenLogo, value); }
         }
         public ImageSource MonLogoBox
         {
@@ -115,10 +115,10 @@ namespace GetMyCard.ViewModels
             set { Assign(ref _PathLogo, value); }
         }
 
-        public string SelectedPays
+        public List<string> ListePays
         {
-            get { return _SelectedPays; }
-            set { Assign(ref _SelectedPays, value); }
+            get { return _ListePays; }
+            set { Assign(ref _ListePays, value); }
         }
 
         public MaCarteVisite MaCarteVisite
@@ -155,6 +155,7 @@ namespace GetMyCard.ViewModels
             _ChosenImage = new BitmapImage();
             _ChosenLogo = new BitmapImage();
             MaCarteVisite = new MaCarteVisite();
+            _ListePays = new List<string>();
 
             #region Récupération des infos MaCarte
 

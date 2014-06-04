@@ -99,18 +99,7 @@
                     <TextBox Text="{Binding MaCarteVisite.CP, Mode=TwoWay}" InputScope="Number" KeyDown="VerifNombre" />
 
                     <TextBlock Text="{Binding Path=LocalizedResources.PaysTexte, Source={StaticResource LocalizedStrings}}" />
-
-                    <toolkit:AutoCompleteBox  ItemsSource="{Binding ListePays}"
-                                    ValueMemberPath="Pays"
-                                    SelectedItem="{Binding SelectedPays, Mode=TwoWay}"
-                                    FilterMode="Contains">
-                        <toolkit:AutoCompleteBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Pays}" Style="{StaticResource PhoneTextAccentStyle}"/>
-                            </DataTemplate>
-                        </toolkit:AutoCompleteBox.ItemTemplate>
-
-                    </toolkit:AutoCompleteBox>
+                    <toolkit:AutoCompleteBox ItemsSource="{Binding ListePays}" ValueMemberPath="ListePays" FilterMode="StartsWith" />
 
                     <Button Content="{Binding Path=LocalizedResources.ValidateTexte, Source={StaticResource LocalizedStrings}}" Command="{Binding ValidateCommand, Mode=TwoWay}" />
                 </StackPanel>
