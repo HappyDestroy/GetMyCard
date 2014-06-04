@@ -132,5 +132,14 @@ namespace GetMyCard.Model
         }
 
         #endregion
+
+        #region Method
+
+        public override string ToString()
+        {
+            return "nom:" + Nom + ";prenom:" + Prenom + ";" + Photo + ";" + Mail + ";" + TelFixe + ";" + TelPort + ";" + Nationalite + ";" + Societe + ";" + Poste + ";" + Logo + ";" + SiteWeb + ";" + Adresse + ";" + Ville + ";" + CP + ";" + Pays;
+        }
+
+        #endregion
     }
 }

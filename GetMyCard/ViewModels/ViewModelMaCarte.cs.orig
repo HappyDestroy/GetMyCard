@@ -1,6 +1,6 @@
 ﻿using Microsoft.Phone.Tasks;
 using System;
-using System.Collections; // for 'IEnumerable'
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +21,7 @@ using GetMyCard.Model;
 using Windows.Storage;
 using System.IO.IsolatedStorage;
 using System.Windows.Navigation;
+using System.Collections.ObjectModel;
 
 
 namespace GetMyCard.ViewModels
@@ -29,30 +30,10 @@ namespace GetMyCard.ViewModels
     {
         #region Fields
 
-<<<<<<< HEAD
-        private string _Nom;
-        private string _Prenom;
-        private string _Photo;
-        private string _Mail;
-        private string _TelFixe;
-        private string _TelPort;
-        private string _Nationalite;
-        private string _Societe;
-        private string _Logo;
-        private string _Poste;
-        private string _SiteWeb;
-        private string _Adresse;
-        private string _Ville;
-        private string _CP;
-        private string _Pays;
-        private List<string> ListePays = new List<string>();
-
-        private BitmapImage _ChoosenImage;
-        private BitmapImage _ChoosenLogo;
-=======
         private BitmapImage _ChosenImage;
         private BitmapImage _ChosenLogo;
->>>>>>> eaac5d6485b34ad2055b16ba174b2950b064e039
+        private List<string> _ListePays;
+
         private ImageSource _MaPhotoBox;
         private ImageSource _MonLogoBox;
 
@@ -115,7 +96,7 @@ namespace GetMyCard.ViewModels
         public BitmapImage ChoosenLogo
         {
             get { return _ChosenLogo; }
-            set { _ChosenLogo = value; }
+            set { Assign(ref _ChosenLogo, value); }
         }
         public ImageSource MonLogoBox
         {
@@ -135,6 +116,15 @@ namespace GetMyCard.ViewModels
             set { Assign(ref _PathLogo, value); }
         }
 
+<<<<<<< HEAD
+        public List<string> ListePays
+        {
+            get { return _ListePays; }
+            set { Assign(ref _ListePays, value); }
+        }
+
+=======
+>>>>>>> deb4f93af630d5ef10e466f05e4285e84d60ce9a
         public MaCarteVisite MaCarteVisite
         {
             get { return _MaCarteVisite; }
@@ -156,6 +146,11 @@ namespace GetMyCard.ViewModels
             ValidateCommand.OnCanExecuteChanged();
         }
 
+        public List<string> ListePays
+        {
+            get { return _ListePays; }
+            set { Assign(ref _ListePays, value); }
+        }
         #endregion
 
 
@@ -168,7 +163,10 @@ namespace GetMyCard.ViewModels
             _ImportLogoCommand = new DelegateCommand(ExecuteImportLogo, CanExecuteImportLogo);
             _ChosenImage = new BitmapImage();
             _ChosenLogo = new BitmapImage();
+            _ListePays = new List<string>();
+
             MaCarteVisite = new MaCarteVisite();
+            _ListePays = new List<string>();
 
             #region Récupération des infos MaCarte
 
@@ -209,14 +207,11 @@ namespace GetMyCard.ViewModels
 
             #endregion
 
-<<<<<<< HEAD
-                #endregion
-            }
             #region Liste des pays de l'autocompleteBox
-            
+                
                 ListePays.Add("AFGHANISTAN");
                 ListePays.Add("AFRIQUE DU SUD");
-                ListePays.Add("ÅLAND");
+                ListePays.Add("ALAND");
                 ListePays.Add("ALBANIE");
                 ListePays.Add("ALGERIE");
                 ListePays.Add("ALLEMAGNE");
@@ -464,10 +459,7 @@ namespace GetMyCard.ViewModels
                 ListePays.Add("YEMEN"); 
                 ListePays.Add("ZAMBIE");
                 ListePays.Add("ZIMBABWE");
-                //this.ListePays.ItemsSource = ListePays;
             #endregion
-=======
->>>>>>> eaac5d6485b34ad2055b16ba174b2950b064e039
         }
 
         #endregion
@@ -490,7 +482,6 @@ namespace GetMyCard.ViewModels
                 MaCarteVisite c = GetMyCardDataContext.Instance.MaCarteVisite.First();
 
                 c = MaCarteVisite;
-
 
                 if (!string.IsNullOrEmpty(SrcPhoto))
                 {
@@ -519,7 +510,7 @@ namespace GetMyCard.ViewModels
 
                     string ext = SrcLogo.Split(".".ToCharArray()).Last();
                     PathLogo = "logo_" + MaCarteVisite.Nom + "-" + MaCarteVisite.Prenom + "-" + num + "." + ext;
-                    c.Photo = PathLogo;
+                    c.Logo = PathLogo;
 
                     using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
                     {

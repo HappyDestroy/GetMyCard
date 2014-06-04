@@ -133,13 +133,10 @@ namespace GetMyCard.ViewModels
 
         private void ExecuteSelectedContact(object parameters)
         {
-            MessageBox.Show(((Contact)parameters).Nom.ToString());
-            string idContact = ((Contact)parameters).Identifiant.ToString();
-
             PhoneApplicationService.Current.State["contact"] = parameters;
             App.RootFrame.Navigate(new Uri("/Views/ContactInfo.xaml", UriKind.Relative));
         }
-       
+
 
         public void LoadData()
         {
@@ -156,23 +153,32 @@ namespace GetMyCard.ViewModels
 
                 if (!string.IsNullOrEmpty(MaCarteVisite.Photo))
                 {
-                    BitmapImage retrievedImage = new BitmapImage();
-
-                    //On récupère l'image depuis l'isolated storage
-                    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                    if (MaCarteVisite.Photo.Equals("/Images/contact.png"))
                     {
-                        using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
+                        BitmapImage retrievedPhoto = new BitmapImage();
+
+                        retrievedPhoto.UriSource = new Uri(MaCarteVisite.Photo, UriKind.RelativeOrAbsolute);
+                        PhotoMoi = retrievedPhoto;
+                    }
+                    else
+                    {
+                        BitmapImage retrievedPhoto = new BitmapImage();
+
+                        //On récupère l'image depuis l'isolated storage
+                        using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
                         {
-                            retrievedImage.SetSource(isoFileStream);
-                            PhotoMoi = retrievedImage;
+                            using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Photo, System.IO.FileMode.Open))
+                            {
+                                retrievedPhoto.SetSource(isoFileStream);
+                                PhotoMoi = retrievedPhoto;
+                            }
                         }
                     }
                 }
-               
 
                 if(!string.IsNullOrEmpty(MaCarteVisite.Logo))
                 {
-                    BitmapImage retrievedImage = new BitmapImage();
+                    BitmapImage retrievedLogo = new BitmapImage();
 
                     //On récupère le logo depuis l'isolated storage
                     using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
@@ -180,8 +186,8 @@ namespace GetMyCard.ViewModels
                         // Récupération du logo
                         using (var isoFileStream = isoStore.OpenFile(MaCarteVisite.Logo, System.IO.FileMode.Open))
                         {
-                            retrievedImage.SetSource(isoFileStream);
-                            LogoMoi = retrievedImage;
+                            retrievedLogo.SetSource(isoFileStream);
+                            LogoMoi = retrievedLogo;
                         }
 
                     }
@@ -190,7 +196,10 @@ namespace GetMyCard.ViewModels
             else
             {
                 MaCarteVisite = new MaCarteVisite();
-                MaCarteVisite.Photo = "Images/contact.png";
+
+                BitmapImage retrievedImage = new BitmapImage();
+                retrievedImage.UriSource = new Uri("/Images/contact.png", UriKind.RelativeOrAbsolute);
+                PhotoMoi = retrievedImage;
                 MaCarteVisite.Nom = "Vous n'avez pas de carte de visite";
             }
         }

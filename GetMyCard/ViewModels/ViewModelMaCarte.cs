@@ -1,6 +1,6 @@
 ﻿using Microsoft.Phone.Tasks;
 using System;
-using System.Collections; // for 'IEnumerable'
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +21,7 @@ using GetMyCard.Model;
 using Windows.Storage;
 using System.IO.IsolatedStorage;
 using System.Windows.Navigation;
+using System.Collections.ObjectModel;
 
 
 namespace GetMyCard.ViewModels
@@ -95,7 +96,7 @@ namespace GetMyCard.ViewModels
         public BitmapImage ChoosenLogo
         {
             get { return _ChosenLogo; }
-            set { Assign(ref _ChosenLogo, value); }
+            set { _ChosenLogo = value; }
         }
         public ImageSource MonLogoBox
         {
@@ -113,12 +114,6 @@ namespace GetMyCard.ViewModels
         {
             get { return _PathLogo; }
             set { Assign(ref _PathLogo, value); }
-        }
-
-        public List<string> ListePays
-        {
-            get { return _ListePays; }
-            set { Assign(ref _ListePays, value); }
         }
 
         public MaCarteVisite MaCarteVisite
@@ -142,6 +137,11 @@ namespace GetMyCard.ViewModels
             ValidateCommand.OnCanExecuteChanged();
         }
 
+        public List<string> ListePays
+        {
+            get { return _ListePays; }
+            set { Assign(ref _ListePays, value); }
+        }
         #endregion
 
 
@@ -154,8 +154,9 @@ namespace GetMyCard.ViewModels
             _ImportLogoCommand = new DelegateCommand(ExecuteImportLogo, CanExecuteImportLogo);
             _ChosenImage = new BitmapImage();
             _ChosenLogo = new BitmapImage();
-            MaCarteVisite = new MaCarteVisite();
             _ListePays = new List<string>();
+
+            MaCarteVisite = new MaCarteVisite();
 
             #region Récupération des infos MaCarte
 
@@ -197,10 +198,10 @@ namespace GetMyCard.ViewModels
             #endregion
 
             #region Liste des pays de l'autocompleteBox
-            
+                
                 ListePays.Add("AFGHANISTAN");
                 ListePays.Add("AFRIQUE DU SUD");
-                ListePays.Add("ÅLAND");
+                ListePays.Add("ALAND");
                 ListePays.Add("ALBANIE");
                 ListePays.Add("ALGERIE");
                 ListePays.Add("ALLEMAGNE");
@@ -448,7 +449,6 @@ namespace GetMyCard.ViewModels
                 ListePays.Add("YEMEN"); 
                 ListePays.Add("ZAMBIE");
                 ListePays.Add("ZIMBABWE");
-                //this.ListePays.ItemsSource = ListePays;
             #endregion
         }
 
@@ -472,7 +472,6 @@ namespace GetMyCard.ViewModels
                 MaCarteVisite c = GetMyCardDataContext.Instance.MaCarteVisite.First();
 
                 c = MaCarteVisite;
-
 
                 if (!string.IsNullOrEmpty(SrcPhoto))
                 {
@@ -501,7 +500,7 @@ namespace GetMyCard.ViewModels
 
                     string ext = SrcLogo.Split(".".ToCharArray()).Last();
                     PathLogo = "logo_" + MaCarteVisite.Nom + "-" + MaCarteVisite.Prenom + "-" + num + "." + ext;
-                    c.Photo = PathLogo;
+                    c.Logo = PathLogo;
 
                     using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
                     {
