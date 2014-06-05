@@ -7,11 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Xml.Serialization;
 using Windows.Networking.Proximity;
@@ -224,9 +227,23 @@ namespace GetMyCard.ViewModels
             //On se connecte à l'appareil selectionné
             PeerInformation peer = SelectedContact.PeerInfo;
 
-            SendMessage(MaCarte);
+            BitmapImage retrievedPhoto = null;
 
+            if (!string.IsNullOrEmpty(MaCarte.Photo) && !(MaCarte.Photo.Equals("/Images/contact.png")))
+            {
+                retrievedPhoto = new BitmapImage();
 
+                using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                {
+                    using (var isoFileStream = isoStore.OpenFile(MaCarte.Photo, System.IO.FileMode.Open))
+                    {
+                        retrievedPhoto.SetSource(isoFileStream);
+                    }
+                }
+            }
+
+            //On envoi l'objet Contact et l'image
+            SendContact(MaCarte, retrievedPhoto);
         }
 
         #endregion
@@ -396,28 +413,6 @@ namespace GetMyCard.ViewModels
             }
         }
 
-        private async void ListenForIncomingMessage()
-        {
-            try
-            {
-                var jsonMessage = await GetMessage();
-                if (!string.IsNullOrWhiteSpace(jsonMessage))
-                {
-                    Contact c = JsonConvert.DeserializeObject<Contact>(jsonMessage);
-
-                    GetMyCardDataContext.Instance.Contact.InsertOnSubmit(c);
-                    GetMyCardDataContext.Instance.SubmitChanges();
-                }
-
-                ListenForIncomingMessage();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Déconnecté");
-                CloseConnection(true);
-            }
-        }
-
         #endregion
 
         #region ProgressBar
@@ -440,7 +435,7 @@ namespace GetMyCard.ViewModels
 
         #region SendAndGetMessage
 
-        private async Task SendMessage(MaCarteVisite MaCarte)
+        private async Task SendContact(MaCarteVisite MaCarte, BitmapImage MaPhoto)
         {
             if (MaCarte == null)
             {
@@ -455,11 +450,15 @@ namespace GetMyCard.ViewModels
             }
 
             if (DataWriter == null)
+            {
                 DataWriter = new DataWriter(Socket.OutputStream);
+            }
 
             // Chaque message est envoyé en 2 blocs.
             // Le premier est la taille du message.
             // Et le 2ème est le message.
+
+
 
             //On sérialise notre objet en Json
             string MaCarteJson = JsonConvert.SerializeObject(MaCarte, Formatting.Indented);
@@ -467,15 +466,56 @@ namespace GetMyCard.ViewModels
             DataWriter.WriteInt32(MaCarteJson.Length);
             await DataWriter.StoreAsync();
 
-
             DataWriter.WriteString(MaCarteJson);
             await DataWriter.StoreAsync();
+
+            SendPhoto(MaPhoto);
         }
+
+
+
+
+
+        private async Task SendPhoto(BitmapImage MonImage)
+        {
+            if (MonImage == null)
+            {
+                MessageBox.Show("Pas de photo à envoyer", "Erreur", MessageBoxButton.OK);
+                return;
+            }
+
+            if (Socket == null)
+            {
+                MessageBox.Show("Non connecté", "Erreur", MessageBoxButton.OK);
+                return;
+            }
+
+            if (DataWriter == null)
+            {
+                DataWriter = new DataWriter(Socket.OutputStream);
+            }
+
+            byte[] imgByte = ImageToByteArray(MonImage);
+
+            string MaPhotoJson = JsonConvert.SerializeObject(imgByte);
+
+            DataWriter.WriteInt32((MaPhotoJson + "*" + MaCarte.Photo).Length);
+            await DataWriter.StoreAsync();
+
+            DataWriter.WriteString(MaPhotoJson + "*" + MaCarte.Photo);
+            await DataWriter.StoreAsync();
+        }
+
+
+
+
 
         private async Task<string> GetMessage()
         {
             if (DataReader == null)
+            {
                 DataReader = new DataReader(Socket.InputStream);
+            }
 
             // Chaque message est envoyé en 2 blocs.
             // Le premier est la taille du message.
@@ -484,6 +524,54 @@ namespace GetMyCard.ViewModels
             uint messageLen = (uint)DataReader.ReadInt32();
             await DataReader.LoadAsync(messageLen);
             return DataReader.ReadString(messageLen);
+        }
+
+
+
+        private async void ListenForIncomingMessage()
+        {
+            try
+            {
+                var jsonMessage = await GetMessage();
+
+                if (!string.IsNullOrWhiteSpace(jsonMessage))
+                {
+                    //Si on récupère du Json d'un contact
+                    if(jsonMessage.Contains("Nom") && jsonMessage.Contains("Prenom"))
+                    {
+                        Contact c = JsonConvert.DeserializeObject<Contact>(jsonMessage);
+
+                        GetMyCardDataContext.Instance.Contact.InsertOnSubmit(c);
+                        GetMyCardDataContext.Instance.SubmitChanges();
+                    }
+                    //Sinon c'est une image
+                    else
+                    {
+                        string[] split = jsonMessage.Split('*');
+
+                        byte[] imgByte = JsonConvert.DeserializeObject<byte[]>(split[0]);
+
+                        BitmapImage img = ByteArraytoBitmap(imgByte);
+
+                        using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                        {
+                            var wb = new WriteableBitmap(img);
+
+                            using (var isoFileStream = isoStore.CreateFile(split[1]))
+                            {
+                                Extensions.SaveJpeg(wb, isoFileStream, wb.PixelHeight, wb.PixelWidth, 0, 100);
+                            }
+                        }
+                    }
+                }
+
+                ListenForIncomingMessage();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Déconnecté");
+                CloseConnection(true);
+            }
         }
 
         #endregion
@@ -495,6 +583,30 @@ namespace GetMyCard.ViewModels
             connectionSettingsTask.Show();
         }
 
+
+
+        public static Byte[] ImageToByteArray(BitmapImage image)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                WriteableBitmap btmMap = new WriteableBitmap
+                    (image.PixelWidth, image.PixelHeight);
+
+                Extensions.SaveJpeg(btmMap, ms,
+                    image.PixelWidth, image.PixelHeight, 0, 100);
+
+                return ms.ToArray();
+            }
+        }
+
+
+        public static BitmapImage ByteArraytoBitmap(Byte[] byteArray)
+        {
+            MemoryStream stream = new MemoryStream(byteArray);
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.SetSource(stream);
+            return bitmapImage;
+        }
         #endregion
     }
 

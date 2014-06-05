@@ -33,6 +33,9 @@ namespace GetMyCard.ViewModels
 
         private ImageSource _PhotoMoi;
         private ImageSource _LogoMoi;
+
+        private ImageSource _PhotoContact;
+
         #endregion
 
 
@@ -73,6 +76,11 @@ namespace GetMyCard.ViewModels
             set { Assign(ref _LogoMoi, value); }
         }
 
+        public ImageSource PhotoContact
+        {
+            get { return _PhotoContact; }
+            set { Assign(ref _PhotoContact, value); }
+        }
         #endregion
 
 
@@ -81,18 +89,40 @@ namespace GetMyCard.ViewModels
 
         public ViewModelMainPage()
         {
-            Contact addContact = new Contact();
-            addContact.Photo = "/Images/contact.png";
-            addContact.Nom = "Nico";
-            addContact.Prenom = "Sabou";
-
-            GetMyCardDataContext.Instance.Contact.InsertOnSubmit(addContact);
-            GetMyCardDataContext.Instance.SubmitChanges();
-
             _DeleteContactCommand = new DelegateCommand(ExecuteDeleteContact, CanExecuteDeleteContact);
             _SelectedContact = new DelegateCommand(ExecuteSelectedContact, CanExecuteSelectContact);
 
             _Contacts = new ObservableCollection<Contact>();
+
+
+
+            #region chargement des contacts
+            foreach (Contact contact in GetMyCardDataContext.Instance.Contact)
+            {
+                if (contact.Photo.Equals("/Images/contact.png") || string.IsNullOrEmpty(contact.Photo))
+                {
+                    BitmapImage retrievedPhoto = new BitmapImage();
+
+                    retrievedPhoto.UriSource = new Uri(contact.Photo, UriKind.RelativeOrAbsolute);
+                    PhotoContact = retrievedPhoto;
+                }
+                else
+                {
+                    BitmapImage retrievedPhoto = new BitmapImage();
+
+                    using (var isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                    {
+                        using (var isoFileStream = isoStore.OpenFile(contact.Photo, System.IO.FileMode.Open))
+                        {
+                            retrievedPhoto.SetSource(isoFileStream);
+                            PhotoContact = retrievedPhoto;
+                        }
+                    }
+                }
+
+                Contacts.Add(contact);
+            }
+            #endregion
         }
 
 
@@ -140,12 +170,6 @@ namespace GetMyCard.ViewModels
 
         public void LoadData()
         {
-            //On charge tous les contacts
-            foreach (Contact contact in GetMyCardDataContext.Instance.Contact)
-            {
-                Contacts.Add(contact);
-            }
-
             //On charge les infos de sa carte
             if (GetMyCardDataContext.Instance.MaCarteVisite.Any())
             {

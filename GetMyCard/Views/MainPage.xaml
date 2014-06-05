@@ -81,17 +81,6 @@
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
 
-                                        <!--<Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Image Grid.Column="0" Source="{Binding Photo}" Width="30" Height="60" />
-                                            <TextBlock Grid.Column="1" Text="{Binding Nom}" Margin="20 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>
-                                            <TextBlock Grid.Column="2" Text="{Binding Prenom}" Margin="10 0 0 0" Style="{StaticResource PhoneTextTitle2Style}"/>                              
-                                        </Grid>-->
-                                        
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
@@ -99,7 +88,7 @@
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <Image Grid.Column="0" Source="{Binding Photo}" Width="100" Stretch="Uniform"/>
+                                            <Image Grid.Column="0" Source="{Binding PhotoContact}" Width="100" Stretch="Uniform"/>
 
                                             <Grid Grid.Column="1">
                                                 <Grid.RowDefinitions>
